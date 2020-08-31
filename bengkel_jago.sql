@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Agu 2020 pada 09.06
+-- Waktu pembuatan: 30 Agu 2020 pada 09.40
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.4
 
@@ -131,6 +131,7 @@ CREATE TABLE `tbl_piutang` (
   `tgl_piutang` datetime NOT NULL,
   `tgl_jatuh_tempo` datetime NOT NULL,
   `jumlah` int(11) NOT NULL,
+  `status_piutang` varchar(255) NOT NULL,
   `id_client` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

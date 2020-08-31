@@ -6,10 +6,6 @@
 								<h2 class="text-white pb-2 fw-bold">User Management</h2>
 						
 							</div>
-							<div class="ml-md-auto py-2 py-md-0">
-								<a href="#" class="btn btn-white btn-border btn-round mr-2">+ Penjualan</a>
-								<a href="#" class="btn btn-secondary btn-round">Piutang</a>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -20,7 +16,7 @@
 								<div class="card-header" style="background-image: url('<?=base_url()?>assets/img/blogpost.jpg')">
 									<div class="profile-picture">
 										<div class="avatar avatar-xl">
-											<img src="<?=base_url()?>assets/img/user.jpg" alt="..." class="avatar-img rounded-circle">
+											<img src="<?=base_url()?>assets/img/logo_user.jpg" alt="..." class="avatar-img rounded-circle">
 										</div>
 									</div>
 								</div>

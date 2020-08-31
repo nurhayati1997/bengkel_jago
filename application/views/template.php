@@ -56,12 +56,12 @@
 					
 						<li class="nav-item">
 							<a class="nav-link" href="<?=site_url('penjualan_control')?>" title="penjualan" role="button" aria-expanded="false">
-								<i class="fa fa-th"></i>
+								<i class="fas fa-th-list"></i>
 							</a>
 						</li>
 						<li class="nav-item dropdown hidden-caret">
 							<a class="nav-link" href="<?=site_url('piutang_control')?>" title="piutang" aria-expanded="false">
-								<i class="fas fa-layer-group"></i>
+								<i class="fas fa-pen-square"></i>
 							</a>
 						</li>
 						<li class="nav-item dropdown hidden-caret">

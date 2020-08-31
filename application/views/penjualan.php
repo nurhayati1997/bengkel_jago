@@ -121,10 +121,10 @@
 								<div class="card-header">
 									<div class="d-flex align-items-center">
 										<h4 class="card-title">Data Transaksi</h4>
-										<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-											<i class="fas fa-print"></i>
-											Cetak
-										</button>
+										<div class="ml-md-auto py-2 py-md-0">
+											<a href="#" class="btn btn-primary btn-border btn-round mr-2">Hutang</a>
+											<a href="#" class="btn btn-secondary btn-round">Tambah</a>
+										</div>
 									</div>
 								</div>
 								<div class="card-body">
@@ -187,6 +187,12 @@
 													<th style="width: 10%">Action</th>
 												</tr>
 											</thead>
+											<tfoot>
+												<tr>
+													<th colspan="3">TOTAL</th>
+													<th></th>
+												</tr>
+											</tfoot>
 											<tbody>
 												<tr>
 													<td>001</td>

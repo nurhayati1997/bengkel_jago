@@ -111,28 +111,28 @@
 				</div>
 			</div>
 			<script>
-				function get_user() {
-					var tabel = '<table id="add-row" class="display table table-striped table-hover"><thead><tr><th>NO</th><th>KODE USER</th><th>NAMA USER</th><th>RULE</th><th style="width: 10%">Action</th></tr></thead><tbody>'
-					$.ajax({
-							type: 'get',
-							data: 'target=user',
-							url: '<?= base_url() ?>user_control/ambilData',
-							dataType: 'json',
-							success: function(data) {
-								var baris = ""
-								for (let i = 0; i < data.length; i++) {
-									baris += '<tr>'
-									baris += '<td>' + i + '</td>'
-									baris += '<td>' + data.id_user + '</td>'
-									baris += '<td>' + data.nama + '</td>'
-									baris += '<td>' + data.role + '</td>'
-									baris += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"><i class="fa fa-edit"></i></button><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>'
-									baris += '</tr>'
-								}
-								baris += '</tbody></table>'
-							}
-							$("#tabel_user").html(baris)
+				get_user()
 
+				function get_user() {
+					var baris = '<table id="add-row" class="display table table-striped table-hover"><thead><tr><th>NO</th><th>KODE USER</th><th>NAMA USER</th><th>RULE</th><th style="width: 10%">Action</th></tr></thead><tbody>'
+					$.ajax({
+						type: 'get',
+						data: 'target=tbl_pengguna',
+						url: '<?= base_url() ?>user_control/get_data',
+						dataType: 'json',
+						success: function(data) {
+							console.log(data)
+							for (let i = 0; i < data.length; i++) {
+								baris += '<tr>'
+								baris += '<td>' + i + 1 + '</td>'
+								baris += '<td>' + data[i].id_pengguna + '</td>'
+								baris += '<td>' + data[i].nama + '</td>'
+								baris += '<td>' + data[i].rule + '</td>'
+								baris += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"><i class="fa fa-edit"></i></button><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td>'
+								baris += '</tr>'
+							}
+							baris += '</tbody></table>'
+							$("#tabel_user").html(baris)
 						}
 					});
 				}

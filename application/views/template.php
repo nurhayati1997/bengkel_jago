@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Karisma Motor</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="<?=base_url()?>assets/img/icon.ico" type="image/x-icon"/>
+	<link rel="icon" href="<?= base_url() ?>assets/img/icon.ico" type="image/x-icon" />
 
 	<!-- Fonts and icons -->
-	<script src="<?=base_url()?>assets/js/plugin/webfont/webfont.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/webfont/webfont.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/core/jquery.3.2.1.min.js"></script>
 	<script>
 		WebFont.load({
-			google: {"families":["Lato:300,400,700,900"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['<?=base_url()?>assets/css/fonts.min.css']},
+			google: {
+				"families": ["Lato:300,400,700,900"]
+			},
+			custom: {
+				"families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+				urls: ['<?= base_url() ?>assets/css/fonts.min.css']
+			},
 			active: function() {
 				sessionStorage.fonts = true;
 			}
@@ -19,20 +26,21 @@
 	</script>
 
 	<!-- CSS Files -->
-	<link rel="stylesheet" href="<?=base_url()?>assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="<?=base_url()?>assets/css/atlantis.min.css">
+	<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="<?= base_url() ?>assets/css/atlantis.min.css">
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
-	<link rel="stylesheet" href="<?=base_url()?>assets/css/demo.css">
+	<link rel="stylesheet" href="<?= base_url() ?>assets/css/demo.css">
 </head>
+
 <body>
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
 			<div class="logo-header" data-background-color="blue">
-				
+
 				<a href="index.html" class="logo">
-					<img src="<?=base_url()?>assets/img/logo.svg" alt="navbar brand" class="navbar-brand">
+					<img src="<?= base_url() ?>assets/img/logo.svg" alt="navbar brand" class="navbar-brand">
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
@@ -50,7 +58,7 @@
 
 			<!-- Navbar Header -->
 			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
-				
+
 				<div class="container-fluid">
 					<div class="collapse" id="search-nav">
 						<form class="navbar-left navbar-form nav-search mr-md-3">
@@ -77,7 +85,7 @@
 							<ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
 								<li>
 									<div class="dropdown-title d-flex justify-content-between align-items-center">
-										Messages 									
+										Messages
 										<a href="#" class="small">Mark all as read</a>
 									</div>
 								</li>
@@ -85,51 +93,51 @@
 									<div class="message-notif-scroll scrollbar-outer">
 										<div class="notif-center">
 											<a href="#">
-												<div class="notif-img"> 
-													<img src="<?=base_url()?>assets/img/jm_denis.jpg" alt="Img Profile">
+												<div class="notif-img">
+													<img src="<?= base_url() ?>assets/img/jm_denis.jpg" alt="Img Profile">
 												</div>
 												<div class="notif-content">
 													<span class="subject">Jimmy Denis</span>
 													<span class="block">
 														How are you ?
 													</span>
-													<span class="time">5 minutes ago</span> 
+													<span class="time">5 minutes ago</span>
 												</div>
 											</a>
 											<a href="#">
-												<div class="notif-img"> 
-													<img src="<?=base_url()?>assets/img/chadengle.jpg" alt="Img Profile">
+												<div class="notif-img">
+													<img src="<?= base_url() ?>assets/img/chadengle.jpg" alt="Img Profile">
 												</div>
 												<div class="notif-content">
 													<span class="subject">Chad</span>
 													<span class="block">
 														Ok, Thanks !
 													</span>
-													<span class="time">12 minutes ago</span> 
+													<span class="time">12 minutes ago</span>
 												</div>
 											</a>
 											<a href="#">
-												<div class="notif-img"> 
-													<img src="<?=base_url()?>assets/img/mlane.jpg" alt="Img Profile">
+												<div class="notif-img">
+													<img src="<?= base_url() ?>assets/img/mlane.jpg" alt="Img Profile">
 												</div>
 												<div class="notif-content">
 													<span class="subject">Jhon Doe</span>
 													<span class="block">
 														Ready for the meeting today...
 													</span>
-													<span class="time">12 minutes ago</span> 
+													<span class="time">12 minutes ago</span>
 												</div>
 											</a>
 											<a href="#">
-												<div class="notif-img"> 
-													<img src="<?=base_url()?>assets/img/talha.jpg" alt="Img Profile">
+												<div class="notif-img">
+													<img src="<?= base_url() ?>assets/img/talha.jpg" alt="Img Profile">
 												</div>
 												<div class="notif-content">
 													<span class="subject">Talha</span>
 													<span class="block">
 														Hi, Apa Kabar ?
 													</span>
-													<span class="time">17 minutes ago</span> 
+													<span class="time">17 minutes ago</span>
 												</div>
 											</a>
 										</div>
@@ -158,7 +166,7 @@
 													<span class="block">
 														New user registered
 													</span>
-													<span class="time">5 minutes ago</span> 
+													<span class="time">5 minutes ago</span>
 												</div>
 											</a>
 											<a href="#">
@@ -167,18 +175,18 @@
 													<span class="block">
 														Rahmad commented on Admin
 													</span>
-													<span class="time">12 minutes ago</span> 
+													<span class="time">12 minutes ago</span>
 												</div>
 											</a>
 											<a href="#">
-												<div class="notif-img"> 
-													<img src="<?=base_url()?>assets/img/profile2.jpg" alt="Img Profile">
+												<div class="notif-img">
+													<img src="<?= base_url() ?>assets/img/profile2.jpg" alt="Img Profile">
 												</div>
 												<div class="notif-content">
 													<span class="block">
 														Reza send messages to you
 													</span>
-													<span class="time">12 minutes ago</span> 
+													<span class="time">12 minutes ago</span>
 												</div>
 											</a>
 											<a href="#">
@@ -187,7 +195,7 @@
 													<span class="block">
 														Farrah liked Admin
 													</span>
-													<span class="time">17 minutes ago</span> 
+													<span class="time">17 minutes ago</span>
 												</div>
 											</a>
 										</div>
@@ -254,14 +262,14 @@
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 								<div class="avatar-sm">
-									<img src="<?=base_url()?>assets/img/logo_user.jpg" alt="..." class="avatar-img rounded-circle">
+									<img src="<?= base_url() ?>assets/img/logo_user.jpg" alt="..." class="avatar-img rounded-circle">
 								</div>
 							</a>
 							<ul class="dropdown-menu dropdown-user animated fadeIn">
 								<div class="dropdown-user-scroll scrollbar-outer">
 									<li>
 										<div class="user-box">
-											<div class="avatar-lg"><img src="<?=base_url()?>assets/img/logo_user.jpg" alt="image profile" class="avatar-img rounded"></div>
+											<div class="avatar-lg"><img src="<?= base_url() ?>assets/img/logo_user.jpg" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
 												<h4>Hizrian</h4>
 												<p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
@@ -288,12 +296,12 @@
 		</div>
 
 		<!-- Sidebar -->
-		<div class="sidebar sidebar-style-2">			
+		<div class="sidebar sidebar-style-2">
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="avatar-sm float-left mr-2">
-							<img src="<?=base_url()?>assets/img/logo_user.jpg" alt="..." class="avatar-img rounded-circle">
+							<img src="<?= base_url() ?>assets/img/logo_user.jpg" alt="..." class="avatar-img rounded-circle">
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -306,7 +314,7 @@
 					</div>
 					<ul class="nav nav-primary">
 						<li class="nav-item active">
-							<a href="<?=site_url('dashboard_control')?>">
+							<a href="<?= site_url('dashboard_control') ?>">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
 							</a>
@@ -318,19 +326,19 @@
 							<h4 class="text-section">Menu</h4>
 						</li>
 						<li class="nav-item active">
-							<a href="<?=site_url('penjualan_control')?>" >
+							<a href="<?= site_url('penjualan_control') ?>">
 								<i class="fas fa-th-list"></i>
 								<p>Penjualan</p>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="<?=site_url('pembelian_control')?>" >
+							<a href="<?= site_url('pembelian_control') ?>">
 								<i class="fas fa-desktop"></i>
 								<p>Pembelian</p>
 							</a>
 						</li>
 						<li class="nav-item active">
-							<a href="<?=site_url('barang_control')?>" >
+							<a href="<?= site_url('barang_control') ?>">
 								<i class="fas fa-layer-group"></i>
 								<p>Barang</p>
 							</a>
@@ -344,12 +352,12 @@
 							<div class="collapse" id="tables">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="<?=site_url('keuntungan_control')?>">
+										<a href="<?= site_url('keuntungan_control') ?>">
 											<span class="sub-item">Keuntungan</span>
 										</a>
 									</li>
 									<li>
-										<a href="<?=site_url('stok_control')?>">
+										<a href="<?= site_url('stok_control') ?>">
 											<span class="sub-item">Stok</span>
 										</a>
 									</li>
@@ -357,7 +365,7 @@
 							</div>
 						</li>
 						<li class="nav-item active">
-							<a href="<?=site_url('piutang_control')?>" >
+							<a href="<?= site_url('piutang_control') ?>">
 								<i class="fas fa-pen-square"></i>
 								<p>Piutang</p>
 							</a>
@@ -371,12 +379,12 @@
 							<div class="collapse" id="master">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="<?=site_url('user_control')?>">
+										<a href="<?= site_url('user_control') ?>">
 											<span class="sub-item">User</span>
 										</a>
 									</li>
 									<li>
-										<a href="<?=site_url('client_control')?>">
+										<a href="<?= site_url('client_control') ?>">
 											<span class="sub-item">Client</span>
 										</a>
 									</li>
@@ -390,16 +398,16 @@
 		<!-- End Sidebar -->
 
 		<div class="main-panel">
-            <?php echo $contents ?>
+			<?php echo $contents ?>
 			<footer class="footer">
 				<div class="container-fluid">
 					<div class="copyright ml-auto">
 						2020, made with <i class="fa fa-heart heart text-danger"></i> FindTech to <a href="">Karisma Motor</a>
-					</div>				
+					</div>
 				</div>
 			</footer>
 		</div>
-		
+
 		<!-- Custom template | don't include it in your project! -->
 		<div class="custom-template">
 			<div class="title">Settings</div>
@@ -416,7 +424,7 @@
 							<button type="button" class="changeLogoHeaderColor" data-color="orange"></button>
 							<button type="button" class="changeLogoHeaderColor" data-color="red"></button>
 							<button type="button" class="changeLogoHeaderColor" data-color="white"></button>
-							<br/>
+							<br />
 							<button type="button" class="changeLogoHeaderColor" data-color="dark2"></button>
 							<button type="button" class="changeLogoHeaderColor" data-color="blue2"></button>
 							<button type="button" class="changeLogoHeaderColor" data-color="purple2"></button>
@@ -437,7 +445,7 @@
 							<button type="button" class="changeTopBarColor" data-color="orange"></button>
 							<button type="button" class="changeTopBarColor" data-color="red"></button>
 							<button type="button" class="changeTopBarColor" data-color="white"></button>
-							<br/>
+							<br />
 							<button type="button" class="changeTopBarColor" data-color="dark2"></button>
 							<button type="button" class="selected changeTopBarColor" data-color="blue2"></button>
 							<button type="button" class="changeTopBarColor" data-color="purple2"></button>
@@ -473,90 +481,90 @@
 		<!-- End Custom template -->
 	</div>
 	<!--   Core JS Files   -->
-	<script src="<?=base_url()?>assets/js/core/jquery.3.2.1.min.js"></script>
-	<script src="<?=base_url()?>assets/js/core/popper.min.js"></script>
-	<script src="<?=base_url()?>assets/js/core/bootstrap.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/core/jquery.3.2.1.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/core/popper.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/core/bootstrap.min.js"></script>
 
 	<!-- jQuery UI -->
-	<script src="<?=base_url()?>assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-	<script src="<?=base_url()?>assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 
 	<!-- jQuery Scrollbar -->
-	<script src="<?=base_url()?>assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
 
 	<!-- Chart JS -->
-	<script src="<?=base_url()?>assets/js/plugin/chart.js/chart.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/chart.js/chart.min.js"></script>
 
 	<!-- jQuery Sparkline -->
-	<script src="<?=base_url()?>assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
 
 	<!-- Chart Circle -->
-	<script src="<?=base_url()?>assets/js/plugin/chart-circle/circles.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/chart-circle/circles.min.js"></script>
 
 	<!-- Datatables -->
-	<script src="<?=base_url()?>assets/js/plugin/datatables/datatables.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/datatables/datatables.min.js"></script>
 
 	<!-- Bootstrap Notify -->
-	<script src="<?=base_url()?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
 	<!-- jQuery Vector Maps -->
-	<script src="<?=base_url()?>assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
-	<script src="<?=base_url()?>assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
 
 	<!-- Sweet Alert -->
-	<script src="<?=base_url()?>assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 
 	<!-- Atlantis JS -->
-	<script src="<?=base_url()?>assets/js/atlantis.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/atlantis.min.js"></script>
 
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
-	<script src="<?=base_url()?>assets/js/setting-demo.js"></script>
-	<script src="<?=base_url()?>assets/js/demo.js"></script>
+	<script src="<?= base_url() ?>assets/js/setting-demo.js"></script>
+	<script src="<?= base_url() ?>assets/js/demo.js"></script>
 	<script>
 		Circles.create({
-			id:'circles-1',
-			radius:45,
-			value:60,
-			maxValue:100,
-			width:7,
+			id: 'circles-1',
+			radius: 45,
+			value: 60,
+			maxValue: 100,
+			width: 7,
 			text: 5,
-			colors:['#f1f1f1', '#FF9E27'],
-			duration:400,
-			wrpClass:'circles-wrp',
-			textClass:'circles-text',
-			styleWrapper:true,
-			styleText:true
+			colors: ['#f1f1f1', '#FF9E27'],
+			duration: 400,
+			wrpClass: 'circles-wrp',
+			textClass: 'circles-text',
+			styleWrapper: true,
+			styleText: true
 		})
 
 		Circles.create({
-			id:'circles-2',
-			radius:45,
-			value:70,
-			maxValue:100,
-			width:7,
+			id: 'circles-2',
+			radius: 45,
+			value: 70,
+			maxValue: 100,
+			width: 7,
 			text: 36,
-			colors:['#f1f1f1', '#2BB930'],
-			duration:400,
-			wrpClass:'circles-wrp',
-			textClass:'circles-text',
-			styleWrapper:true,
-			styleText:true
+			colors: ['#f1f1f1', '#2BB930'],
+			duration: 400,
+			wrpClass: 'circles-wrp',
+			textClass: 'circles-text',
+			styleWrapper: true,
+			styleText: true
 		})
 
 		Circles.create({
-			id:'circles-3',
-			radius:45,
-			value:40,
-			maxValue:100,
-			width:7,
+			id: 'circles-3',
+			radius: 45,
+			value: 40,
+			maxValue: 100,
+			width: 7,
 			text: 12,
-			colors:['#f1f1f1', '#F25961'],
-			duration:400,
-			wrpClass:'circles-wrp',
-			textClass:'circles-text',
-			styleWrapper:true,
-			styleText:true
+			colors: ['#f1f1f1', '#F25961'],
+			duration: 400,
+			wrpClass: 'circles-wrp',
+			textClass: 'circles-text',
+			styleWrapper: true,
+			styleText: true
 		})
 
 		var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
@@ -565,7 +573,7 @@
 			type: 'bar',
 			data: {
 				labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
-				datasets : [{
+				datasets: [{
 					label: "Total Income",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
@@ -583,22 +591,22 @@
 						ticks: {
 							display: false //this will remove only the label
 						},
-						gridLines : {
+						gridLines: {
 							drawBorder: false,
-							display : false
+							display: false
 						}
 					}],
-					xAxes : [ {
-						gridLines : {
+					xAxes: [{
+						gridLines: {
 							drawBorder: false,
-							display : false
+							display: false
 						}
 					}]
 				},
 			}
 		});
 
-		$('#lineChart').sparkline([105,103,123,100,95,105,115], {
+		$('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
 			type: 'line',
 			height: '70',
 			width: '100%',
@@ -607,32 +615,31 @@
 			fillColor: 'rgba(255, 165, 52, .14)'
 		});
 	</script>
-	<script >
+	<script>
 		$(document).ready(function() {
-			$('#basic-datatables').DataTable({
-			});
+			$('#basic-datatables').DataTable({});
 
-			$('#multi-filter-select').DataTable( {
+			$('#multi-filter-select').DataTable({
 				"pageLength": 5,
-				initComplete: function () {
-					this.api().columns().every( function () {
+				initComplete: function() {
+					this.api().columns().every(function() {
 						var column = this;
 						var select = $('<select class="form-control"><option value=""></option></select>')
-						.appendTo( $(column.footer()).empty() )
-						.on( 'change', function () {
-							var val = $.fn.dataTable.util.escapeRegex(
-								$(this).val()
+							.appendTo($(column.footer()).empty())
+							.on('change', function() {
+								var val = $.fn.dataTable.util.escapeRegex(
+									$(this).val()
 								);
 
-							column
-							.search( val ? '^'+val+'$' : '', true, false )
-							.draw();
-						} );
+								column
+									.search(val ? '^' + val + '$' : '', true, false)
+									.draw();
+							});
 
-						column.data().unique().sort().each( function ( d, j ) {
-							select.append( '<option value="'+d+'">'+d+'</option>' )
-						} );
-					} );
+						column.data().unique().sort().each(function(d, j) {
+							select.append('<option value="' + d + '">' + d + '</option>')
+						});
+					});
 				}
 			});
 
@@ -649,11 +656,12 @@
 					$("#addPosition").val(),
 					$("#addOffice").val(),
 					action
-					]);
+				]);
 				$('#addRowModal').modal('hide');
 
 			});
 		});
 	</script>
 </body>
+
 </html>

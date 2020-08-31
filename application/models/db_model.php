@@ -1,5 +1,5 @@
 <?php
-class Db_model extends CI_Model
+class db_model extends CI_Model
 {
     public function insert($tabel, $data)
     {

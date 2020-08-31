@@ -75,12 +75,6 @@
 													</div>
 													<div class="col-sm-6">
 														<div class="form-group">
-															<label for="pillInput">Stok</label>
-															<input type="text" class="form-control input-pill" id="stok" placeholder="0">
-														</div>
-													</div>
-													<div class="col-sm-6">
-														<div class="form-group">
 															<label for="pillInput">Distributor</label>
 															<input type="text" class="form-control input-pill" id="distributor" placeholder="">
 														</div>
@@ -223,6 +217,18 @@
 </div>
 <script>
 	function tambah() {
+		if (document.getElementById("kode").value == "") {
+			document.getElementById("kode").focus();
+		}
+		if (document.getElementById("stok").value == "") {
+			document.getElementById("stok").focus();
+		}
+		if (document.getElementById("nama").value == "") {
+			document.getElementById("nama").focus();
+		}
+		if (document.getElementById("jenis").value == "") {
+			document.getElementById("jenis").focus();
+		}
 		if (document.getElementById("kode").value == "") {
 			document.getElementById("kode").focus();
 		}

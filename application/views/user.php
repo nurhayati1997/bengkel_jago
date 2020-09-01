@@ -23,7 +23,7 @@
 							<div class="card-body">
 								<div class="user-profile text-center">
 									<div class="name">User Management</div>
-									<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#tambah_modal">
+									<button class="btn btn-primary btn-round ml-auto" onclick="tryTambah()">
 										<i class="fa fa-plus"></i>
 										Tambah
 									</button>
@@ -46,10 +46,11 @@
 													</button>
 												</div>
 												<div class="modal-body">
+													<small class="text-danger" id="pesan_error"></small>
 													<form>
 														<div class="row">
 															<div class="col-sm-6">
-																<small class="text-danger" id="pesan_error"></small>
+																<input type="hidden" id="id_user" name="id_user" />
 																<div class="form-group">
 																	<label for="pillInput">Nama</label>
 																	<input type="text" id="nama" name="nama" class="form-control input-pill" id="pillInput" placeholder="Nama">
@@ -82,6 +83,7 @@
 												</div>
 												<div class="modal-footer no-bd">
 													<button type="button" id="tambah" onClick="tambah()" class="btn btn-primary">Tambah</button>
+													<button type="button" id="edit" onClick="edit()" class="btn btn-primary">Edit</button>
 													<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
 												</div>
 											</div>
@@ -116,12 +118,23 @@
 								baris += '<td>' + data[i].id_pengguna + '</td>'
 								baris += '<td>' + data[i].nama + '</td>'
 								baris += '<td>' + data[i].rule + '</td>'
-								baris += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"><i class="fa fa-edit"></i></button><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td></tr>'
+								baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_pengguna + ')"><i class="fa fa-edit"></i></button><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td></tr>'
 							}
 							baris += '</tbody></table>'
 							$("#tabel_user").html(baris)
 						}
 					});
+				}
+
+				function tryTambah() {
+					$("#nama").val("")
+					$("#password").val("")
+					$("#verifpass").val("")
+					$("#tambah_modal").modal('show')
+					$("#tambah").show()
+					$("#edit").hide()
+					$("#nama").prop('disabled', false)
+					$('#pesan_error').html("")
 				}
 
 				function tambah() {
@@ -135,13 +148,62 @@
 						data: "target=tbl_pengguna&nama=" + nama + "&password=" + password + "&verifpass=" + verifpass + "&rule=" + rule,
 						dataType: 'json',
 						success: function(data) {
-							console.log(data)
 							if (data == "") {
 								$("#tambah_modal").modal('hide')
+								tampilkan()
+								$("#nama").val("")
+								$("#password").val("")
+								$("#verifpass").val("")
+								$('#pesan_error').html("")
 							} else {
 								$('#pesan_error').html(data)
 							}
-							tampilkan()
+
+						}
+					});
+				}
+
+				function tryEdit(id) {
+					$("#edit").show()
+					$("#id_user").val(id)
+					$("#tambah").hide()
+					$("#nama").prop('disabled', true)
+					$.ajax({
+						url: '<?= base_url() ?>user_control/get_dataByid',
+						method: 'post',
+						data: "target=tbl_pengguna&id=" + id,
+						dataType: 'json',
+						success: function(data) {
+							$("#tambah_modal").modal('show')
+							$("#nama").val(data.nama)
+							$("#rule").val(data.rule)
+						}
+					});
+				}
+
+				function edit() {
+					var password = $("#password").val()
+					var id = $("#id_user").val()
+					var verifpass = $("#verifpass").val()
+					var rule = $("#rule").val()
+					$.ajax({
+						url: '<?= base_url() ?>user_control/ubah_data',
+						method: 'post',
+						data: "target=tbl_pengguna&id=" + id + "&password=" + password + "&verifpass=" + verifpass + "&rule=" + rule,
+						dataType: 'json',
+						success: function(data) {
+							console.log(data)
+							if (data == "") {
+								$("#tambah_modal").modal('hide')
+								tampilkan()
+								$("#id_user").val("")
+								$("#nama").val("")
+								$("#password").val("")
+								$("#verifpass").val("")
+								$('#pesan_error').html("")
+							} else {
+								$('#pesan_error').html(data)
+							}
 						}
 					});
 				}

@@ -77,7 +77,6 @@
 																	<input type="password" class="form-control input-pill" id="verifpass" name="verifpass" placeholder="">
 																</div>
 															</div>
-
 														</div>
 													</form>
 												</div>
@@ -89,7 +88,32 @@
 											</div>
 										</div>
 									</div>
-
+									<div class="modal fade" id="hapus_modal" tabindex="-1" role="dialog" aria-hidden="true">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header no-bd">
+													<h5 class="modal-title">
+														<span class="fw-mediumbold">
+															Hapus</span>
+														<span class="fw-light">
+															Pengguna
+														</span>
+													</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<p id="teksHapus"></p>
+													<input type="hidden" id="id_edit" name="id_edit" />
+												</div>
+												<div class="modal-footer no-bd">
+													<button type="button" id="edit" onClick="hapus()" class="btn btn-primary">Hapus</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+												</div>
+											</div>
+										</div>
+									</div>
 									<div class="table-responsive" id="tabel_user">
 
 									</div>
@@ -118,7 +142,7 @@
 								baris += '<td>' + data[i].id_pengguna + '</td>'
 								baris += '<td>' + data[i].nama + '</td>'
 								baris += '<td>' + data[i].rule + '</td>'
-								baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_pengguna + ')"><i class="fa fa-edit"></i></button><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td></tr>'
+								baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_pengguna + ')"><i class="fa fa-edit"></i></button><button type="button" title="hapus?" class="btn btn-link btn-danger" onClick="tryHapus(' + data[i].id_pengguna + ')"><i class="fa fa-times"></i></button></div></td></tr>'
 							}
 							baris += '</tbody></table>'
 							$("#tabel_user").html(baris)
@@ -204,6 +228,36 @@
 							} else {
 								$('#pesan_error').html(data)
 							}
+						}
+					});
+				}
+
+				function tryHapus(id) {
+					$.ajax({
+						url: '<?= base_url() ?>user_control/get_dataByid',
+						method: 'post',
+						data: "target=tbl_pengguna&id=" + id,
+						dataType: 'json',
+						success: function(data) {
+							$("#id_edit").val(id)
+							$("#teksHapus").html("apakah anda yakin ingin menghapus pengguna dengan nama '" + data.nama + "' ?")
+						}
+					});
+					$("#hapus_modal").modal('show')
+				}
+
+				function hapus() {
+					var id = $("#id_edit").val()
+					$.ajax({
+						url: '<?= base_url() ?>user_control/hapus_data',
+						method: 'post',
+						data: "target=tbl_pengguna&id=" + id,
+						dataType: 'json',
+						success: function(data) {
+							$("id_edit").val("")
+							$("#teksHapus").html("")
+							tampilkan()
+							$("#hapus_modal").modal('hide')
 						}
 					});
 				}

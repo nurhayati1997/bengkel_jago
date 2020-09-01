@@ -48,16 +48,10 @@
 												<div class="modal-body">
 													<form>
 														<div class="row">
-															<div class="col-sm-12">
+															<div class="col-sm-6">
 																<div class="form-group">
 																	<label for="pillInput">Nama</label>
 																	<input type="text" class="form-control input-pill" id="pillInput" placeholder="Nama">
-																</div>
-															</div>
-															<div class="col-sm-6">
-																<div class="form-group">
-																	<label for="pillInput">Password</label>
-																	<input type="password" class="form-control input-pill" id="pillInput" placeholder="">
 																</div>
 															</div>
 															<div class="col-sm-6">
@@ -69,6 +63,19 @@
 																	</select>
 																</div>
 															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<label for="pillInput">Password</label>
+																	<input type="password" class="form-control input-pill" id="pillInput" placeholder="">
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<label for="pillInput">Konfirmasi Password</label>
+																	<input type="password" class="form-control input-pill" id="pillInput" placeholder="">
+																</div>
+															</div>
+															
 														</div>
 													</form>
 												</div>

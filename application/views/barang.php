@@ -51,7 +51,7 @@
 											<th>DISTRIBUTOR</th>
 											<th>HARGA KULAK</th>
 											<th>HARGA JUAL</th>
-											<th style="width: 10%">Action</th>
+											<th style="width: 10%">AKSI</th>
 										</tr>
 									</thead>
 								</table>
@@ -297,6 +297,8 @@
 					document.getElementById("distributor").value = "";
 					document.getElementById("satuan").value = "";
 					document.getElementById("jual").value = "";
+
+					ambil_data();
 				}
 			});
 		}

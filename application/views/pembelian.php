@@ -6,10 +6,6 @@
 								<h2 class="text-white pb-2 fw-bold">Pembelian</h2>
 						
 							</div>
-							<div class="ml-md-auto py-2 py-md-0">
-								<a href="#" class="btn btn-white btn-border btn-round mr-2">+ Penjualan</a>
-								<a href="#" class="btn btn-secondary btn-round">Piutang</a>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -100,7 +96,7 @@
 									</div>
 
 									<div class="table-responsive">
-										<table id="add-row" class="display table table-striped table-hover" >
+										<table id="multi-filter-select" class="display table table-striped table-hover" >
 											<thead>
 												<tr>
 													<th>NO</th>
@@ -109,17 +105,18 @@
 													<th>JENIS BARANG</th>
 													<th>JUMLAH PEMBELIAN</th>
 													<th>HARGA SATUAN</th>
-													<th style="width: 10%">Action</th>
 												</tr>
 											</thead>
-											<!-- <tfoot>
+											<tfoot>
 												<tr>
-													<th>Name</th>
-													<th>Position</th>
-													<th>Office</th>
-													<th>Action</th>
+												<th>NO</th>
+													<th>KODE BARANG</th>
+													<th>NAMA BARANG</th>
+													<th>JENIS BARANG</th>
+													<th>JUMLAH PEMBELIAN</th>
+													<th>HARGA SATUAN</th>
 												</tr>
-											</tfoot> -->
+											</tfoot>
 											<tbody>
 												<tr>
 													<td>1</td>
@@ -128,16 +125,6 @@
 													<td>Tiger Nixon</td>
 													<td>System Architect</td>
 													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
 												</tr>
 												<tr>
 													<td>2</td>
@@ -146,16 +133,6 @@
 													<td>Tiger Nixon</td>
 													<td>System Architect</td>
 													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
 												</tr>
 												<tr>
 													<td>3</td>
@@ -164,16 +141,6 @@
 													<td>Tiger Nixon</td>
 													<td>System Architect</td>
 													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
 												</tr>
 												<tr>
 													<td>4</td>
@@ -182,16 +149,6 @@
 													<td>Tiger Nixon</td>
 													<td>System Architect</td>
 													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
 												</tr>
 												<tr>
 													<td>5</td>
@@ -200,16 +157,6 @@
 													<td>Tiger Nixon</td>
 													<td>System Architect</td>
 													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
 												</tr>
 												<tr>
 													<td>6</td>
@@ -218,16 +165,6 @@
 													<td>Tiger Nixon</td>
 													<td>System Architect</td>
 													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
 												</tr>
 												<tr>
 													<td>7</td>
@@ -236,16 +173,6 @@
 													<td>Tiger Nixon</td>
 													<td>System Architect</td>
 													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
 												</tr>
 												<tr>
 													<td>8</td>
@@ -254,16 +181,6 @@
 													<td>Tiger Nixon</td>
 													<td>System Architect</td>
 													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
 												</tr>
 												<tr>
 													<td>9</td>
@@ -272,16 +189,6 @@
 													<td>Tiger Nixon</td>
 													<td>System Architect</td>
 													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
 												</tr>
 												<tr>
 													<td>10</td>
@@ -290,16 +197,6 @@
 													<td>Tiger Nixon</td>
 													<td>System Architect</td>
 													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
 												</tr>
 											</tbody>
 										</table>

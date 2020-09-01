@@ -134,7 +134,7 @@ input, select, textarea {
   -o-appearance: unset !important;
   -ms-appearance: unset !important; }
 
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+select, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   appearance: none !important;
   -moz-appearance: none !important;
   -webkit-appearance: none !important;
@@ -142,7 +142,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   -ms-appearance: none !important;
   margin: 0; }
 
-input:focus, select:focus, textarea:focus {
+select, input:focus, select:focus, textarea:focus {
   outline: none;
   box-shadow: none !important;
   -moz-box-shadow: none !important;
@@ -317,7 +317,7 @@ figure {
   .form-group:last-child {
     margin-bottom: 0px; }
 
-input {
+select, input {
   width: 100%;
   display: block;
   border: none;

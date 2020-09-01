@@ -93,7 +93,7 @@
 							<div class="card">
 								<div class="card-header">
 									<div class="card-head-row">
-										<div class="card-title">User Statistics</div>
+										<div class="card-title">Keuntungan</div>
 										<div class="card-tools">
 											<a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
 												<span class="btn-label">
@@ -121,7 +121,7 @@
 						<div class="col-md-4">
 							<div class="card card-primary bg-primary-gradient">
 								<div class="card-body">
-									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Top Products</h4>
+									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Barang Terlaris</h4>
 									<div class="card-body pb-0">
 									<div class="d-flex">
 										<div class="avatar">

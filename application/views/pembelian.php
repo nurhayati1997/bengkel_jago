@@ -25,7 +25,7 @@
 										<div class="name">Transaksi Pembelian</div>
 										<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
 											<i class="fa fa-plus"></i>
-											Add Row
+											Tambah Data
 										</button>
 								</div>
 								<div class="card-footer">

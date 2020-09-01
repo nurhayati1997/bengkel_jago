@@ -54,14 +54,14 @@
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="form-group">
-															<label for="pillInput">Kode Barang</label>
-															<input type="text" class="form-control input-pill" id="kode" placeholder="0">
+															<label for="kode">Kode Barang</label>
+															<input type="text" class="form-control input-pill" id="kode" placeholder="">
 														</div>
 													</div>
 													<div class="col-sm-6">
 														<div class="form-group">
-															<label for="pillSelect">Jenis Barang</label>
-															<select class="form-control input-pill" id="jenis" placeholder="Pill Input">
+															<label for="jenis">Jenis Barang</label>
+															<select class="form-control input-pill" id="jenis" placeholder="">
 																<option value="0">Sepeda Motor</option>
 																<option value="1">Mobil</option>
 															</select>
@@ -69,26 +69,26 @@
 													</div>
 													<div class="col-sm-12">
 														<div class="form-group">
-															<label for="pillInput">Nama Barang</label>
+															<label for="nama">Nama Barang</label>
 															<input type="text" class="form-control input-pill" id="nama" placeholder="barang">
 														</div>
 													</div>
 													<div class="col-sm-6">
 														<div class="form-group">
-															<label for="pillInput">Distributor</label>
+															<label for="distributor">Distributor</label>
 															<input type="text" class="form-control input-pill" id="distributor" placeholder="">
 														</div>
 													</div>
 													<div class="col-sm-6">
 														<div class="form-group">
-															<label for="pillInput">Harga Satuan</label>
-															<input type="text" class="form-control input-pill" id="satuan" placeholder="Rp">
+															<label for="satuan">Harga Satuan</label>
+															<input type="number" min="0" class="form-control input-pill" id="satuan" placeholder="Rp">
 														</div>
 													</div>
 													<div class="col-sm-6">
 														<div class="form-group">
-															<label for="pillInput">Harga jual</label>
-															<input type="text" class="form-control input-pill" id="jual" placeholder="Rp">
+															<label for="jual">Harga jual</label>
+															<input type="number" min="0" class="form-control input-pill" id="jual" placeholder="Rp">
 														</div>
 													</div>
 												</div>
@@ -217,11 +217,17 @@
 </div>
 <script>
 	function tambah() {
+		if (document.getElementById("jual").value == "") {
+			document.getElementById("jual").focus();
+		}
+		if (document.getElementById("satuan").value == "") {
+			document.getElementById("satuan").focus();
+		}
+		if (document.getElementById("distributor").value == "") {
+			document.getElementById("distributor").focus();
+		}
 		if (document.getElementById("kode").value == "") {
 			document.getElementById("kode").focus();
-		}
-		if (document.getElementById("stok").value == "") {
-			document.getElementById("stok").focus();
 		}
 		if (document.getElementById("nama").value == "") {
 			document.getElementById("nama").focus();
@@ -231,7 +237,18 @@
 		}
 		if (document.getElementById("kode").value == "") {
 			document.getElementById("kode").focus();
+		} else {
+			// console.log("sukses");
+			$.ajax({
+				type: 'POST',
+				data: 'table=' + 'tbl_barang',
+				url: '<?= base_url() ?>barang_control/tambah',
+				dataType: 'json',
+				success: function(data) {
+					console.log(data);
+				}
+			});
 		}
-		console.log(document.getElementById("kode").value);
+		// console.log(document.getElementById("kode").value);
 	}
 </script>

@@ -22,4 +22,34 @@ class client_control extends CI_Controller
 		$data = $this->db_model->get_all($tabel)->result_array();
 		echo json_encode($data);
 	}
+
+	public function tambah_data()
+	{
+		$this->form_validation->set_rules('nama', 'Nama', 'required|trim');
+		$this->form_validation->set_rules('alamat', 'Alamat', 'required|trim|min_length[5]');
+		$this->form_validation->set_rules('no_hp', 'No HP', 'required|trim|min_length[11]');
+		$this->form_validation->set_rules('no_ktp', 'No KTP', 'required|trim|min_length[16]|is_unique[tbl_client.no_ktp]');
+
+		if ($this->form_validation->run() == false) {
+			if (form_error("nama")) {
+				$error = form_error("nama");
+			} elseif (form_error("alamat")) {
+				$error = form_error("alamat");
+			} elseif (form_error("no_hp")) {
+				$error = form_error("no_hp");
+			} else {
+				$error = form_error("no_ktp");
+			}
+			echo json_encode($error);
+		} else {
+			$tabel = $this->input->post("target");
+			$nama = $this->input->post("nama");
+			$alamat = $this->input->post("alamat");
+			$no_ktp = $this->input->post("no_ktp");
+			$no_hp = $this->input->post("no_hp");
+
+			$this->db_model->insert($tabel, ["nama_client" => $nama, "alamat" => $alamat, "no_ktp" => $no_ktp, "no_telp" => $no_hp]);
+			echo json_encode("");
+		}
+	}
 }

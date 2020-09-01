@@ -23,14 +23,14 @@
 							<div class="card-body">
 								<div class="user-profile text-center">
 									<div class="name">Data Client</div>
-									<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+									<button class="btn btn-primary btn-round ml-auto" onclick="tryTambah()">
 										<i class="fa fa-plus"></i>
-										Add Row
+										Tambah Client
 									</button>
 								</div>
 								<div class="card-footer">
 									<!-- Modal -->
-									<div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+									<div class="modal fade" id="modal_tambah" tabindex="-1" role="dialog" aria-hidden="true">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
 												<div class="modal-header no-bd">
@@ -46,6 +46,7 @@
 													</button>
 												</div>
 												<div class="modal-body">
+													<small class="text-danger" id="pesan_error"></small>
 													<form>
 														<div class="row">
 															<div class="col-sm-6">
@@ -62,34 +63,35 @@
 															</div>
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<label for="pillInput">Nama Client</label>
-																	<input type="text" class="form-control input-pill" id="pillInput" placeholder="Nama">
+																	<label for="nama">Nama Client</label>
+																	<input type="text" class="form-control input-pill" id="nama" name="nama" placeholder="Nama">
 																</div>
 															</div>
 															<div class="col-sm-12">
 																<div class="form-group">
-																	<label for="pillInput">Alamat</label>
-																	<input type="text" class="form-control input-pill" id="pillInput" placeholder="Alamat">
+																	<label for="alamat">Alamat</label>
+																	<input type="text" class="form-control input-pill" id="alamat" name="alamat" placeholder="Alamat">
 																</div>
 															</div>
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<label for="pillInput">KTP</label>
-																	<input type="text" class="form-control input-pill" id="pillInput" placeholder="No KTP">
+																	<label for="no_ktp">KTP</label>
+																	<input type="text" class="form-control input-pill" id="no_ktp" name="no_ktp" placeholder="No KTP">
 																</div>
 															</div>
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<label for="pillInput">No Hp</label>
-																	<input type="text" class="form-control input-pill" id="pillInput" placeholder="No Hp">
+																	<label for="no_hp">No Hp</label>
+																	<input type="text" class="form-control input-pill" id="no_hp" name="no_hp" placeholder="No Hp">
 																</div>
 															</div>
 														</div>
 													</form>
 												</div>
 												<div class="modal-footer no-bd">
-													<button type="button" id="addRowButton" class="btn btn-primary">Add</button>
-													<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+													<button type="button" id="tambah" onClick="tambah()" class="btn btn-primary">Tambah</button>
+													<button type="button" id="edit" onClick="ubah()" class="btn btn-primary">Edit</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
 												</div>
 											</div>
 										</div>
@@ -128,6 +130,44 @@
 							}
 							tabel += '</tbody></table>'
 							$("#tempat_tabel").html(tabel)
+						}
+					});
+				}
+
+
+				function tryTambah() {
+					$("#nama").val("")
+					$("#alamat").val("")
+					$("#no_ktp").val("")
+					$("#no_hp").val("")
+					$("#modal_tambah").modal('show')
+					$("#tambah").show()
+					$("#edit").hide()
+					$('#pesan_error').html("")
+				}
+
+				function tambah() {
+					var nama = $("#nama").val()
+					var alamat = $("#alamat").val()
+					var no_ktp = $("#no_ktp").val()
+					var no_hp = $("#no_hp").val()
+					$.ajax({
+						url: '<?= base_url() ?>client_control/tambah_data',
+						method: 'post',
+						data: "target=tbl_client&nama=" + nama + "&alamat=" + alamat + "&no_ktp=" + no_ktp + "&no_hp=" + no_hp,
+						dataType: 'json',
+						success: function(data) {
+							if (data == "") {
+								$("#modal_tambah").modal('hide')
+								tampilkan()
+								$("#nama").val("")
+								$("#alamat").val("")
+								$("#no_ktp").val("")
+								$('#no_hp').val("")
+							} else {
+								$('#pesan_error').html(data)
+							}
+
 						}
 					});
 				}

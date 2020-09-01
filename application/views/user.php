@@ -25,7 +25,7 @@
 									<div class="name">User Management</div>
 									<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
 										<i class="fa fa-plus"></i>
-										Add Row
+										Tambah
 									</button>
 								</div>
 								<div class="card-footer">
@@ -36,9 +36,9 @@
 												<div class="modal-header no-bd">
 													<h5 class="modal-title">
 														<span class="fw-mediumbold">
-															Identitas Client</span>
+															Identitas</span>
 														<span class="fw-light">
-															Pembelian
+															User
 														</span>
 													</h5>
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -48,48 +48,33 @@
 												<div class="modal-body">
 													<form>
 														<div class="row">
-															<div class="col-sm-6">
+															<div class="col-sm-12">
 																<div class="form-group">
-																	<label for="pillSelect">Kode User</label>
-																	<select class="form-control input-pill" id="pillSelect" placeholder="Pill Input">
-																		<option>001</option>
-																		<option>002</option>
-																		<option>003</option>
-																		<option>004</option>
-																		<option>005</option>
-																	</select>
-																</div>
-															</div>
-															<div class="col-sm-6">
-																<div class="form-group">
-																	<label for="pillInput">Nama User</label>
+																	<label for="pillInput">Nama</label>
 																	<input type="text" class="form-control input-pill" id="pillInput" placeholder="Nama">
 																</div>
 															</div>
-															<div class="col-sm-12">
+															<div class="col-sm-6">
 																<div class="form-group">
-																	<label for="pillInput">Alamat</label>
-																	<input type="text" class="form-control input-pill" id="pillInput" placeholder="Alamat">
+																	<label for="pillInput">Password</label>
+																	<input type="password" class="form-control input-pill" id="pillInput" placeholder="">
 																</div>
 															</div>
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<label for="pillInput">KTP</label>
-																	<input type="text" class="form-control input-pill" id="pillInput" placeholder="No KTP">
-																</div>
-															</div>
-															<div class="col-sm-6">
-																<div class="form-group">
-																	<label for="pillInput">No Hp</label>
-																	<input type="text" class="form-control input-pill" id="pillInput" placeholder="No Hp">
+																	<label for="pillSelect">Rule</label>
+																	<select class="form-control input-pill" id="pillSelect" placeholder="Pill Input">
+																		<option>1</option>
+																		<option>2</option>
+																	</select>
 																</div>
 															</div>
 														</div>
 													</form>
 												</div>
 												<div class="modal-footer no-bd">
-													<button type="button" id="addRowButton" class="btn btn-primary">Add</button>
-													<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+													<button type="button" id="addRowButton" class="btn btn-primary">Tambah</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
 												</div>
 											</div>
 										</div>

@@ -23,14 +23,14 @@
 							<div class="card-body">
 								<div class="user-profile text-center">
 									<div class="name">User Management</div>
-									<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+									<button class="btn btn-primary btn-round ml-auto" onclick="tryTambah()">
 										<i class="fa fa-plus"></i>
 										Tambah
 									</button>
 								</div>
 								<div class="card-footer">
 									<!-- Modal -->
-									<div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+									<div class="modal fade" id="tambah_modal" tabindex="-1" role="dialog" aria-hidden="true">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
 												<div class="modal-header no-bd">
@@ -46,18 +46,20 @@
 													</button>
 												</div>
 												<div class="modal-body">
+													<small class="text-danger" id="pesan_error"></small>
 													<form>
 														<div class="row">
 															<div class="col-sm-6">
+																<input type="hidden" id="id_user" name="id_user" />
 																<div class="form-group">
 																	<label for="pillInput">Nama</label>
-																	<input type="text" class="form-control input-pill" id="pillInput" placeholder="Nama">
+																	<input type="text" id="nama" name="nama" class="form-control input-pill" id="pillInput" placeholder="Nama">
 																</div>
 															</div>
 															<div class="col-sm-6">
 																<div class="form-group">
 																	<label for="pillSelect">Rule</label>
-																	<select class="form-control input-pill" id="pillSelect" placeholder="Pill Input">
+																	<select name="rule" id="rule" class="form-control input-pill" id="pillSelect" placeholder="Pill Input">
 																		<option>1</option>
 																		<option>2</option>
 																	</select>
@@ -66,21 +68,22 @@
 															<div class="col-sm-6">
 																<div class="form-group">
 																	<label for="pillInput">Password</label>
-																	<input type="password" class="form-control input-pill" id="pillInput" placeholder="">
+																	<input type="password" name="password" class="form-control input-pill" id="password" placeholder="">
 																</div>
 															</div>
 															<div class="col-sm-6">
 																<div class="form-group">
 																	<label for="pillInput">Konfirmasi Password</label>
-																	<input type="password" class="form-control input-pill" id="pillInput" placeholder="">
+																	<input type="password" class="form-control input-pill" id="verifpass" name="verifpass" placeholder="">
 																</div>
 															</div>
-															
+
 														</div>
 													</form>
 												</div>
 												<div class="modal-footer no-bd">
-													<button type="button" id="addRowButton" class="btn btn-primary">Tambah</button>
+													<button type="button" id="tambah" onClick="tambah()" class="btn btn-primary">Tambah</button>
+													<button type="button" id="edit" onClick="edit()" class="btn btn-primary">Edit</button>
 													<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
 												</div>
 											</div>
@@ -99,23 +102,109 @@
 				</div>
 			</div>
 			<script>
-				var baris = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>KODE USER</th><th>NAMA USER</th><th>RULE</th><th style="width: 10%">Action</th></tr></thead><tbody>'
-				$.ajax({
-					url: '<?= base_url() ?>user_control/get_data',
-					method: 'post',
-					data: "target=tbl_pengguna",
-					dataType: 'json',
-					success: function(data) {
-						for (let i = 0; i < data.length; i++) {
-							baris += '<tr>'
-							baris += '<td>' + (i + 1) + '</td>'
-							baris += '<td>' + data[i].id_pengguna + '</td>'
-							baris += '<td>' + data[i].nama + '</td>'
-							baris += '<td>' + data[i].rule + '</td>'
-							baris += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"><i class="fa fa-edit"></i></button><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td></tr>'
+				tampilkan()
+
+				function tampilkan() {
+					var baris = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>KODE USER</th><th>NAMA USER</th><th>RULE</th><th style="width: 10%">Action</th></tr></thead><tbody>'
+					$.ajax({
+						url: '<?= base_url() ?>user_control/get_data',
+						method: 'post',
+						data: "target=tbl_pengguna",
+						dataType: 'json',
+						success: function(data) {
+							for (let i = 0; i < data.length; i++) {
+								baris += '<tr>'
+								baris += '<td>' + (i + 1) + '</td>'
+								baris += '<td>' + data[i].id_pengguna + '</td>'
+								baris += '<td>' + data[i].nama + '</td>'
+								baris += '<td>' + data[i].rule + '</td>'
+								baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_pengguna + ')"><i class="fa fa-edit"></i></button><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td></tr>'
+							}
+							baris += '</tbody></table>'
+							$("#tabel_user").html(baris)
 						}
-						baris += '</tbody></table>'
-						$("#tabel_user").html(baris)
-					}
-				});
+					});
+				}
+
+				function tryTambah() {
+					$("#nama").val("")
+					$("#password").val("")
+					$("#verifpass").val("")
+					$("#tambah_modal").modal('show')
+					$("#tambah").show()
+					$("#edit").hide()
+					$("#nama").prop('disabled', false)
+					$('#pesan_error').html("")
+				}
+
+				function tambah() {
+					var nama = $("#nama").val()
+					var password = $("#password").val()
+					var verifpass = $("#verifpass").val()
+					var rule = $("#rule").val()
+					$.ajax({
+						url: '<?= base_url() ?>user_control/tambah_data',
+						method: 'post',
+						data: "target=tbl_pengguna&nama=" + nama + "&password=" + password + "&verifpass=" + verifpass + "&rule=" + rule,
+						dataType: 'json',
+						success: function(data) {
+							if (data == "") {
+								$("#tambah_modal").modal('hide')
+								tampilkan()
+								$("#nama").val("")
+								$("#password").val("")
+								$("#verifpass").val("")
+								$('#pesan_error').html("")
+							} else {
+								$('#pesan_error').html(data)
+							}
+
+						}
+					});
+				}
+
+				function tryEdit(id) {
+					$("#edit").show()
+					$("#id_user").val(id)
+					$("#tambah").hide()
+					$("#nama").prop('disabled', true)
+					$.ajax({
+						url: '<?= base_url() ?>user_control/get_dataByid',
+						method: 'post',
+						data: "target=tbl_pengguna&id=" + id,
+						dataType: 'json',
+						success: function(data) {
+							$("#tambah_modal").modal('show')
+							$("#nama").val(data.nama)
+							$("#rule").val(data.rule)
+						}
+					});
+				}
+
+				function edit() {
+					var password = $("#password").val()
+					var id = $("#id_user").val()
+					var verifpass = $("#verifpass").val()
+					var rule = $("#rule").val()
+					$.ajax({
+						url: '<?= base_url() ?>user_control/ubah_data',
+						method: 'post',
+						data: "target=tbl_pengguna&id=" + id + "&password=" + password + "&verifpass=" + verifpass + "&rule=" + rule,
+						dataType: 'json',
+						success: function(data) {
+							console.log(data)
+							if (data == "") {
+								$("#tambah_modal").modal('hide')
+								tampilkan()
+								$("#id_user").val("")
+								$("#nama").val("")
+								$("#password").val("")
+								$("#verifpass").val("")
+								$('#pesan_error').html("")
+							} else {
+								$('#pesan_error').html(data)
+							}
+						}
+					});
+				}
 			</script>

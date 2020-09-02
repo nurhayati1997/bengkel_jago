@@ -515,6 +515,10 @@ label.valid {
   margin-right: 20px;
   margin-top: 10px; }
 
+.error p{
+  font-size: 12px;color:red;
+}
+
 @media screen and (max-width: 1200px) {
   .container {
     width: calc( 100% - 30px);

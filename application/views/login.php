@@ -28,17 +28,22 @@
 
                     <div class="signin-form">
                         <h2 class="form-title">Login</h2>
+                        <?php if ($this->session->flashdata('gagal_login')) { ?><div class="error">
+                                <p><?= $this->session->flashdata('gagal_login'); ?></p>
+                            </div>
+                        <?php } ?>
                         <form method="POST" class="register-form" id="login-form">
                             <div class="form-group">
-                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <label for="nama"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <select name="nama" class="form-control" id="nama">
                                 </select>
                                 <small class="text-danger"><?= form_error('nama'); ?></small>
                             </div>
                             <div class="form-group">
-                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="your_pass" id="your_pass" placeholder="Password" />
+                                <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="password" id="password" placeholder="Password" />
                             </div>
+                            <div class="error"><?= form_error('password'); ?></div>
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
                                 <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>

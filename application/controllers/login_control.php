@@ -34,25 +34,26 @@ class login_control extends CI_Controller
 	private function _login()
 	{
 		$data['title'] = "Login";
-		$idKecamatan = $this->input->post("idKecamatan");
+		$nama = $this->input->post("nama");
 		$password = $this->input->post("password");
-		$user = $this->db_model->get_where("tbl_Kecamatan", ["KODE_KECAMATAN" => $idKecamatan])->row_array();
+		$user = $this->db_model->get_where("tbl_pengguna", ["id_pengguna" => $nama])->row_array();
 
 		if ($user) {
 			if (password_verify($password, $user['password'])) {
 				$data = [
-					'kode' => $user['KODE_KECAMATAN']
+					'id_pengguna' => $user['id_pengguna'],
+					'nama' => $user['nama']
 				];
 				$this->session->set_userdata($data);
 
-				redirect('dashboard');
+				redirect('dashboard_control');
 			} else {
 				$this->session->set_flashdata('gagal_login', 'Maaf, Password anda salah :(');
-				redirect('Auth', $data);
+				$this->load->view('login', $data);
 			}
 		} else {
-			$this->session->set_flashdata('gagal_login', 'Maaf, Kecamatan tersebut belum terdaftar :(');
-			redirect('Auth', $data);
+			$this->session->set_flashdata('gagal_login', 'Silahkan Pilih pengguna dulu ya :)');
+			$this->load->view('login', $data);
 		}
 	}
 

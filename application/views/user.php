@@ -105,7 +105,7 @@
 												</div>
 												<div class="modal-body">
 													<p id="teksHapus"></p>
-													<input type="hidden" id="id_edit" name="id_edit" />
+													<input type="hidden" id="id_hapus" name="id_hapus" />
 												</div>
 												<div class="modal-footer no-bd">
 													<button type="button" id="edit" onClick="hapus()" class="btn btn-primary">Hapus</button>
@@ -216,7 +216,6 @@
 						data: "target=tbl_pengguna&id=" + id + "&password=" + password + "&verifpass=" + verifpass + "&rule=" + rule,
 						dataType: 'json',
 						success: function(data) {
-							console.log(data)
 							if (data == "") {
 								$("#tambah_modal").modal('hide')
 								tampilkan()
@@ -239,7 +238,7 @@
 						data: "target=tbl_pengguna&id=" + id,
 						dataType: 'json',
 						success: function(data) {
-							$("#id_edit").val(id)
+							$("#id_hapus").val(id)
 							$("#teksHapus").html("apakah anda yakin ingin menghapus pengguna dengan nama '" + data.nama + "' ?")
 						}
 					});
@@ -247,14 +246,14 @@
 				}
 
 				function hapus() {
-					var id = $("#id_edit").val()
+					var id = $("#id_hapus").val()
 					$.ajax({
 						url: '<?= base_url() ?>user_control/hapus_data',
 						method: 'post',
 						data: "target=tbl_pengguna&id=" + id,
 						dataType: 'json',
 						success: function(data) {
-							$("id_edit").val("")
+							$("#id_hapus").val("")
 							$("#teksHapus").html("")
 							tampilkan()
 							$("#hapus_modal").modal('hide')

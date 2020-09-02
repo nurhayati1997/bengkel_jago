@@ -97,7 +97,32 @@
 											</div>
 										</div>
 									</div>
-
+									<div class="modal fade" id="hapus_modal" tabindex="-1" role="dialog" aria-hidden="true">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header no-bd">
+													<h5 class="modal-title">
+														<span class="fw-mediumbold">
+															Hapus</span>
+														<span class="fw-light">
+															Client
+														</span>
+													</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<p id="teksHapus"></p>
+													<input type="hidden" id="id_hapus" name="id_hapus" />
+												</div>
+												<div class="modal-footer no-bd">
+													<button type="button" id="edit" onClick="hapus()" class="btn btn-primary">Hapus</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+												</div>
+											</div>
+										</div>
+									</div>
 									<div class="table-responsive" id="tempat_tabel">
 									</div>
 								</div>
@@ -127,7 +152,7 @@
 								tabel += '<td>' + data[i].alamat + '</td>'
 								tabel += '<td>' + data[i].no_ktp + '</td>'
 								tabel += '<td>' + data[i].no_telp + '</td>'
-								tabel += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="Edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_client + ')"><i class="fa fa-edit"></i></button><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td></tr>'
+								tabel += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="Edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_client + ')"><i class="fa fa-edit"></i></button><button type="button" title="hapus ?" class="btn btn-link btn-danger"><i class="fa fa-times" onClick="tryHapus(' + data[i].id_client + ')"></i></button></div></td></tr>'
 							}
 							tabel += '</tbody></table>'
 							$("#tempat_tabel").html(tabel)
@@ -217,6 +242,36 @@
 							} else {
 								$('#pesan_error').html(data)
 							}
+						}
+					});
+				}
+
+				function tryHapus(id) {
+					$.ajax({
+						url: '<?= base_url() ?>client_control/get_dataByid',
+						method: 'post',
+						data: "target=tbl_client&id=" + id,
+						dataType: 'json',
+						success: function(data) {
+							$("#id_hapus").val(id)
+							$("#teksHapus").html("apakah anda yakin ingin menghapus client dengan nama '" + data.nama_client + "' ?")
+						}
+					});
+					$("#hapus_modal").modal('show')
+				}
+
+				function hapus() {
+					var id = $("#id_hapus").val()
+					$.ajax({
+						url: '<?= base_url() ?>client_control/hapus_data',
+						method: 'post',
+						data: "target=tbl_client&id=" + id,
+						dataType: 'json',
+						success: function(data) {
+							$("#id_hapus").val("")
+							$("#teksHapus").html("")
+							tampilkan()
+							$("#hapus_modal").modal('hide')
 						}
 					});
 				}

@@ -89,4 +89,12 @@ class client_control extends CI_Controller
 			echo json_encode("");
 		}
 	}
+
+	public function hapus_data()
+	{
+		$tabel = $this->input->post("target");
+		$id = $this->input->post("id");
+		$this->db_model->delete($tabel, ["id_client" => $id]);
+		echo json_encode("");
+	}
 }

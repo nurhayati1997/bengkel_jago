@@ -48,6 +48,7 @@
 												<div class="modal-body">
 													<small class="text-danger" id="pesan_error"></small>
 													<form>
+														<input type="hidden" id="id_client" name="id_client" />
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
@@ -90,7 +91,7 @@
 												</div>
 												<div class="modal-footer no-bd">
 													<button type="button" id="tambah" onClick="tambah()" class="btn btn-primary">Tambah</button>
-													<button type="button" id="edit" onClick="ubah()" class="btn btn-primary">Edit</button>
+													<button type="button" id="edit" onClick="edit()" class="btn btn-primary">Edit</button>
 													<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
 												</div>
 											</div>
@@ -126,7 +127,7 @@
 								tabel += '<td>' + data[i].alamat + '</td>'
 								tabel += '<td>' + data[i].no_ktp + '</td>'
 								tabel += '<td>' + data[i].no_telp + '</td>'
-								tabel += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"><i class="fa fa-edit"></i></button><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td></tr>'
+								tabel += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="Edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_client + ')"><i class="fa fa-edit"></i></button><button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button></div></td></tr>'
 							}
 							tabel += '</tbody></table>'
 							$("#tempat_tabel").html(tabel)
@@ -168,6 +169,54 @@
 								$('#pesan_error').html(data)
 							}
 
+						}
+					});
+				}
+
+				function tryEdit(id) {
+					$("#edit").show()
+					$("#id_client").val(id)
+					$("#tambah").hide()
+					$("#no_ktp").prop('disabled', true)
+					$.ajax({
+						url: '<?= base_url() ?>client_control/get_dataByid',
+						method: 'post',
+						data: "target=tbl_client&id=" + id,
+						dataType: 'json',
+						success: function(data) {
+							$('#pesan_error').html("")
+							$("#nama").val(data.nama_client)
+							$("#alamat").val(data.alamat)
+							$("#no_ktp").val(data.no_ktp)
+							$("#no_hp").val(data.no_telp)
+							$("#modal_tambah").modal('show')
+						}
+					});
+				}
+
+				function edit() {
+					var id = $("#id_client").val()
+					var nama = $("#nama").val()
+					var alamat = $("#alamat").val()
+					var no_hp = $("#no_hp").val()
+					$.ajax({
+						url: '<?= base_url() ?>client_control/ubah_data',
+						method: 'post',
+						data: "target=tbl_client&id=" + id + "&nama=" + nama + "&alamat=" + alamat + "&no_hp=" + no_hp,
+						dataType: 'json',
+						success: function(data) {
+							if (data == "") {
+								$("#modal_tambah").modal('hide')
+								tampilkan()
+								$("#id_user").val("")
+								$("#nama").val("")
+								$("#alamat").val("")
+								$("#no_ktp").val("")
+								$("#no_hp").val("")
+								$('#pesan_error').html("")
+							} else {
+								$('#pesan_error').html(data)
+							}
 						}
 					});
 				}

@@ -67,6 +67,42 @@
 				<!-- <div class="row">
 					</div> -->
 			</div>
+			<div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header no-bd">
+							<h5 class="modal-title">
+								<span class="fw-mediumbold">
+									Edit</span>
+								<span class="fw-light">
+									Pagu Barang
+								</span>
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<small class="text-danger" id="pesan_error"></small>
+							<form>
+								<input type="hidden" id="id_barang" name="id_barang" />
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label for="pagu">Jumla Pagu</label>
+											<input type="number" class="form-control input-pill" id="pagu" name="pagu" placeholder="Jumlah Pagu">
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer no-bd">
+							<button type="button" id="edit" onClick="edit()" class="btn btn-primary">Edit</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script>
 			tampilkan()
@@ -94,7 +130,7 @@
 								stokWarning += '<tr><td>' + noWarning + '</td>' + baris + '</tr>'
 								noWarning += 1
 							}
-							stokPagu += '<tr><td>' + (i + 1) + '</td>' + baris + ' <td> ' + data[i].pagu + ' </td><td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_pengguna + ')"><i class="fa fa-edit"></i > </button></div> </td></tr > '
+							stokPagu += '<tr><td>' + (i + 1) + '</td>' + baris + ' <td> ' + data[i].pagu + ' </td><td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_barang + ')"><i class="fa fa-edit"></i > </button></div> </td></tr > '
 						}
 						$("#tempatTabelWarning").html(stokWarning + '</tbody></table>')
 						$("#tempatTabelAman").html(stokAman + '</tbody></table>')
@@ -102,4 +138,80 @@
 					}
 				});
 			}
+
+			function tryEdit(id) {
+				$("#id_barang").val(id)
+				$.ajax({
+					url: '<?= base_url() ?>stok_control/get_dataByid',
+					method: 'post',
+					data: "target=tbl_barang&id=" + id,
+					dataType: 'json',
+					success: function(data) {
+						$('#pesan_error').html("")
+						$("#pagu").val(data.pagu)
+						$("#modal_edit").modal('show')
+					}
+				});
+			}
+
+			function edit() {
+				var id = $("#id_barang").val()
+				var pagu = $("#pagu").val()
+				$.ajax({
+					url: '<?= base_url() ?>stok_control/ubah_data',
+					method: 'post',
+					data: "target=tbl_barang&id=" + id + "&pagu=" + pagu,
+					dataType: 'json',
+					success: function(data) {
+						if (data == "") {
+							tampilkan()
+							$("#id_barang").val("")
+							$("#pagu").val("")
+							$('#pesan_error').html("")
+							$("#modal_edit").modal('hide')
+						} else {
+							$('#pesan_error').html(data)
+						}
+					}
+				});
+			}
+
+			$(document).ready(function() {
+				$('#basic-datatables').DataTable({});
+
+				$('#multi-filter-select').DataTable({
+					"pageLength": 5,
+					initComplete: function() {
+						this.api().columns().every(function() {
+							var column = this;
+							var select = $('<select class="form-control"><option value=""></option></select>')
+								.appendTo($(column.footer()).empty())
+								.on('change', function() {
+									var val = $.fn.dataTable.util.escapeRegex(
+										$(this).val()
+									);
+
+									column
+										.search(val ? '^' + val + '$' : '', true, false)
+										.draw();
+								});
+
+							column.data().unique().sort().each(function(d, j) {
+								select.append('<option value="' + d + '">' + d + '</option>')
+							});
+						});
+					}
+				});
+
+				$('#tabelWarning').DataTable({
+					"pageLength": 5,
+				});
+				$('#tabelAman').DataTable({
+					"pageLength": 5,
+				});
+				$('#tabelPagu').DataTable({
+					"pageLength": 5,
+				});
+
+			});
 		</script>

@@ -33,11 +33,11 @@
 								<table id="tabel_pembelian" class="display table table-striped table-hover">
 									<thead>
 										<tr>
+											<th>TANGGAL</th>
 											<th>KODE BARANG</th>
 											<th>NAMA BARANG</th>
-											<th>JENIS BARANG</th>
-											<th>JUMLAH PEMBELIAN</th>
 											<th>HARGA KULAK</th>
+											<th>JUMLAH PEMBELIAN</th>
 											<th>AKSI</th>
 										</tr>
 									</thead>
@@ -52,7 +52,7 @@
 		</div>
 	</div>
 </div>
-<!-- Modal -->
+<!-- Tambah Modal -->
 <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -94,8 +94,8 @@
 						</div>
 						<div class="col-sm-12">
 							<div class="form-group">
-								<label for="harga">Harga satuan</label>
-								<input oninput="jumlah_barang()" onchange="jumlah_barang()" type="text" class="form-control input-pill" id="harga" placeholder="">
+								<label for="harga">Harga</label>
+								<input oninput="jumlah_barang()" onchange="jumlah_barang()" type="text" class="form-control input-pill" id="harga" placeholder="" readonly>
 							</div>
 						</div>
 						<div class="col-sm-6" style="display: none;">
@@ -114,6 +114,70 @@
 		</div>
 	</div>
 </div>
+
+<!-- Ubah Modal -->
+<div class="modal fade" id="ubahModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header no-bd">
+				<h5 class="modal-title">
+					<span class="fw-mediumbold">
+						Transaksi</span>
+					<span class="fw-light">
+						Pembelian
+					</span>
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="ubah_kode">Kode barang</label>
+								<input oninput="ubah_tampil_data_kode()" onchange="ubah_tampil_data_kode()" type="text" class="form-control input-pill" id="ubah_kode" autocomplete="TRUE" list="kodes" placeholder="">
+								<datalist onchange="ubah_tampil_data_kode()" id="kodes">
+
+								</datalist>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="ubah_jumlah">Jumlah Pembelian</label>
+								<input oninput="ubah_jumlah_barang()" onchange="ubah_jumlah_barang()" type="number" min="0" class="form-control input-pill" id="ubah_jumlah" placeholder="">
+							</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label for="nama">Nama Barang</label>
+								<input type="text" class="form-control input-pill" id="ubah_nama" readonly>
+							</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label for="ubah_harga">Harga satuan</label>
+								<input oninput="ubah_jumlah_barang()" onchange="ubah_jumlah_barang()" type="text" class="form-control input-pill" id="ubah_harga" placeholder="" readonly>
+							</div>
+						</div>
+						<div class="col-sm-6" style="display: none;">
+							<div class="form-group">
+								<label for="ubah_total">Total</label>
+								<input type="text" class="form-control input-pill" id="ubah_total" placeholder="" readonly>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer no-bd" id="ubahModal_tombol">
+				<!-- <button type="button" onclick="ubah()" class="btn btn-primary">Ubah</button> -->
+				<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 	var barang = [];
 	var id_selected = '';
@@ -153,12 +217,37 @@
 		}
 	}
 
+	function ubah_tampil_data_kode() {
+		// alert(document.getElementById('kode').value);
+		for (var i = 0; i < barang.length; i++) {
+			if (document.getElementById('ubah_kode').value == barang[i].kode_barang) {
+				document.getElementById('ubah_nama').value = barang[i].nama_barang;
+				document.getElementById('ubah_harga').value = barang[i].harga_jual;
+
+				id_selected = barang[i].id_barang;
+				stok = barang[i].stok_barang;
+
+				// console.log(id_selected);
+				jumlah_barang();
+			}
+		}
+	}
+
 	function jumlah_barang() {
 		// alert("yeye");
 		if (document.getElementById('jumlah').value != "" && document.getElementById('harga').value != "") {
 			document.getElementById('total').value = parseInt(document.getElementById('jumlah').value) * parseInt(document.getElementById('harga').value);
 		} else {
 			document.getElementById('total').value = "";
+		}
+	}
+
+	function ubah_jumlah_barang() {
+		// alert("yeye");
+		if (document.getElementById('ubah_jumlah').value != "" && document.getElementById('ubah_harga').value != "") {
+			document.getElementById('ubah_total').value = parseInt(document.getElementById('ubah_jumlah').value) * parseInt(document.getElementById('ubah_harga').value);
+		} else {
+			document.getElementById('ubah_total').value = "";
 		}
 	}
 
@@ -191,38 +280,63 @@
 		}
 	}
 
+	function ubah(id) {
+		if (document.getElementById('ubah_jumlah').value == '') {
+			document.getElementById('ubah_jumlah').focus();
+		}
+		if (document.getElementById('ubah_harga').value == "") {
+			document.getElementById('ubah_harga').focus();
+		}
+		if (document.getElementById('ubah_kode').value == "") {
+			document.getElementById('ubah_kode').focus();
+		}
+		if (document.getElementById('ubah_kode').value != "" && document.getElementById('ubah_harga').value != "" && document.getElementById('ubah_jumlah').value != '') {
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url() ?>pembelian_control/ubah',
+				data: 'id=' + id_selected + '&jumlah=' + document.getElementById('ubah_jumlah').value + '&harga=' + document.getElementById('ubah_harga').value +
+					'&stok=' + stok,
+				dataType: 'json',
+				success: function(data) {
+					document.getElementById('ubah_jumlah').value = "";
+					document.getElementById('ubah_harga').value = "";
+					document.getElementById('ubah_kode').value = "";
+					document.getElementById('ubah_nama').value = "";
+
+					$('#ubahModal').modal('hide');
+				}
+			});
+		}
+	}
+
 	function ambil_data() {
 		$('#tabel_pembelian').DataTable({
 			destroy: true,
 			"ajax": {
-				"url": "<?php echo site_url("barang_control/tampil") ?>",
+				"url": "<?php echo site_url("pembelian_control/tampil") ?>",
 				"dataSrc": ""
 			},
 			"columns": [{
-					"data": "kode_barang"
+					"data": "tgl_pembelian",
+					"render": function(data, type, row) {
+						var tanggal = data.split(" ");
+						return tanggal[0]
+					}
 				},
 				{
-					"data": "jenis",
-					"render": function(data, type, row) {
-						if (data == 0) {
-							return "Sepeda Motor"
-						} else {
-							return "Mobil"
-						}
-
-					}
+					"data": "kode_barang"
 				},
 				{
 					"data": "nama_barang"
 				},
 				{
-					"data": "stok_barang"
+					"data": "harga_kulak"
 				},
 				{
-					"data": "distributor"
+					"data": "jumlah_pembelian"
 				},
 				{
-					"data": "id_barang",
+					"data": "id_pembelian",
 					"render": function(data, type, row) {
 						// Tampilkan kolom aksi
 						var html = '<div class="form-button-action">' +
@@ -238,6 +352,31 @@
 
 				}
 			]
+		});
+	}
+
+	function ubah_list(id) {
+		$.ajax({
+			type: 'POST',
+			data: 'id=' + id,
+			url: '<?= base_url() ?>pembelian_control/ubah_list',
+			dataType: 'json',
+			success: function(data) {
+				// console.log(data);
+				for (var i = 0; i < data.length; i++) {
+					document.getElementById('jumlah').value = "";
+
+					document.getElementById("ubah_kode").value = data[i].kode_barang;
+					document.getElementById("ubah_nama").value = data[i].nama_barang;
+					document.getElementById("ubah_harga").value = data[i].harga_kulak;
+					document.getElementById("ubah_jumlah").value = data[i].jumlah_pembelian;
+
+					var html = '<button onclick="ubah(' + data[i].id_penjualan + ')" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
+					$("#ubahModal_tombol").html(html);
+
+					$('#ubahModal').modal('show');
+				}
+			}
 		});
 	}
 </script>

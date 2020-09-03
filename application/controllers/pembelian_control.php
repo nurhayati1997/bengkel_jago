@@ -43,4 +43,14 @@ class pembelian_control extends CI_Controller
 
 		echo json_encode('');
 	}
+
+	function ubah_list()
+	{
+		echo json_encode($this->db_model->get_where('view_pembelian', ["id_pembelian" => $this->input->post('id', TRUE)])->result());
+	}
+
+	public function tampil()
+	{
+		echo json_encode($this->db_model->get_all("view_pembelian")->result());
+	}
 }

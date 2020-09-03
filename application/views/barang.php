@@ -40,6 +40,18 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
+							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="edit-alert" role="alert">
+								<strong>Data Berhasil di Ubah</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="delete-alert" role="alert">
+								<strong>Data Berhasil di Hapus</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 							<div class="table-responsive">
 								<table id="myTable" class="display table table-striped table-hover">
 									<thead>
@@ -138,7 +150,7 @@
 	</div>
 </div>
 
-<!--Tambah Modal -->
+<!--Ubah Modal -->
 <div class="modal fade" id="ubahModal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -251,6 +263,18 @@
 		$("#tambah_button").click(function showAlert() {
 			$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
 				$("#success-alert").slideUp(500);
+			});
+		});
+
+		$("#ubah_button").click(function showAlert() {
+			$("#edit-alert").fadeTo(2000, 500).slideUp(500, function() {
+				$("#edit-alert").slideUp(500);
+			});
+		});
+
+		$("#hapus_button").click(function showAlert() {
+			$("#delete-alert").fadeTo(2000, 500).slideUp(500, function() {
+				$("#delete-alert").slideUp(500);
 			});
 		});
 
@@ -378,7 +402,7 @@
 					document.getElementById("ubah_satuan").value = data[i].harga_kulak;
 					document.getElementById("ubah_jual").value = data[i].harga_jual;
 					document.getElementById("ubah_stok").value = data[i].stok_barang;
-					var html = '<button onclick="ubah(' + id + ')" id="tambah_button" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
+					var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
 					$("#ubahModal_tombol").html(html);
 
 					$('#ubahModal').modal('show');
@@ -406,7 +430,7 @@
 	}
 
 	function hapus_list(id) {
-		var html = '<button onclick="hapus(' + id + ')" id="tambah_button" type="button" data-dismiss="modal" class="btn btn-danger">Hapus</button>';
+		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" data-dismiss="modal" class="btn btn-danger">Hapus</button>';
 		$("#hapusModal_tombol").html(html);
 		$('#hapusModal').modal('show');
 	}

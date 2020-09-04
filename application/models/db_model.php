@@ -30,15 +30,26 @@ class Db_model extends CI_Model
     {
         $this->db->delete($tabel, $where);
     }
-    function getDataAgregat($tgl, $col)
+    function getWarningStock($tabel)
     {
-        $query = $this->db->where($col, $tgl)->get('vwpasien');
-
-        return $query->result();
+        $this->db->order_by('stok_barang ASC');
+        $this->db->limit(10, 0);
+        return $this->db->get($tabel);
     }
-    function getDataStatus($col, $table)
+
+    function getTerlaris()
     {
-        $query = $this->db->select($col)->get($table)->result();
-        return $query;
+        $this->db->select('*, SUM(jumlah_penjualan)');
+        $this->db->group_by('id_barang');
+        $this->db->order_by('jumlah_penjualan DESC');
+        return $this->db->get('tbl_penjualan', 10);
+    }
+
+    function getJumlahTerjual()
+    {
+        $this->db->select('SUM(jumlah_penjualan)');
+        $this->db->where('tgl_penjualan', date("Y/m/d"));
+        $this->db->group_by('tgl_penjualan');
+        return $this->db->get('tbl_penjualan');
     }
 }

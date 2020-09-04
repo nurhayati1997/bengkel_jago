@@ -4,7 +4,7 @@
 						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 							<div>
 								<h2 class="text-white pb-2 fw-bold">Dashboard</h2>
-						
+
 							</div>
 						</div>
 					</div>
@@ -23,7 +23,7 @@
 										<div class="col-7 col-stats">
 											<div class="numbers">
 												<p class="card-category">Jumlah Pembeli</p>
-												<h4 class="card-title">100 Custumer</h4>
+												<h4 class="card-title"><?= $jumlahBarangTerjual ?></h4>
 											</div>
 										</div>
 									</div>
@@ -42,7 +42,7 @@
 										<div class="col-7 col-stats">
 											<div class="numbers">
 												<p class="card-category">Keuntungan</p>
-												<h4 class="card-title">Rp. 3.000.000</h4>
+												<h4 class="card-title">Rp. <?= $keuntungan ?></h4>
 											</div>
 										</div>
 									</div>
@@ -61,7 +61,7 @@
 										<div class="col-7 col-stats">
 											<div class="numbers">
 												<p class="card-category">Hutang</p>
-												<h4 class="card-title">Rp. 4.500.000</h4>
+												<h4 class="card-title">Rp. <?= $hutang ?></h4>
 											</div>
 										</div>
 									</div>
@@ -80,7 +80,7 @@
 										<div class="col-7 col-stats">
 											<div class="numbers">
 												<p class="card-category">Belanja</p>
-												<h4 class="card-title">10 Kulakan </h4>
+												<h4 class="card-title"><?= $jumlahJenisBarangTerbeli ?> Kulakan </h4>
 											</div>
 										</div>
 									</div>
@@ -123,43 +123,19 @@
 								<div class="card-body">
 									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Barang Terlaris</h4>
 									<div class="card-body pb-0">
-									<div class="d-flex">
-										<div class="avatar">
-											<img src="../assets/img/logoproduct.svg" alt="..." class="avatar-img rounded-circle">
-										</div>
-										<div class="flex-1 pt-1 ml-2">
-											<h6 class="fw-bold mb-1">CSS</h6>
-										</div>
-										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$17</h3>
-										</div>
+										<?php
+										for ($i = 0; $i < count($terlaris); $i++) { ?>
+											<div class="d-flex">
+												<div class="flex-1 pt-1 ml-2">
+													<h6 class="fw-bold mb-1"><?= $terlaris[$i]["id_barang"] ?></h6>
+												</div>
+												<div class="d-flex ml-auto align-items-center">
+													<h3 class="text-info fw-bold"><?= $terlaris[$i]["SUM(jumlah_penjualan)"] ?></h3>
+												</div>
+											</div>
+											<div class="separator-dashed"></div>
+										<?php } ?>
 									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar">
-											<img src="../assets/img/logoproduct.svg" alt="..." class="avatar-img rounded-circle">
-										</div>
-										<div class="flex-1 pt-1 ml-2">
-											<h6 class="fw-bold mb-1">J.CO Donuts</h6>
-										</div>
-										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$300</h3>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar">
-											<img src="../assets/img/logoproduct3.svg" alt="..." class="avatar-img rounded-circle">
-										</div>
-										<div class="flex-1 pt-1 ml-2">
-											<h6 class="fw-bold mb-1">Ready Pro</h6>
-										</div>
-										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$350</h3>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-								</div>
 								</div>
 							</div>
 						</div>
@@ -168,37 +144,29 @@
 						<div class="col-sm-12">
 							<div class="card">
 								<div class="card-header">
-								<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">SISA STOK</h4>
+									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">SISA STOK</h4>
 									<div class="table-responsive">
-										<table id="basic-datatables" class="display table table-striped table-hover" >
+										<table id="basic-datatables" class="display table table-striped table-hover">
 											<thead>
 												<tr>
 													<th>NO</th>
-													<th>KODE BARANG</th>
-													<th>NAMA BARANG</th>
+													<th>KODE</th>
+													<th>NAMA</th>
+													<th>MERK</th>
 													<th>SISA STOK</th>
 												</tr>
 											</thead>
-																
+
 											<tbody>
-												<tr>
-													<td>1</td>
-													<td>008</td>
-													<td>Edinburgh</td>
-													<td>61</td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>008</td>
-													<td>Edinburgh</td>
-													<td>61</td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>008</td>
-													<td>Edinburgh</td>
-													<td>61</td>
-												</tr>
+												<?php for ($i = 0; $i < count($stok); $i++) { ?>
+													<tr>
+														<td><?= ($i + 1) ?></td>
+														<td><?= $stok[$i]["kode_barang"] ?></td>
+														<td><?= $stok[$i]["nama_barang"] ?></td>
+														<td><?= $stok[$i]["merk_barang"] ?></td>
+														<td><?= $stok[$i]["stok_barang"] ?></td>
+													</tr>
+												<?php } ?>
 											</tbody>
 										</table>
 									</div>

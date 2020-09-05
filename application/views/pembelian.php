@@ -83,7 +83,7 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="jumlah">Jumlah Pembelian</label>
-								<input oninput="jumlah_barang()" onchange="jumlah_barang()" type="number" min="0" class="form-control input-pill" id="jumlah" placeholder="">
+								<input oninput="jumlah_barang()" onchange="jumlah_barang()" type="number" min="1" class="form-control input-pill" id="jumlah" placeholder="">
 							</div>
 						</div>
 						<div class="col-sm-12">
@@ -137,7 +137,7 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="ubah_kode">Kode barang</label>
-								<input oninput="ubah_tampil_data_kode()" onchange="ubah_tampil_data_kode()" type="text" class="form-control input-pill" id="ubah_kode" autocomplete="TRUE" list="kodes" placeholder="">
+								<input oninput="ubah_tampil_data_kode()" onchange="ubah_tampil_data_kode()" type="text" class="form-control input-pill" id="ubah_kode" autocomplete="TRUE" list="kodes" placeholder="" readonly>
 								<datalist onchange="ubah_tampil_data_kode()" id="kodes">
 
 								</datalist>
@@ -146,7 +146,7 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="ubah_jumlah">Jumlah Pembelian</label>
-								<input oninput="ubah_jumlah_barang()" onchange="ubah_jumlah_barang()" type="number" min="0" class="form-control input-pill" id="ubah_jumlah" placeholder="">
+								<input oninput="ubah_jumlah_barang()" onchange="ubah_jumlah_barang()" type="number" min="1" class="form-control input-pill" id="ubah_jumlah" placeholder="">
 							</div>
 						</div>
 						<div class="col-sm-12">
@@ -178,10 +178,38 @@
 	</div>
 </div>
 
+
+<!--Hapus Modal -->
+<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header no-bd">
+				<h5 class="modal-title">
+					<span class="fw-mediumbold">
+						Hapus Data</span>
+					<span class="fw-light">
+						Pembelian
+					</span>
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>Apakah anda ingin mengapus data ? </br> <span style="color: red;">*Data yang telah dihapus tidak dapat dikembalikan lagi</span></p>
+			</div>
+			<div class="modal-footer no-bd" id="hapusModal_tombol">
+				<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 	var barang = [];
 	var id_selected = '';
 	var stok = 0;
+	var stok_ubah = 0;
 	$(document).ready(function() {
 		list();
 		ambil_data();
@@ -280,7 +308,7 @@
 		}
 	}
 
-	function ubah(id) {
+	function ubah(id_pembelian, id_barang) {
 		if (document.getElementById('ubah_jumlah').value == '') {
 			document.getElementById('ubah_jumlah').focus();
 		}
@@ -294,19 +322,30 @@
 			$.ajax({
 				type: 'POST',
 				url: '<?= base_url() ?>pembelian_control/ubah',
-				data: 'id=' + id_selected + '&jumlah=' + document.getElementById('ubah_jumlah').value + '&harga=' + document.getElementById('ubah_harga').value +
-					'&stok=' + stok,
+				data: 'id_pembelian=' + id_pembelian + '&id_barang=' + id_barang + '&jumlah=' + document.getElementById('ubah_jumlah').value +
+					'&stok=' + stok + '&stok_ubah=' + stok_ubah,
 				dataType: 'json',
 				success: function(data) {
-					document.getElementById('ubah_jumlah').value = "";
-					document.getElementById('ubah_harga').value = "";
-					document.getElementById('ubah_kode').value = "";
-					document.getElementById('ubah_nama').value = "";
-
+					console.log(data);
+					ambil_data();
 					$('#ubahModal').modal('hide');
 				}
 			});
 		}
+	}
+
+	function hapus(id) {
+		$.ajax({
+			type: 'POST',
+			data: 'id=' + id,
+			url: '<?= base_url() ?>pembelian_control/hapus',
+			dataType: 'json',
+			success: function(data) {
+				console.log(data);
+				$('#hapusModal').modal('hide');
+				ambil_data();
+			}
+		});
 	}
 
 	function ambil_data() {
@@ -371,12 +410,19 @@
 					document.getElementById("ubah_harga").value = data[i].harga_kulak;
 					document.getElementById("ubah_jumlah").value = data[i].jumlah_pembelian;
 
-					var html = '<button onclick="ubah(' + data[i].id_penjualan + ')" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
+					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
 					$("#ubahModal_tombol").html(html);
-
+					stok_ubah = data[i].jumlah_pembelian;
+					stok = data[i].stok_barang;
 					$('#ubahModal').modal('show');
 				}
 			}
 		});
+	}
+
+	function hapus_list(id) {
+		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" data-dismiss="modal" class="btn btn-danger">Hapus</button>';
+		$("#hapusModal_tombol").html(html);
+		$('#hapusModal').modal('show');
 	}
 </script>

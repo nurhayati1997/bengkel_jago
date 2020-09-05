@@ -112,7 +112,7 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label for="nama">Nama Barang</label>
-								<input type="text" class="form-control input-pill" id="nama" placeholder="barang">
+								<input type="text" class="form-control input-pill" id="nama" placeholder="">
 							</div>
 						</div>
 						<div class="col-sm-6">

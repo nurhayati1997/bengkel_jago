@@ -44,6 +44,24 @@ class pembelian_control extends CI_Controller
 		echo json_encode('');
 	}
 
+	public function ubah()
+	{
+		$stok_update = ((int) $this->input->post("stok", TRUE) - (int) $this->input->post("stok_ubah", TRUE)) + $this->input->post("jumlah", TRUE);
+		$data = [
+			"stok_barang" => $stok_update
+		];
+
+		$this->db_model->update('tbl_barang', $data, array('id_barang' => $this->input->post('id_barang', TRUE)));
+
+		$data = [
+			"jumlah_pembelian" => (int) $this->input->post("jumlah", TRUE)
+		];
+
+		$this->db_model->update('tbl_pembelian', $data, array('id_pembelian' => $this->input->post('id_pembelian', TRUE)));
+
+		echo json_encode("");
+	}
+
 	function ubah_list()
 	{
 		echo json_encode($this->db_model->get_where('view_pembelian', ["id_pembelian" => $this->input->post('id', TRUE)])->result());
@@ -52,5 +70,19 @@ class pembelian_control extends CI_Controller
 	public function tampil()
 	{
 		echo json_encode($this->db_model->get_all("view_pembelian")->result());
+	}
+
+	public function hapus()
+	{
+		$view = $this->db_model->get_where('view_pembelian', ['id_pembelian' => $this->input->post('id', TRUE)])->row();
+		$stok = (int) $view->stok_barang - (int) $view->jumlah_pembelian;
+
+		$data = [
+			"stok_barang" => $stok
+		];
+
+		$this->db_model->update('tbl_barang', $data, array('id_barang' => $view->id_barang));
+
+		echo json_encode($this->db_model->delete("tbl_pembelian", ['id_pembelian' => $view->id_pembelian]));
 	}
 }

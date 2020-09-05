@@ -55,7 +55,7 @@
 								<div class="card-header">
 									<div class="d-flex align-items-center">
 										<h4 class="card-title">Data Transaksi</h4>
-										<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+										<button class="btn btn-primary btn-round ml-auto" onclick="eksport()">
 											<i class="fas fa-print"></i>
 											Cetak
 										</button>
@@ -148,5 +148,11 @@
 					var month = ("0" + (now.getMonth() + 1)).slice(-2);
 					var today = now.getFullYear() + "-" + (month) + "-" + (day);
 					return today
+				}
+
+				function eksport() {
+					var tanggalMulai = $("#tanggalMulai").val()
+					var tanggalSelesai = $("#tanggalSelesai").val()
+					window.location.href = '<?= base_url() ?>keuntungan_control/eksport?tanggalMulai=' + tanggalMulai + '&tanggalSelesai=' + tanggalSelesai
 				}
 			</script>

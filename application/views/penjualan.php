@@ -19,7 +19,6 @@
 								<div class="price-value">
 									<div class="value">
 										<span class="currency">Penjualan</span>
-										<!-- <span class="amount">1<span>99</span></span> -->
 										<span class="month">Barang</span>
 									</div>
 								</div>
@@ -119,7 +118,7 @@
 										<h4 class="card-title">Data Transaksi</h4>
 										<div class="ml-md-auto py-2 py-md-0">
 											<a class="btn btn-primary btn-border btn-round mr-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Hutang</a>
-											<a href="#" class="btn btn-secondary btn-round">Tambah</a>
+											<a href="#" class="btn btn-success btn-round">Tambah</a>
 										</div>
 										
 									</div>

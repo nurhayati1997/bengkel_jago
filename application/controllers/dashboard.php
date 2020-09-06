@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class dashboard_control extends CI_Controller
+class dashboard extends CI_Controller
 {
 	public function __construct()
 	{
@@ -34,6 +34,6 @@ class dashboard_control extends CI_Controller
 		//stok barang
 		$data['stok'] = $this->db_model->getWarningStock('tbl_barang')->result_array();
 
-		$this->template->load('template', 'dashboard', $data);
+		$this->template->load('template', 'dashboard_view', $data);
 	}
 }

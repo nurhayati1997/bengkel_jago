@@ -109,7 +109,7 @@
 					</div>
 					<ul class="nav nav-primary">
 						<li class="nav-item">
-							<a href="<?= site_url('dashboard_control') ?>">
+							<a href="<?= site_url('dashboard') ?>">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
 							</a>

@@ -21,7 +21,7 @@ class keuntungan_control extends CI_Controller
 		$target = $this->input->post('target');
 		$tanggalMulai = $this->input->post('tanggalMulai');
 		$tanggalSelesai = $this->input->post('tanggalSelesai');
-		$data = $this->db_model->get_where("tbl_penjualan", ['tgl_penjualan >=' => $tanggalMulai, 'tgl_penjualan <=' => $tanggalSelesai])->result_array();
+		$data = $this->db_model->get_where("vw_penjualan", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
 		echo json_encode($data);
 	}
 
@@ -95,20 +95,20 @@ class keuntungan_control extends CI_Controller
 		$object->getActiveSheet()->setCellValueByColumnAndRow(10, 4, "KASIR");
 
 		//import tabel
-		$data = $this->db_model->get_where("tbl_penjualan", ['tgl_penjualan >=' => $tanggalMulai, 'tgl_penjualan <=' => $tanggalSelesai])->result_array();
+		$data = $this->db_model->get_where("vw_penjualan", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
 		$excel_row = 5;
 		for ($i = 0; $i < count($data); $i++) {
 			$object->getActiveSheet()->setCellValueByColumnAndRow(0, $excel_row, $i + 1);
-			$object->getActiveSheet()->setCellValueByColumnAndRow(1, $excel_row, $data[$i]['tgl_penjualan']);
-			$object->getActiveSheet()->setCellValueByColumnAndRow(2, $excel_row, "KODE BARANG");
-			$object->getActiveSheet()->setCellValueByColumnAndRow(3, $excel_row, "NAMA BARANG");
-			$object->getActiveSheet()->setCellValueByColumnAndRow(4, $excel_row, "MERK BARANG");
-			$object->getActiveSheet()->setCellValueByColumnAndRow(5, $excel_row, "HARGA KULAK");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(1, $excel_row, $data[$i]['tgl_transaksi']);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(2, $excel_row, $data[$i]['kode_barang']);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(3, $excel_row, $data[$i]['nama_barang']);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(4, $excel_row, $data[$i]['merk_barang']);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(5, $excel_row, $data[$i]['harga_kulak']);
 			$object->getActiveSheet()->setCellValueByColumnAndRow(6, $excel_row, $data[$i]['harga_jual']);
 			$object->getActiveSheet()->setCellValueByColumnAndRow(7, $excel_row, $data[$i]['jumlah_penjualan']);
-			$object->getActiveSheet()->setCellValueByColumnAndRow(8, $excel_row, "TOTAL");
-			$object->getActiveSheet()->setCellValueByColumnAndRow(9, $excel_row, "UNTUNG");
-			$object->getActiveSheet()->setCellValueByColumnAndRow(10, $excel_row, $data[$i]['id_pengguna']);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(8, $excel_row, $data[$i]['harga_jual'] * $data[$i]['jumlah_penjualan']);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(9, $excel_row, ($data[$i]['harga_jual'] - $data[$i]['harga_kulak']) * $data[$i]['jumlah_penjualan']);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(10, $excel_row, $data[$i]['nama']);
 			foreach (range('A', 'K') as $columnID) {
 				$object->getActiveSheet()->getStyle($columnID . $excel_row)->applyFromArray($border_all);
 			}
@@ -139,5 +139,35 @@ class keuntungan_control extends CI_Controller
 
 		$object_writer->save('php://output');
 		$this->index();
+	}
+
+	public function keuntunganMingguan()
+	{
+		$hari = array('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun');
+		$hariIndo = array("Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Ming");
+
+		$hariIni = array_search(date('D', strtotime('today')), $hari);
+
+		$tanggalSeminggu = array(date('Y-m-d', strtotime('last monday')), date('Y-m-d', strtotime('last tuesday')), date('Y-m-d', strtotime('last wednesday')), date('Y-m-d', strtotime('last thursday')), date('Y-m-d', strtotime('last friday')), date('Y-m-d', strtotime('last saturday')), date('Y-m-d', strtotime('last sunday')));
+
+		$hasil = array();
+
+		for ($i = $hariIni; $i < count($hari); $i++) {
+			$dataKeuntungan = $this->db_model->get_where('vw_penjualan', ['tgl_transaksi' => $tanggalSeminggu[$i]])->result_array();
+			$untungPerHari = 0;
+			for ($j = 0; $j < count($dataKeuntungan); $j++) {
+				$untungPerHari += ($dataKeuntungan[$j]['harga_jual'] - $dataKeuntungan[$j]['harga_kulak']) * $dataKeuntungan[$j]['jumlah_penjualan'];
+			}
+			array_push($hasil, array($hariIndo[$i], $untungPerHari));
+		}
+		for ($i = 0; $i < $hariIni; $i++) {
+			$dataKeuntungan = $this->db_model->get_where('vw_penjualan', ['tgl_transaksi' => $tanggalSeminggu[$i]])->result_array();
+			$untungPerHari = 0;
+			for ($j = 0; $j < count($dataKeuntungan); $j++) {
+				$untungPerHari += ($dataKeuntungan[$j]['harga_jual'] - $dataKeuntungan[$j]['harga_kulak']) * $dataKeuntungan[$j]['jumlah_penjualan'];
+			}
+			array_push($hasil, array($hariIndo[$i], $untungPerHari));
+		}
+		echo json_encode($hasil);
 	}
 }

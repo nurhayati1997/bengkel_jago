@@ -116,42 +116,55 @@
 
 			<script src="<?= base_url() ?>assets/js/plugin/chart.js/chart.min.js"></script>
 			<script>
-				var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
+				var keuntungan = []
+				var hari = []
+				$.ajax({
+					url: '<?= base_url() ?>keuntungan_control/keuntunganMingguan',
+					method: 'post',
+					dataType: 'json',
+					success: function(data) {
+						for (let i = 0; i < data.length; i++) {
+							keuntungan.push(data[i][1])
+							hari.push(data[i][0])
+						}
+						var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
 
-				var mytotalIncomeChart = new Chart(totalIncomeChart, {
-					type: 'bar',
-					data: {
-						labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
-						datasets: [{
-							label: "Total Income",
-							backgroundColor: '#ff9e27',
-							borderColor: 'rgb(23, 125, 255)',
-							data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
-						}],
-					},
-					options: {
-						responsive: true,
-						maintainAspectRatio: false,
-						legend: {
-							display: false,
-						},
-						scales: {
-							yAxes: [{
-								ticks: {
-									display: false //this will remove only the label
+						var mytotalIncomeChart = new Chart(totalIncomeChart, {
+							type: 'bar',
+							data: {
+								labels: hari,
+								datasets: [{
+									label: "Total Income",
+									backgroundColor: '#ff9e27',
+									borderColor: 'rgb(23, 125, 255)',
+									data: keuntungan,
+								}],
+							},
+							options: {
+								responsive: true,
+								maintainAspectRatio: false,
+								legend: {
+									display: false,
 								},
-								gridLines: {
-									drawBorder: false,
-									display: false
-								}
-							}],
-							xAxes: [{
-								gridLines: {
-									drawBorder: false,
-									display: false
-								}
-							}]
-						},
+								scales: {
+									yAxes: [{
+										ticks: {
+											display: false //this will remove only the label
+										},
+										gridLines: {
+											drawBorder: false,
+											display: false
+										}
+									}],
+									xAxes: [{
+										gridLines: {
+											drawBorder: false,
+											display: false
+										}
+									}]
+								},
+							}
+						});
 					}
 				});
 
@@ -182,20 +195,20 @@
 						dataType: 'json',
 						success: function(data) {
 							for (let i = 0; i < data.length; i++) {
-								keuntungan = ((data[i].harga_jual - data[i].kulak) * data[i].jumlah_penjualan)
+								keuntungan = ((data[i].harga_jual - data[i].harga_kulak) * data[i].jumlah_penjualan)
 								totalKeuntungan += keuntungan
 								tabel += '<tr>'
 								tabel += '<td>' + (i + 1) + '</td>'
-								tabel += '<td>' + formatTanggal(data[i].tgl_penjualan) + '</td>'
+								tabel += '<td>' + formatTanggal(data[i].tgl_transaksi) + '</td>'
 								tabel += '<td>' + data[i].kode_barang + '</td>'
 								tabel += '<td>' + data[i].nama_barang + '</td>'
 								tabel += '<td>' + data[i].merk_barang + '</td>'
-								tabel += '<td>' + data[i].kulak + '</td>'
-								tabel += '<td>' + data[i].harga_jual + '</td>'
+								tabel += '<td>' + formatRupiah(data[i].harga_kulak) + '</td>'
+								tabel += '<td>' + formatRupiah(data[i].harga_jual) + '</td>'
 								tabel += '<td>' + data[i].jumlah_penjualan + '</td>'
-								tabel += '<td>' + (data[i].harga_jual * data[i].jumlah_penjualan) + '</td>'
-								tabel += '<td>' + keuntungan + '</td>'
-								tabel += '<td>' + data[i].id_pengguna + '</td>'
+								tabel += '<td>' + formatRupiah((data[i].harga_jual * data[i].jumlah_penjualan).toString()) + '</td>'
+								tabel += '<td>' + formatRupiah(keuntungan.toString()) + '</td>'
+								tabel += '<td>' + data[i].nama + '</td>'
 								tabel += '</tr>'
 							}
 							tabel += '</tbody></table>'
@@ -217,5 +230,22 @@
 					var tanggalMulai = $("#tanggalMulai").val()
 					var tanggalSelesai = $("#tanggalSelesai").val()
 					window.location.href = '<?= base_url() ?>keuntungan_control/eksport?tanggalMulai=' + tanggalMulai + '&tanggalSelesai=' + tanggalSelesai
+				}
+
+				function formatRupiah(angka, prefix) {
+					var number_string = angka.replace(/[^,\d]/g, '').toString(),
+						split = number_string.split(','),
+						sisa = split[0].length % 3,
+						rupiah = split[0].substr(0, sisa),
+						ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+					// tambahkan titik jika yang di input sudah menjadi angka ribuan
+					if (ribuan) {
+						separator = sisa ? '.' : '';
+						rupiah += separator + ribuan.join('.');
+					}
+
+					rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+					return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 				}
 			</script>

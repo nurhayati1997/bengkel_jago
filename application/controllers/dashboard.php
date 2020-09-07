@@ -23,12 +23,14 @@ class dashboard extends CI_Controller
 		for ($i = 0; $i < count($hutang); $i++) {
 			$data['hutang'] += ($hutang[$i]['harga_jual'] - $hutang[$i]['harga_kulak']) * $hutang[$i]['jumlah_penjualan'];
 		}
+		$data['hutang'] = number_format($data["hutang"], 0, '', '.');
 		//keuntungan hari ini
 		$keuntungan = $this->db_model->get_where('vw_penjualan', ['tgl_transaksi' => date("Y/m/d")])->result_array();
 		$data['keuntungan'] = 0;
 		for ($i = 0; $i < count($keuntungan); $i++) {
 			$data['keuntungan'] += ($keuntungan[$i]['harga_jual'] - $keuntungan[$i]['harga_kulak']) * $keuntungan[$i]['jumlah_penjualan'];
 		}
+		$data['keuntungan'] = number_format($data["keuntungan"], 0, '', '.');
 		//barang terbeli
 		$data['jumlahJenisBarangTerbeli'] = $this->db_model->getJumlahTerbeli()->row_array()['SUM(jumlah_pembelian)'];
 		if (!$data['jumlahJenisBarangTerbeli']) {

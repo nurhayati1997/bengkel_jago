@@ -41,15 +41,28 @@ class Db_model extends CI_Model
     {
         $this->db->select('*, SUM(jumlah_penjualan)');
         $this->db->group_by('id_barang');
-        $this->db->order_by('jumlah_penjualan DESC');
-        return $this->db->get('tbl_penjualan', 10);
+        $this->db->order_by('jumlah_penjualan ASC');
+        return $this->db->get('vw_penjualan', 10);
     }
 
     function getJumlahTerjual()
     {
         $this->db->select('SUM(jumlah_penjualan)');
-        $this->db->where('tgl_penjualan', date("Y/m/d"));
-        $this->db->group_by('tgl_penjualan');
-        return $this->db->get('tbl_penjualan');
+        $this->db->where('tgl_transaksi', date("Y/m/d"));
+        $this->db->group_by('tgl_transaksi');
+        return $this->db->get('vw_penjualan');
+    }
+
+    function getJumlahTerbeli()
+    {
+        $this->db->select('SUM(jumlah_pembelian)');
+        $this->db->where('tgl_pembelian', date("Y/m/d"));
+        $this->db->group_by('tgl_pembelian');
+        return $this->db->get('tbl_pembelian');
+    }
+
+    function keuntunganMingguan()
+    {
+        return $this->db->query("SELECT * FROM tbl_penjualan WHERE vw_penjualan.tgl_transaksi >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND vw_penjualan.tgl_transaksi < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY");
     }
 }

@@ -19,7 +19,6 @@
 								<div class="price-value">
 									<div class="value">
 										<span class="currency">Penjualan</span>
-										<!-- <span class="amount">1<span>99</span></span> -->
 										<span class="month">Barang</span>
 									</div>
 								</div>
@@ -119,29 +118,29 @@
 										<h4 class="card-title">Data Transaksi</h4>
 										<div class="ml-md-auto py-2 py-md-0">
 											<a class="btn btn-primary btn-border btn-round mr-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Hutang</a>
-											<a href="#" class="btn btn-secondary btn-round">Tambah</a>
+											<a href="#" class="btn btn-success btn-round">Tambah</a>
 										</div>
-										
 									</div>
-									
 								</div>
 								<div class="card-body">
 									<div class="collapse" id="collapseExample">
-										<div class="card card-body">
+										<div class="card-body">
 											<form>
 												<div class="row">
 													<div class="col-sm-12">
 														<div class="form-group">
 															<label for="pillSelect">Nama Client</label>
 															<select class="form-control input-pill" id="pillSelect" placeholder="Pill Input">
-																<option>anu</option>
-																<option>ini</option>
-																<option>itu</option>
+																<option>mohammad client</option>
+																<option>siti client</option>
+																<option>abdul pelanggan</option>
 															</select>
 														</div>
 													</div>
+													<div class="ml-md-auto py-2 py-md-0">
+														<a href="#" class="btn btn-primary btn-round">Tambah Hutang</a>
+													</div>
 												</div>
-												<a href="<?= site_url('piutang_control') ?>" class="btn btn-primary btn-border btn-lg fw-bold mb-3">Tambah Hutang</a>
 											</form>
 										</div>
 									</div>

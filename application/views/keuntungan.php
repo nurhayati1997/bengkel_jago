@@ -55,14 +55,35 @@
 								<div class="card-header">
 									<div class="d-flex align-items-center">
 										<h4 class="card-title">Data Transaksi</h4>
-										<button class="btn btn-primary btn-round ml-auto" onclick="eksport()">
-											<i class="fas fa-print"></i>
-											Cetak
+										<!-- <a class="btn btn-primary btn-border btn-round mr-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Hutang</a> -->
+										<button class="btn btn-succes btn-round ml-auto" data-toggle="collapse" href="#collapseExample">
+											<i class="fas fa-share "></i>
+											Action
 										</button>
 									</div>
 								</div>
 								<div class="card-body">
-
+									<div class="collapse" id="collapseExample">
+										<div class="card card-body">
+											<div class="row">
+												<div class="col-sm-4">
+													<button class="btn btn-warning btn-round ml-auto">
+														<i class="fas fa-cogs">Barang</i>
+													</button>
+												</div>
+												<div class="col-sm-4">
+													<button class="btn btn-warning btn-round ml-auto">
+														<i class="fas fa-car">Jasa Service</i>
+													</button>
+												</div>
+												<div class="col-sm-4">
+													<button class="btn btn-primary btn-round ml-auto" onclick="eksport()">
+														<i class="fas fa-print">Cetak</i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
 									<div class="table-responsive" id="tempat_tabel">
 
 									</div>

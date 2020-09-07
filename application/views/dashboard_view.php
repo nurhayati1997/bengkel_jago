@@ -164,13 +164,12 @@
 					</div>
 				</div>
 			</div>
-
 			<script src="<?= base_url() ?>assets/js/plugin/chart.js/chart.min.js"></script>
 			<script>
 				var keuntungan = []
 				var hari = []
 				$.ajax({
-					url: '<?= base_url() ?>dashboard_control/keuntunganMingguan',
+					url: '<?= base_url() ?>dashboard/keuntunganMingguan',
 					method: 'post',
 					dataType: 'json',
 					success: function(data) {

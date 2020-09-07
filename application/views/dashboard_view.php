@@ -121,7 +121,6 @@
 													<h3 class="text-info fw-bold"><?= $terlaris[$i]["SUM(jumlah_penjualan)"] ?></h3>
 												</div>
 											</div>
-											<div class="separator-dashed"></div>
 										<?php } ?>
 									</div>
 								</div>

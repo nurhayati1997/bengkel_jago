@@ -54,12 +54,24 @@
 							<div class="card">
 								<div class="card-header">
 									<div class="d-flex align-items-center">
-										<h4 class="card-title">Data Transaksi</h4>
-										<!-- <a class="btn btn-primary btn-border btn-round mr-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Hutang</a> -->
-										<button class="btn btn-succes btn-round ml-auto" data-toggle="collapse" href="#collapseExample">
-											<i class="fas fa-share "></i>
-											Action
-										</button>
+										<div class="col-sm-6">
+											<h4 class="card-title">Data Transaksi</h4>
+										</div>
+											<div class="col-sm-3">
+												<a class="btn btn-primary btn-border btn-round mr-2">Cetak</a>
+											</div>
+											<div class="col-sm-3">
+												<div class="dropdown">
+													<button class="btn btn-warning btn-round dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														Laporan
+													</button>
+													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+														<a class="dropdown-item" href="#">Barang</a>
+														<a class="dropdown-item" href="#">Jasa</a>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="card-body">

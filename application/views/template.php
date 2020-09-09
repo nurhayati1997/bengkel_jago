@@ -101,7 +101,7 @@
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Hizrian
+									Muhammad
 									<span class="user-level">Administrator</span>
 								</span>
 							</a>

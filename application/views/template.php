@@ -63,7 +63,7 @@
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 
 						<li class="nav-item">
-							<a class="nav-link" href="<?= site_url('penjualan_control') ?>" title="penjualan" role="button" aria-expanded="false">
+							<a class="nav-link" href="<?= site_url('penjualan') ?>" title="penjualan" role="button" aria-expanded="false">
 								<i class="fas fa-th-list"></i>
 							</a>
 						</li>
@@ -121,13 +121,13 @@
 							<h4 class="text-section">Menu</h4>
 						</li>
 						<li class="nav-item">
-							<a href="<?= site_url('penjualan_control') ?>">
+							<a href="<?= site_url('penjualan') ?>">
 								<i class="fas fa-th-list"></i>
 								<p>Penjualan</p>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="<?= site_url('pembelian_control') ?>">
+							<a href="<?= site_url('pembelian') ?>">
 								<i class="fas fa-desktop"></i>
 								<p>Pembelian</p>
 							</a>

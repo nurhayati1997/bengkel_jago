@@ -39,7 +39,7 @@
 											</div>
 										</div>
 									</div>
-									<a href="#" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3" onclick="tampilkanByDate()">Proses</a>
+									<a href="#" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3" onclick="jasaByDate()">Proses</a>
 								</form>
 								<div class="row py-3">
 									<div class="col-md-12">
@@ -179,17 +179,17 @@
 
 					$("#tanggalMulai").val(today)
 					$("#tanggalSelesai").val(today)
-					tampilkanByDate()
+					barangByDate()
 				}
 
-				function tampilkanByDate() {
+				function barangByDate() {
 					var tanggalMulai = $("#tanggalMulai").val()
 					var tanggalSelesai = $("#tanggalSelesai").val()
 					var keuntungan = 0;
 					var totalKeuntungan = 0;
 					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>TANGGAL</th><th>KODE</th><th>NAMA</th><th>MERK</th><th>KULAK</th><th>JUAL</th><th>QUANTITY</th><th>TOTAL</th><th>UNTUNG</th><th>KASIR</th></tr></thead><tbody>'
 					$.ajax({
-						url: '<?= base_url() ?>keuntungan_control/get_data',
+						url: '<?= base_url() ?>keuntungan_control/getDataBarang',
 						method: 'post',
 						data: "target=tbl_penjualan&tanggalMulai=" + tanggalMulai + "&tanggalSelesai=" + tanggalSelesai,
 						dataType: 'json',
@@ -214,6 +214,35 @@
 							tabel += '</tbody></table>'
 							$("#tempat_tabel").html(tabel)
 							$("#keuntungan").html('Rp. ' + totalKeuntungan)
+						}
+					});
+				}
+
+				function jasaByDate() {
+					var tanggalMulai = $("#tanggalMulai").val()
+					var tanggalSelesai = $("#tanggalSelesai").val()
+					var totalKeuntungan = 0;
+					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>TANGGAL</th><th>JASA</th><th>HARGA</th><th>KASIR</th></tr></thead><tbody>'
+					$.ajax({
+						url: '<?= base_url() ?>keuntungan_control/getDataJasa',
+						method: 'post',
+						data: "target=tbl_penjualan&tanggalMulai=" + tanggalMulai + "&tanggalSelesai=" + tanggalSelesai,
+						dataType: 'json',
+						success: function(data) {
+							for (let i = 0; i < data.length; i++) {
+								totalKeuntungan += parseInt(data[i].harga_jasa)
+								tabel += '<tr>'
+								tabel += '<td>' + (i + 1) + '</td>'
+								tabel += '<td>' + formatTanggal(data[i].tgl_transaksi) + '</td>'
+								tabel += '<td>' + data[i].nama_jasa + '</td>'
+								tabel += '<td>' + formatRupiah(data[i].harga_jasa.toString()) + '</td>'
+								tabel += '<td>' + data[i].nama + '</td>'
+								tabel += '</tr>'
+
+							}
+							tabel += '</tbody></table>'
+							$("#tempat_tabel").html(tabel)
+							$("#keuntungan").html('Rp. ' + formatRupiah(totalKeuntungan.toString()))
 						}
 					});
 				}

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class login_control extends CI_Controller
+class login extends CI_Controller
 {
 
 	public function __construct()
@@ -19,7 +19,7 @@ class login_control extends CI_Controller
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
 		if ($this->form_validation->run() == false) {
 			$data['title'] = "Login";
-			$this->load->view('login', $data);
+			$this->load->view('login_view', $data);
 		} else {
 			$this->_login();
 		}

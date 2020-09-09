@@ -292,12 +292,3 @@
 					</div>
 				</div>
 			</div>
-
-
-
-												<!-- <tr>
-													<th>NO</th>
-													<th>NAMA CLIENT</th>
-													<th>TOTAL</th>
-													<th style="width: 10%">Action</th>
-												</tr> -->

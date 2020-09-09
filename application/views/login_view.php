@@ -77,7 +77,7 @@
             $.ajax({
                 type: 'get',
                 data: 'target=tbl_pengguna',
-                url: '<?= base_url() ?>login_control/ambilData',
+                url: '<?= base_url() ?>login/ambilData',
                 dataType: 'json',
                 success: function(data) {
                     var baris = '<option value="0">- Pilih Pengguna -</option>';

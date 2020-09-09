@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class client_control extends CI_Controller
+class client extends CI_Controller
 {
 	public function __construct()
 	{
@@ -13,7 +13,7 @@ class client_control extends CI_Controller
 	public function index()
 	{
 		//echo  'hello panda';
-		$this->template->load('template', 'client');
+		$this->template->load('template', 'client_view');
 	}
 
 	public function get_data()

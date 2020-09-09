@@ -68,12 +68,12 @@
 							</a>
 						</li>
 						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link" href="<?= site_url('piutang_control') ?>" title="piutang" aria-expanded="false">
+							<a class="nav-link" href="<?= site_url('piutang') ?>" title="piutang" aria-expanded="false">
 								<i class="fas fa-pen-square"></i>
 							</a>
 						</li>
 						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link" href="<?= site_url('logout_control') ?>" title="logout" aria-expanded="false">
+							<a class="nav-link" href="<?= site_url('logout') ?>" title="logout" aria-expanded="false">
 								<i class="fas fa-arrow-circle-right"></i>
 							</a>
 						</li>
@@ -133,7 +133,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="<?= site_url('barang_control') ?>">
+							<a href="<?= site_url('barang') ?>">
 								<i class="fas fa-layer-group"></i>
 								<p>Barang</p>
 							</a>
@@ -147,12 +147,12 @@
 							<div class="collapse" id="tables">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="<?= site_url('keuntungan_control') ?>">
+										<a href="<?= site_url('keuntungan') ?>">
 											<span class="sub-item">Keuntungan</span>
 										</a>
 									</li>
 									<li>
-										<a href="<?= site_url('stok_control') ?>">
+										<a href="<?= site_url('stok') ?>">
 											<span class="sub-item">Stok</span>
 										</a>
 									</li>
@@ -160,7 +160,7 @@
 							</div>
 						</li>
 						<li class="nav-item">
-							<a href="<?= site_url('piutang_control') ?>">
+							<a href="<?= site_url('piutang') ?>">
 								<i class="fas fa-pen-square"></i>
 								<p>Piutang</p>
 							</a>
@@ -174,12 +174,12 @@
 							<div class="collapse" id="master">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="<?= site_url('user_control') ?>">
+										<a href="<?= site_url('user') ?>">
 											<span class="sub-item">User</span>
 										</a>
 									</li>
 									<li>
-										<a href="<?= site_url('client_control') ?>">
+										<a href="<?= site_url('client') ?>">
 											<span class="sub-item">Client</span>
 										</a>
 									</li>

@@ -131,7 +131,7 @@
 				var keuntungan = []
 				var hari = []
 				$.ajax({
-					url: '<?= base_url() ?>keuntungan_control/keuntunganMingguan',
+					url: '<?= base_url() ?>keuntungan/keuntunganMingguan',
 					method: 'post',
 					dataType: 'json',
 					success: function(data) {
@@ -201,7 +201,7 @@
 					var totalKeuntungan = 0;
 					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>TANGGAL</th><th>KODE</th><th>NAMA</th><th>MERK</th><th>KULAK</th><th>JUAL</th><th>QUANTITY</th><th>TOTAL</th><th>UNTUNG</th><th>KASIR</th></tr></thead><tbody>'
 					$.ajax({
-						url: '<?= base_url() ?>keuntungan_control/get_data',
+						url: '<?= base_url() ?>keuntungan/get_data',
 						method: 'post',
 						data: "target=tbl_penjualan&tanggalMulai=" + tanggalMulai + "&tanggalSelesai=" + tanggalSelesai,
 						dataType: 'json',

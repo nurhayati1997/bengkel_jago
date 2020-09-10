@@ -39,7 +39,7 @@
 											</div>
 										</div>
 									</div>
-									<a href="#" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3" onclick="jasaByDate()">Proses</a>
+									<a href="#" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3" onclick="tampilkan()">Proses</a>
 								</form>
 								<div class="row py-3">
 									<div class="col-md-12">
@@ -62,13 +62,10 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="dropdown">
-												<button class="btn btn-warning btn-round dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													Laporan
-												</button>
-												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<a class="dropdown-item" href="#">Barang</a>
-													<a class="dropdown-item" href="#">Jasa</a>
-												</div>
+												<select class="btn btn-warning btn-round dropdown-toggle" onChange="tampilkan()" id="jenisLaporan">
+													<option value="1">Barang</option>
+													<option value="2">Jasa</option>
+												</select>
 											</div>
 										</div>
 									</div>
@@ -180,10 +177,10 @@
 					}
 				});
 
-
+				settanggal()
 				tampilkan()
 
-				function tampilkan() {
+				function settanggal() {
 					var now = new Date();
 					var day = ("0" + now.getDate()).slice(-2);
 					var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -191,7 +188,15 @@
 
 					$("#tanggalMulai").val(today)
 					$("#tanggalSelesai").val(today)
-					barangByDate()
+				}
+
+				function tampilkan() {
+					var jenisLaporan = $("#jenisLaporan").val();
+					if (jenisLaporan == "1") {
+						barangByDate()
+					} else {
+						jasaByDate()
+					}
 				}
 
 				function barangByDate() {
@@ -201,7 +206,7 @@
 					var totalKeuntungan = 0;
 					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>TANGGAL</th><th>KODE</th><th>NAMA</th><th>MERK</th><th>KULAK</th><th>JUAL</th><th>QUANTITY</th><th>TOTAL</th><th>UNTUNG</th><th>KASIR</th></tr></thead><tbody>'
 					$.ajax({
-						url: '<?= base_url() ?>keuntungan_control/getDataBarang',
+						url: '<?= base_url() ?>keuntungan/getDataBarang',
 						method: 'post',
 						data: "target=tbl_penjualan&tanggalMulai=" + tanggalMulai + "&tanggalSelesai=" + tanggalSelesai,
 						dataType: 'json',
@@ -236,7 +241,7 @@
 					var totalKeuntungan = 0;
 					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>TANGGAL</th><th>JASA</th><th>HARGA</th><th>KASIR</th></tr></thead><tbody>'
 					$.ajax({
-						url: '<?= base_url() ?>keuntungan_control/getDataJasa',
+						url: '<?= base_url() ?>keuntungan/getDataJasa',
 						method: 'post',
 						data: "target=tbl_penjualan&tanggalMulai=" + tanggalMulai + "&tanggalSelesai=" + tanggalSelesai,
 						dataType: 'json',
@@ -270,7 +275,7 @@
 				function eksport() {
 					var tanggalMulai = $("#tanggalMulai").val()
 					var tanggalSelesai = $("#tanggalSelesai").val()
-					window.location.href = '<?= base_url() ?>keuntungan_control/eksport?tanggalMulai=' + tanggalMulai + '&tanggalSelesai=' + tanggalSelesai
+					window.location.href = '<?= base_url() ?>keuntungan/eksport?tanggalMulai=' + tanggalMulai + '&tanggalSelesai=' + tanggalSelesai
 				}
 
 				function formatRupiah(angka, prefix) {

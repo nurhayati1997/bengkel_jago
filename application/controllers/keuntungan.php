@@ -34,48 +34,6 @@ class keuntungan extends CI_Controller
 		echo json_encode($data);
 	}
 
-	// public function getDataJasa()
-	// {
-	// 	$hasil = array();
-	// 	//hasil[[tanggal,[[a,b,..],[a,b,..],...]],...]
-	// 	$tanggalMulai = $this->input->post('tanggalMulai');
-	// 	$tanggalSelesai = $this->input->post('tanggalSelesai');
-	// 	$this->db->group_by("tgl_transaksi");
-	// 	$tanggal = $this->db_model->get_where("vw_penjualan_jasa", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
-	// 	for ($i = 0; $i < count($tanggal); $i++) {
-	// 		$tgl = $tanggal[$i]["tgl_transaksi"];
-	// 		$jasa = $this->db_model->get_where("vw_penjualan_jasa", ['tgl_transaksi' => $tgl])->result_array();
-	// 		array_push($hasil, array($tgl, $jasa));
-	// 	}
-	// 	echo json_encode($this->hitungJasa($hasil));
-	// }
-
-	// public function hitungJasa($data)
-	// {
-	// 	$penghitung = array();
-	// 	$hasil = array();
-	// 	//penghitung[[tanggal, [[nama jasa, jumlah],...]],....]
-	// 	for ($i = 0; $i < count($data); $i++) {
-	// 		array_push($penghitung, array($data[$i][0], array()));
-	// 		for ($j = 0; $j < count($data[$i][1]); $j++) {
-	// 			if (array_key_exists($data[$i][1][$j]["id_jasa"], $penghitung[$i][1])) {
-	// 				$penghitung[$i][1][$data[$i][1][$j]["id_jasa"]][1] += 1;
-	// 			} else {
-	// 				$penghitung[$i][1][$data[$i][1][$j]["id_jasa"]] = array($data[$i][1][$j]["nama_jasa"], 1);
-	// 			}
-	// 		}
-	// 	}
-
-	// 	// //hasil[[tanggal,[[namajasa, jumlah], [namajasa, jumlah],....]], ....]
-	// 	for ($i = 0; $i < count($penghitung); $i++) {
-	// 		array_push($hasil, array($penghitung[$i][0], array()));
-	// 		foreach ($penghitung[$i][1] as $data) {
-	// 			array_push($hasil[$i][1], array($data[0], $data[1]));
-	// 		}
-	// 	}
-	// 	return $hasil;
-	// }
-
 	function eksport()
 	{
 		$tanggalMulai = $this->input->get('tanggalMulai');
@@ -194,9 +152,10 @@ class keuntungan extends CI_Controller
 
 	public function keuntunganMingguan()
 	{
+		$target = $this->input->post("target");
+
 		$hari = array('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun');
 		$hariIndo = array("Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Ming");
-
 		$hariIni = array_search(date('D', strtotime('today')), $hari);
 
 		$tanggalSeminggu = array(date('Y-m-d', strtotime('last monday')), date('Y-m-d', strtotime('last tuesday')), date('Y-m-d', strtotime('last wednesday')), date('Y-m-d', strtotime('last thursday')), date('Y-m-d', strtotime('last friday')), date('Y-m-d', strtotime('last saturday')), date('Y-m-d', strtotime('last sunday')));
@@ -204,21 +163,71 @@ class keuntungan extends CI_Controller
 		$hasil = array();
 
 		for ($i = $hariIni; $i < count($hari); $i++) {
-			$dataKeuntungan = $this->db_model->get_where('vw_penjualan', ['tgl_transaksi' => $tanggalSeminggu[$i]])->result_array();
+			$dataKeuntungan = $this->db_model->get_where($target, ['tgl_transaksi' => $tanggalSeminggu[$i]])->result_array();
 			$untungPerHari = 0;
 			for ($j = 0; $j < count($dataKeuntungan); $j++) {
-				$untungPerHari += ($dataKeuntungan[$j]['harga_jual'] - $dataKeuntungan[$j]['harga_kulak']) * $dataKeuntungan[$j]['jumlah_penjualan'];
+				if ($target == "vw_penjualan") {
+					$untungPerHari += ($dataKeuntungan[$j]['harga_jual'] - $dataKeuntungan[$j]['harga_kulak']) * $dataKeuntungan[$j]['jumlah_penjualan'];
+				} else {
+					$untungPerHari += $dataKeuntungan[$j]["harga_jasa"];
+				}
 			}
 			array_push($hasil, array($hariIndo[$i], $untungPerHari));
 		}
 		for ($i = 0; $i < $hariIni; $i++) {
-			$dataKeuntungan = $this->db_model->get_where('vw_penjualan', ['tgl_transaksi' => $tanggalSeminggu[$i]])->result_array();
+			$dataKeuntungan = $this->db_model->get_where($target, ['tgl_transaksi' => $tanggalSeminggu[$i]])->result_array();
 			$untungPerHari = 0;
 			for ($j = 0; $j < count($dataKeuntungan); $j++) {
-				$untungPerHari += ($dataKeuntungan[$j]['harga_jual'] - $dataKeuntungan[$j]['harga_kulak']) * $dataKeuntungan[$j]['jumlah_penjualan'];
+				if ($target == "vw_penjualan") {
+					$untungPerHari += ($dataKeuntungan[$j]['harga_jual'] - $dataKeuntungan[$j]['harga_kulak']) * $dataKeuntungan[$j]['jumlah_penjualan'];
+				} else {
+					$untungPerHari += $dataKeuntungan[$j]["harga_jasa"];
+				}
 			}
 			array_push($hasil, array($hariIndo[$i], $untungPerHari));
 		}
 		echo json_encode($hasil);
 	}
+
+	// public function getDataJasa()
+	// {
+	// 	$hasil = array();
+	// 	//hasil[[tanggal,[[a,b,..],[a,b,..],...]],...]
+	// 	$tanggalMulai = $this->input->post('tanggalMulai');
+	// 	$tanggalSelesai = $this->input->post('tanggalSelesai');
+	// 	$this->db->group_by("tgl_transaksi");
+	// 	$tanggal = $this->db_model->get_where("vw_penjualan_jasa", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
+	// 	for ($i = 0; $i < count($tanggal); $i++) {
+	// 		$tgl = $tanggal[$i]["tgl_transaksi"];
+	// 		$jasa = $this->db_model->get_where("vw_penjualan_jasa", ['tgl_transaksi' => $tgl])->result_array();
+	// 		array_push($hasil, array($tgl, $jasa));
+	// 	}
+	// 	echo json_encode($this->hitungJasa($hasil));
+	// }
+
+	// public function hitungJasa($data)
+	// {
+	// 	$penghitung = array();
+	// 	$hasil = array();
+	// 	//penghitung[[tanggal, [[nama jasa, jumlah],...]],....]
+	// 	for ($i = 0; $i < count($data); $i++) {
+	// 		array_push($penghitung, array($data[$i][0], array()));
+	// 		for ($j = 0; $j < count($data[$i][1]); $j++) {
+	// 			if (array_key_exists($data[$i][1][$j]["id_jasa"], $penghitung[$i][1])) {
+	// 				$penghitung[$i][1][$data[$i][1][$j]["id_jasa"]][1] += 1;
+	// 			} else {
+	// 				$penghitung[$i][1][$data[$i][1][$j]["id_jasa"]] = array($data[$i][1][$j]["nama_jasa"], 1);
+	// 			}
+	// 		}
+	// 	}
+
+	// 	// //hasil[[tanggal,[[namajasa, jumlah], [namajasa, jumlah],....]], ....]
+	// 	for ($i = 0; $i < count($penghitung); $i++) {
+	// 		array_push($hasil, array($penghitung[$i][0], array()));
+	// 		foreach ($penghitung[$i][1] as $data) {
+	// 			array_push($hasil[$i][1], array($data[0], $data[1]));
+	// 		}
+	// 	}
+	// 	return $hasil;
+	// }
 }

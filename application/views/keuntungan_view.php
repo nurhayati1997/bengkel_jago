@@ -125,57 +125,67 @@
 
 			<script src="<?= base_url() ?>assets/js/plugin/chart.js/chart.min.js"></script>
 			<script>
-				var keuntungan = []
-				var hari = []
-				$.ajax({
-					url: '<?= base_url() ?>keuntungan/keuntunganMingguan',
-					method: 'post',
-					dataType: 'json',
-					success: function(data) {
-						for (let i = 0; i < data.length; i++) {
-							keuntungan.push(data[i][1])
-							hari.push(data[i][0])
-						}
-						var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
-
-						var mytotalIncomeChart = new Chart(totalIncomeChart, {
-							type: 'bar',
-							data: {
-								labels: hari,
-								datasets: [{
-									label: "Total Income",
-									backgroundColor: '#ff9e27',
-									borderColor: 'rgb(23, 125, 255)',
-									data: keuntungan,
-								}],
-							},
-							options: {
-								responsive: true,
-								maintainAspectRatio: false,
-								legend: {
-									display: false,
-								},
-								scales: {
-									yAxes: [{
-										ticks: {
-											display: false //this will remove only the label
-										},
-										gridLines: {
-											drawBorder: false,
-											display: false
-										}
-									}],
-									xAxes: [{
-										gridLines: {
-											drawBorder: false,
-											display: false
-										}
-									}]
-								},
-							}
-						});
+				function tampilkanChart() {
+					var target = ""
+					var jenisLaporan = $("#jenisLaporan").val();
+					if (jenisLaporan == "1") {
+						target = "vw_penjualan"
+					} else {
+						target = "vw_penjualan_jasa"
 					}
-				});
+					var keuntungan = []
+					var hari = []
+					$.ajax({
+						url: '<?= base_url() ?>keuntungan/keuntunganMingguan',
+						method: 'post',
+						data: "target=" + target,
+						dataType: 'json',
+						success: function(data) {
+							for (let i = 0; i < data.length; i++) {
+								keuntungan.push(data[i][1])
+								hari.push(data[i][0])
+							}
+							var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
+
+							var mytotalIncomeChart = new Chart(totalIncomeChart, {
+								type: 'bar',
+								data: {
+									labels: hari,
+									datasets: [{
+										label: "Total Income",
+										backgroundColor: '#ff9e27',
+										borderColor: 'rgb(23, 125, 255)',
+										data: keuntungan,
+									}],
+								},
+								options: {
+									responsive: true,
+									maintainAspectRatio: false,
+									legend: {
+										display: false,
+									},
+									scales: {
+										yAxes: [{
+											ticks: {
+												display: false //this will remove only the label
+											},
+											gridLines: {
+												drawBorder: false,
+												display: false
+											}
+										}],
+										xAxes: [{
+											gridLines: {
+												drawBorder: false,
+												display: false
+											}
+										}]
+									},
+								}
+							});
+						}
+					});
+				}
 
 				settanggal()
 				tampilkan()
@@ -191,6 +201,7 @@
 				}
 
 				function tampilkan() {
+					tampilkanChart()
 					var jenisLaporan = $("#jenisLaporan").val();
 					if (jenisLaporan == "1") {
 						barangByDate()

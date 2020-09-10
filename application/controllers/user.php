@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class user_control extends CI_Controller
+class user extends CI_Controller
 {
 
 	public function __construct()
@@ -14,7 +14,7 @@ class user_control extends CI_Controller
 	public function index()
 	{
 		//echo  'hello panda';
-		$this->template->load('template', 'user');
+		$this->template->load('template', 'user_view');
 	}
 
 	public function get_data()

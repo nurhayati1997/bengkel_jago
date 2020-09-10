@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class keuntungan_control extends CI_Controller
+class keuntungan extends CI_Controller
 {
 	public function __construct()
 	{
@@ -13,7 +13,7 @@ class keuntungan_control extends CI_Controller
 	public function index()
 	{
 		//echo  'hello panda';
-		$this->template->load('template', 'keuntungan');
+		$this->template->load('template', 'keuntungan_view');
 	}
 
 	public function getDataBarang()

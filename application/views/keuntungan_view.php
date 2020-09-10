@@ -54,54 +54,65 @@
 							<div class="card">
 								<div class="card-header">
 									<div class="d-flex align-items-center">
-										<h4 class="card-title">Data Transaksi</h4>
-										<!-- <a class="btn btn-primary btn-border btn-round mr-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Hutang</a> -->
-										<button class="btn btn-succes btn-round ml-auto" data-toggle="collapse" href="#collapseExample">
-											<i class="fas fa-share "></i>
-											Action
-										</button>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="collapse" id="collapseExample">
-										<div class="card card-body">
-											<div class="row">
-												<div class="col-sm-4">
-													<button class="btn btn-warning btn-round ml-auto">
-														<i class="fas fa-cogs">Barang</i>
-													</button>
-												</div>
-												<div class="col-sm-4">
-													<button class="btn btn-warning btn-round ml-auto">
-														<i class="fas fa-car">Jasa Service</i>
-													</button>
-												</div>
-												<div class="col-sm-4">
-													<button class="btn btn-primary btn-round ml-auto" onclick="eksport()">
-														<i class="fas fa-print">Cetak</i>
-													</button>
+										<div class="col-sm-6">
+											<h4 class="card-title">Data Transaksi</h4>
+										</div>
+										<div class="col-sm-3">
+											<a class="btn btn-primary btn-border btn-round mr-2">Cetak</a>
+										</div>
+										<div class="col-sm-3">
+											<div class="dropdown">
+												<button class="btn btn-warning btn-round dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													Laporan
+												</button>
+												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+													<a class="dropdown-item" href="#">Barang</a>
+													<a class="dropdown-item" href="#">Jasa</a>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="table-responsive" id="tempat_tabel">
-
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="collapse" id="collapseExample">
+									<div class="card card-body">
+										<div class="row">
+											<div class="col-sm-4">
+												<button class="btn btn-warning btn-round ml-auto">
+													<i class="fas fa-cogs">Barang</i>
+												</button>
+											</div>
+											<div class="col-sm-4">
+												<button class="btn btn-warning btn-round ml-auto">
+													<i class="fas fa-car">Jasa Service</i>
+												</button>
+											</div>
+											<div class="col-sm-4">
+												<button class="btn btn-primary btn-round ml-auto" onclick="eksport()">
+													<i class="fas fa-print">Cetak</i>
+												</button>
+											</div>
+										</div>
 									</div>
-									<br />
-									<div class="col-sm-12 col-md-12">
-										<div class="card card-stats card-round">
-											<div class="card-body ">
-												<div class="row">
-													<div class="col-5">
-														<div class="icon-big text-center">
-															<i class="flaticon-coins text-success"></i>
-														</div>
+								</div>
+								<div class="table-responsive" id="tempat_tabel">
+
+								</div>
+								<br />
+								<div class="col-sm-12 col-md-12">
+									<div class="card card-stats card-round">
+										<div class="card-body ">
+											<div class="row">
+												<div class="col-5">
+													<div class="icon-big text-center">
+														<i class="flaticon-coins text-success"></i>
 													</div>
-													<div class="col-7 col-stats">
-														<div class="numbers">
-															<p class="card-category">Total Keuntungan :</p>
-															<h4 class="card-title" id="keuntungan">Rp. 3.000.000</h4>
-														</div>
+												</div>
+												<div class="col-7 col-stats">
+													<div class="numbers">
+														<p class="card-category">Total Keuntungan :</p>
+														<h4 class="card-title" id="keuntungan">Rp. 3.000.000</h4>
 													</div>
 												</div>
 											</div>
@@ -113,13 +124,14 @@
 					</div>
 				</div>
 			</div>
+			</div>
 
 			<script src="<?= base_url() ?>assets/js/plugin/chart.js/chart.min.js"></script>
 			<script>
 				var keuntungan = []
 				var hari = []
 				$.ajax({
-					url: '<?= base_url() ?>keuntungan_control/keuntunganMingguan',
+					url: '<?= base_url() ?>keuntungan/keuntunganMingguan',
 					method: 'post',
 					dataType: 'json',
 					success: function(data) {

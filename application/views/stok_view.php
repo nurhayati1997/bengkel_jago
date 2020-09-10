@@ -116,7 +116,7 @@
 				var noAman = 1;
 				var baris = '';
 				$.ajax({
-					url: '<?= base_url() ?>stok_control/get_data',
+					url: '<?= base_url() ?>stok/get_data',
 					method: 'post',
 					dataType: 'json',
 					success: function(data) {
@@ -142,7 +142,7 @@
 			function tryEdit(id) {
 				$("#id_barang").val(id)
 				$.ajax({
-					url: '<?= base_url() ?>stok_control/get_dataByid',
+					url: '<?= base_url() ?>stok/get_dataByid',
 					method: 'post',
 					data: "target=tbl_barang&id=" + id,
 					dataType: 'json',
@@ -158,7 +158,7 @@
 				var id = $("#id_barang").val()
 				var pagu = $("#pagu").val()
 				$.ajax({
-					url: '<?= base_url() ?>stok_control/ubah_data',
+					url: '<?= base_url() ?>stok/ubah_data',
 					method: 'post',
 					data: "target=tbl_barang&id=" + id + "&pagu=" + pagu,
 					dataType: 'json',

@@ -107,7 +107,7 @@
 							</div>
 						</div>
 						<div class="col-md-4">
-							<div class="card card-primary bg-primary-gradient">
+							<div class="card card-info">
 								<div class="card-body">
 									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Barang Terlaris</h4>
 									<div class="card-body pb-0">
@@ -118,7 +118,7 @@
 													<h6 class="fw-bold mb-1"><?= $terlaris[$i]["nama_barang"] ?></h6>
 												</div>
 												<div class="d-flex ml-auto align-items-center">
-													<h3 class="text-info fw-bold"><?= $terlaris[$i]["SUM(jumlah_penjualan)"] ?></h3>
+													<h3 class="text-default fw-bold"><?= $terlaris[$i]["SUM(jumlah_penjualan)"] ?></h3>
 												</div>
 											</div>
 										<?php } ?>

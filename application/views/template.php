@@ -82,7 +82,7 @@
 								<div class="avatar-sm">
 									<img src="<?= base_url() ?>assets/img/logo_user.jpg" alt="..." class="avatar-img rounded-circle">
 								</div>
-							</a>	
+							</a>
 						</li>
 					</ul>
 				</div>

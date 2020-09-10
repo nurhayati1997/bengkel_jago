@@ -58,7 +58,7 @@
 											<h4 class="card-title">Data Transaksi</h4>
 										</div>
 										<div class="col-sm-3">
-											<a class="btn btn-primary btn-border btn-round mr-2">Cetak</a>
+											<button class="btn btn-primary btn-border btn-round mr-2" onclick="eksport()">Cetak</button>
 										</div>
 										<div class="col-sm-3">
 											<div class="dropdown">
@@ -72,27 +72,6 @@
 								</div>
 							</div>
 							<div class="card-body">
-								<div class="collapse" id="collapseExample">
-									<div class="card card-body">
-										<div class="row">
-											<div class="col-sm-4">
-												<button class="btn btn-warning btn-round ml-auto">
-													<i class="fas fa-cogs">Barang</i>
-												</button>
-											</div>
-											<div class="col-sm-4">
-												<button class="btn btn-warning btn-round ml-auto">
-													<i class="fas fa-car">Jasa Service</i>
-												</button>
-											</div>
-											<div class="col-sm-4">
-												<button class="btn btn-primary btn-round ml-auto" onclick="eksport()">
-													<i class="fas fa-print">Cetak</i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
 								<div class="table-responsive" id="tempat_tabel">
 
 								</div>
@@ -284,9 +263,16 @@
 				}
 
 				function eksport() {
+					var target = ""
+					var jenisLaporan = $("#jenisLaporan").val();
+					if (jenisLaporan == "1") {
+						target = "vw_penjualan"
+					} else {
+						target = "vw_penjualan_jasa"
+					}
 					var tanggalMulai = $("#tanggalMulai").val()
 					var tanggalSelesai = $("#tanggalSelesai").val()
-					window.location.href = '<?= base_url() ?>keuntungan/eksport?tanggalMulai=' + tanggalMulai + '&tanggalSelesai=' + tanggalSelesai
+					window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + target + '&tanggalMulai=' + tanggalMulai + '&tanggalSelesai=' + tanggalSelesai
 				}
 
 				function formatRupiah(angka, prefix) {

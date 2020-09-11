@@ -1,51 +1,76 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-<<<<<<< HEAD:application/controllers/penjualan.php
-class penjualan extends CI_Controller {
-=======
-class piutang_control extends CI_Controller
+class penjualan extends CI_Controller
 {
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('db_model');
 	}
->>>>>>> inas:application/controllers/piutang_control.php
-
 
 	public function index()
 	{
-<<<<<<< HEAD:application/controllers/penjualan.php
-        //echo  'hello panda';
-        $this->template->load('template','penjualan_view');
-=======
 		//echo  'hello panda';
-		$this->template->load('template', 'piutang');
+		$this->template->load('template', 'penjualan_view');
 	}
-	public function tampil()
+
+	public function list()
 	{
-		$query = "select * FROM view_penjualan INNER JOIN view_piutang on view_piutang.id_transaksi = view_penjualan.id_transaksi GROUP BY view_penjualan.id_transaksi";
-		// echo json_encode($this->db_model->get_all('v_piutang')->result());
-		echo json_encode($this->db_model->get_query($query)->result());
+		echo json_encode($this->db_model->get_all("tbl_jasa")->result());
 	}
-	function ubah_list()
+	public function list_client()
 	{
-		// echo json_encode('');
-		echo json_encode($this->db_model->get_where('view_penjualan', ["id_transaksi" => $this->input->post('id', TRUE)])->result());
+		echo json_encode($this->db_model->get_all("tbl_client")->result());
 	}
-	function ubah_list_jasa()
+	public function transaksi()
 	{
-		// echo json_encode('');
-		echo json_encode($this->db_model->get_where('view_penjualan_jasa', ["id_transaksi" => $this->input->post('id', TRUE)])->result());
+		date_default_timezone_set('Asia/Jakarta');
+		$tgl = date('Y-m-d');
+
+		$data = [
+			"id_pengguna" => 1,
+			"tgl_transaksi" => $tgl
+		];
+		echo json_encode($this->db_model->insert_get("tbl_transaksi", $data));
 	}
-	public function ubah()
+	public function jual_hutang()
 	{
 		$data = [
-			"status_piutang" => $this->input->post("status", TRUE)
+			"id_transaksi" => $this->input->post("id", TRUE),
+			"tgl_jatuh_tempo" => $this->input->post("tgl", TRUE),
+			"id_client" => $this->input->post("client", TRUE),
+			"status_piutang" => 0
 		];
-		$this->db_model->update('tbl_piutang', $data, array('id_transaksi' => $this->input->post('id', TRUE)));
-		echo json_encode($data);
->>>>>>> inas:application/controllers/piutang_control.php
+		echo json_encode($this->db_model->insert('tbl_piutang', $data));
+	}
+	public function barang_insert()
+	{
+		$data = [
+			"id_transaksi" => $this->input->post("id_transaksi", TRUE),
+			"id_barang" => $this->input->post("id_barang", TRUE),
+			"jumlah_penjualan" => $this->input->post("jumlah", TRUE),
+			"harga_jual" => $this->input->post("harga", TRUE),
+			"harga_kulak" => $this->input->post("harga_kulak", TRUE)
+		];
+		$this->db_model->insert('tbl_penjualan', $data);
+
+		$lama = (int) $this->input->post("stok", TRUE) - (int)$this->input->post("jumlah", TRUE);
+		$data = [
+			"stok_barang" =>  $lama
+		];
+
+		$this->db_model->update('tbl_barang', $data, array('id_barang' => $this->input->post('id_barang', TRUE)));
+
+		echo json_encode('');
+	}
+	public function jasa_insert()
+	{
+		$data = [
+			"id_transaksi" => $this->input->post("id_transaksi", TRUE),
+			"id_jasa" => $this->input->post("id_jasa", TRUE),
+		];
+		echo json_encode($this->db_model->insert('tbl_penjualan_jasa', $data));
 	}
 }

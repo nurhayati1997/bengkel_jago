@@ -13,7 +13,7 @@ class pembelian_control extends CI_Controller
 	public function index()
 	{
 		//echo  'hello panda';
-		$this->template->load('template', 'pembelian');
+		$this->template->load('template', 'pembelian_view');
 	}
 
 	public function list()

@@ -328,7 +328,7 @@
 					'&jenis=' + document.getElementById("jenis").value + '&nama=' + document.getElementById("nama").value +
 					'&distributor=' + document.getElementById("distributor").value + '&satuan=' + document.getElementById("satuan").value +
 					'&jual=' + document.getElementById("jual").value + '&merk=' + document.getElementById("merk").value + '&pagu=' + document.getElementById("pagu").value,
-				url: '<?= base_url() ?>barang_control/tambah',
+				url: '<?= base_url() ?>barang/tambah',
 				dataType: 'json',
 				success: function(data) {
 					document.getElementById("kode").value = "";
@@ -351,7 +351,7 @@
 		$('#myTable').DataTable({
 			destroy: true,
 			"ajax": {
-				"url": "<?php echo site_url("barang_control/tampil") ?>",
+				"url": "<?php echo site_url("barang/tampil") ?>",
 				"dataSrc": ""
 			},
 			"columns": [{
@@ -410,7 +410,7 @@
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
-			url: '<?= base_url() ?>barang_control/ubah_list',
+			url: '<?= base_url() ?>barang/ubah_list',
 			dataType: 'json',
 			success: function(data) {
 				// console.log(data);
@@ -441,7 +441,7 @@
 				'&distributor=' + document.getElementById("ubah_distributor").value + '&satuan=' + document.getElementById("ubah_satuan").value +
 				'&jual=' + document.getElementById("ubah_jual").value + '&merk=' + document.getElementById("ubah_merk").value +
 				'&stok=' + document.getElementById("ubah_stok").value + '&pagu=' + document.getElementById("ubah_pagu").value,
-			url: '<?= base_url() ?>barang_control/ubah',
+			url: '<?= base_url() ?>barang/ubah',
 			dataType: 'json',
 			success: function(data) {
 				// console.log(data);
@@ -461,7 +461,7 @@
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
-			url: '<?= base_url() ?>barang_control/hapus',
+			url: '<?= base_url() ?>barang/hapus',
 			dataType: 'json',
 			success: function(data) {
 				// console.log(data);

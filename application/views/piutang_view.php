@@ -101,9 +101,6 @@
 						</div>
 					</div>
 				</div>
-<<<<<<< HEAD:application/views/piutang_view.php
-			</div>
-=======
 			</div>
 		</div>
 	</div>
@@ -120,7 +117,7 @@
 		$('#tabel_piutang').DataTable({
 			destroy: true,
 			"ajax": {
-				"url": "<?php echo site_url("piutang_control/tampil") ?>",
+				"url": "<?php echo site_url("piutang/tampil") ?>",
 				"dataSrc": ""
 			},
 			"columns": [{
@@ -184,7 +181,7 @@
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
-			url: '<?= base_url() ?>piutang_control/ubah_list',
+			url: '<?= base_url() ?>piutang/ubah_list',
 			dataType: 'json',
 			success: function(data) {
 				// console.log(data);
@@ -213,7 +210,7 @@
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
-			url: '<?= base_url() ?>piutang_control/ubah_list_jasa',
+			url: '<?= base_url() ?>piutang/ubah_list_jasa',
 			dataType: 'json',
 			success: function(data) {
 				// console.log(data);
@@ -237,7 +234,7 @@
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id + '&status=' + document.getElementById('status').value,
-			url: '<?= base_url() ?>piutang_control/ubah',
+			url: '<?= base_url() ?>piutang/ubah',
 			dataType: 'json',
 			success: function(data) {
 				ambil_data();
@@ -246,4 +243,3 @@
 		});
 	}
 </script>
->>>>>>> inas:application/views/piutang.php

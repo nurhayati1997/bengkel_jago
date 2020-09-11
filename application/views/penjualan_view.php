@@ -34,13 +34,6 @@
 
 									</datalist>
 								</div>
-<<<<<<< HEAD:application/views/penjualan_view.php
-								<div class="price-value">
-									<div class="value">
-										<span class="currency">Penjualan</span>
-										<span class="month">Barang</span>
-									</div>
-=======
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
@@ -65,7 +58,6 @@
 								<div class="form-group">
 									<label for="total">Total</label>
 									<input type="text" class="form-control input-pill" id="total" placeholder="Rp" readonly>
->>>>>>> inas:application/views/penjualan.php
 								</div>
 							</div>
 						</div>
@@ -147,123 +139,6 @@
 								</form>
 							</div>
 						</div>
-<<<<<<< HEAD:application/views/penjualan_view.php
-						<div class="col-md-6">
-						<div class="card">
-								<div class="card-header">
-									<div class="d-flex align-items-center">
-										<h4 class="card-title">Data Transaksi</h4>
-										<div class="ml-md-auto py-2 py-md-0">
-											<a class="btn btn-primary btn-border btn-round mr-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Hutang</a>
-											<a href="#" class="btn btn-success btn-round">Tambah</a>
-										</div>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="collapse" id="collapseExample">
-										<div class="card-body">
-											<form>
-												<div class="row">
-													<div class="col-sm-12">
-														<div class="form-group">
-															<label for="pillSelect">Nama Client</label>
-															<select class="form-control input-pill" id="pillSelect" placeholder="Pill Input">
-																<option>mohammad client</option>
-																<option>siti client</option>
-																<option>abdul pelanggan</option>
-															</select>
-														</div>
-													</div>
-													<div class="ml-md-auto py-2 py-md-0">
-														<a href="#" class="btn btn-primary btn-round">Tambah Hutang</a>
-													</div>
-												</div>
-											</form>
-										</div>
-									</div>
-									<div class="table-responsive">
-										<table id="add-row" class="display table table-striped table-hover" >
-											<thead>
-												<tr>
-													<th>Kode</th>
-													<th>Nama</th>
-													<th>Harga</th>
-													<th style="width: 10%">Action</th>
-												</tr>
-											</thead>
-											<tfoot>
-												<tr>
-													<th colspan="3">TOTAL</th>
-													<th></th>
-												</tr>
-											</tfoot>
-											<tbody>
-												<tr>
-													<td>001</td>
-													<td>System Architect</td>
-													<td>200.000</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>006</td>
-													<td>Accountant</td>
-													<td>450.000</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>007</td>
-													<td>Junior Technical Author</td>
-													<td>067</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>023</td>
-													<td>Software Engineer</td>
-													<td>54.000</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-=======
 						<div class="table-responsive">
 							<table id="tabel_penjualan" class="display table table-striped table-hover">
 								<thead>
@@ -297,7 +172,6 @@
 
 								</tbody>
 							</table>
->>>>>>> inas:application/views/penjualan.php
 						</div>
 					</div>
 				</div>
@@ -361,7 +235,7 @@
 		if (document.getElementById('nama_client').value != "" && document.getElementById('tgl').value != "") {
 			$.ajax({
 				type: 'POST',
-				url: '<?= base_url() ?>penjualan_control/transaksi',
+				url: '<?= base_url() ?>penjualan/transaksi',
 				data: 'transaksi=' + transaksi,
 				dataType: 'json',
 				success: function(data) {
@@ -377,7 +251,7 @@
 		// console.log(transaksi);
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>penjualan_control/jual_hutang',
+			url: '<?= base_url() ?>penjualan/jual_hutang',
 			data: 'id=' + id + '&tgl=' + document.getElementById('tgl').value + '&client=' + id_klien,
 			dataType: 'json',
 			success: function(data) {
@@ -398,7 +272,7 @@
 		// console.log(transaksi);
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>penjualan_control/transaksi',
+			url: '<?= base_url() ?>penjualan/transaksi',
 			data: 'transaksi=' + transaksi,
 			dataType: 'json',
 			success: function(data) {
@@ -418,7 +292,7 @@
 			if (transaksi[i].tipe == 0) {
 				$.ajax({
 					type: 'POST',
-					url: '<?= base_url() ?>penjualan_control/barang_insert',
+					url: '<?= base_url() ?>penjualan/barang_insert',
 					data: 'id_transaksi=' + id + '&id_barang=' + transaksi[i].id +
 						'&jumlah=' + transaksi[i].jumlah + '&harga=' + transaksi[i].harga +
 						'&harga_kulak=' + transaksi[i].harga_kulak + '&stok=' + transaksi[i].stok,
@@ -430,7 +304,7 @@
 			} else {
 				$.ajax({
 					type: 'POST',
-					url: '<?= base_url() ?>penjualan_control/jasa_insert',
+					url: '<?= base_url() ?>penjualan/jasa_insert',
 					data: 'id_transaksi=' + id + '&id_jasa=' + transaksi[i].id,
 					dataType: 'json',
 					success: function(data) {
@@ -444,7 +318,7 @@
 	function list() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>pembelian_control/list',
+			url: '<?= base_url() ?>pembelian/list',
 			dataType: 'json',
 			success: function(data) {
 				// console.log(data);
@@ -461,7 +335,7 @@
 	function list_client() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>penjualan_control/list_client',
+			url: '<?= base_url() ?>penjualan/list_client',
 			dataType: 'json',
 			success: function(data) {
 				klien = data;
@@ -553,7 +427,7 @@
 	function list_jasa() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>penjualan_control/list',
+			url: '<?= base_url() ?>penjualan/list',
 			dataType: 'json',
 			success: function(data) {
 				jasa = data;

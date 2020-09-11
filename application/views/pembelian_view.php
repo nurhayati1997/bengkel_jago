@@ -218,7 +218,7 @@
 	function list() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>pembelian_control/list',
+			url: '<?= base_url() ?>pembelian/list',
 			dataType: 'json',
 			success: function(data) {
 				barang = data;
@@ -292,7 +292,7 @@
 		if (document.getElementById('kode').value != "" && document.getElementById('harga').value != "" && document.getElementById('jumlah').value != '') {
 			$.ajax({
 				type: 'POST',
-				url: '<?= base_url() ?>pembelian_control/tambah',
+				url: '<?= base_url() ?>pembelian/tambah',
 				data: 'id=' + id_selected + '&jumlah=' + document.getElementById('jumlah').value + '&harga=' + document.getElementById('harga').value +
 					'&stok=' + stok,
 				dataType: 'json',
@@ -321,7 +321,7 @@
 		if (document.getElementById('ubah_kode').value != "" && document.getElementById('ubah_harga').value != "" && document.getElementById('ubah_jumlah').value != '') {
 			$.ajax({
 				type: 'POST',
-				url: '<?= base_url() ?>pembelian_control/ubah',
+				url: '<?= base_url() ?>pembelian/ubah',
 				data: 'id_pembelian=' + id_pembelian + '&id_barang=' + id_barang + '&jumlah=' + document.getElementById('ubah_jumlah').value +
 					'&stok=' + stok + '&stok_ubah=' + stok_ubah,
 				dataType: 'json',
@@ -338,7 +338,7 @@
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
-			url: '<?= base_url() ?>pembelian_control/hapus',
+			url: '<?= base_url() ?>pembelian/hapus',
 			dataType: 'json',
 			success: function(data) {
 				console.log(data);
@@ -352,7 +352,7 @@
 		$('#tabel_pembelian').DataTable({
 			destroy: true,
 			"ajax": {
-				"url": "<?php echo site_url("pembelian_control/tampil") ?>",
+				"url": "<?php echo site_url("pembelian/tampil") ?>",
 				"dataSrc": ""
 			},
 			"columns": [{
@@ -398,7 +398,7 @@
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
-			url: '<?= base_url() ?>pembelian_control/ubah_list',
+			url: '<?= base_url() ?>pembelian/ubah_list',
 			dataType: 'json',
 			success: function(data) {
 				// console.log(data);

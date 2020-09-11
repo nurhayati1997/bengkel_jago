@@ -109,7 +109,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="col-sm-12">
+						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="nama">Nama Barang</label>
 								<input type="text" class="form-control input-pill" id="nama" placeholder="">
@@ -137,6 +137,12 @@
 							<div class="form-group">
 								<label for="jual">Harga jual</label>
 								<input type="number" min="0" class="form-control input-pill" id="jual" placeholder="Rp">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="pagu">Jumlah Pagu</label>
+								<input type="number" min="0" class="form-control input-pill" id="pagu" placeholder="">
 							</div>
 						</div>
 					</div>
@@ -184,7 +190,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="col-sm-12">
+						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="ubah_nama">Nama Barang</label>
 								<input type="text" class="form-control input-pill" id="ubah_nama" placeholder="barang">
@@ -220,7 +226,12 @@
 								<input type="text" class="form-control input-pill" id="ubah_distributor" placeholder="">
 							</div>
 						</div>
-
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="ubah_pagu">Jumlah Pagu</label>
+								<input type="number" min="0" class="form-control input-pill" id="ubah_pagu" placeholder="">
+							</div>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -283,6 +294,9 @@
 	});
 
 	function tambah() {
+		if (document.getElementById("pagu").value == "") {
+			document.getElementById("pagu").focus();
+		}
 		if (document.getElementById("jual").value == "") {
 			document.getElementById("jual").focus();
 		}
@@ -303,14 +317,17 @@
 		}
 		if (document.getElementById("kode").value == "") {
 			document.getElementById("kode").focus();
-		} else {
+		}
+		if (document.getElementById("kode").value != "" && document.getElementById("jenis").value != "" && document.getElementById("nama").value != "" &&
+			document.getElementById("distributor").value != "" && document.getElementById("merk").value != "" && document.getElementById("satuan").value != "" &&
+			document.getElementById("jual").value != "" && document.getElementById("pagu").value != "") {
 			// console.log("sukses");
 			$.ajax({
 				type: 'POST',
 				data: 'tabel="tbl_barang"' + '&kode=' + document.getElementById("kode").value +
 					'&jenis=' + document.getElementById("jenis").value + '&nama=' + document.getElementById("nama").value +
 					'&distributor=' + document.getElementById("distributor").value + '&satuan=' + document.getElementById("satuan").value +
-					'&jual=' + document.getElementById("jual").value + '&merk=' + document.getElementById("merk").value,
+					'&jual=' + document.getElementById("jual").value + '&merk=' + document.getElementById("merk").value + '&pagu=' + document.getElementById("pagu").value,
 				url: '<?= base_url() ?>barang_control/tambah',
 				dataType: 'json',
 				success: function(data) {
@@ -321,6 +338,7 @@
 					document.getElementById("distributor").value = "";
 					document.getElementById("satuan").value = "";
 					document.getElementById("jual").value = "";
+					document.getElementById("pagu").value = "";
 
 					ambil_data();
 				}
@@ -369,14 +387,17 @@
 					"data": "id_barang",
 					"render": function(data, type, row) {
 						// Tampilkan kolom aksi
-						var html = '<div class="form-button-action">' +
-							'<button onclick="ubah_list(' + data + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">' +
-							'<i class="fa fa-edit"></i>' +
-							'</button>' +
-							'<button onclick="hapus_list(' + data + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">' +
-							'<i class="fa fa-times"></i>' +
-							'</button>' +
-							'</div>';
+						var html = "";
+						if (row.hapus == 0) {
+							html += '<div class="form-button-action">' +
+								'<button onclick="ubah_list(' + data + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">' +
+								'<i class="fa fa-edit"></i>' +
+								'</button>' + '<button onclick="hapus_list(' + data + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">' +
+								'<i class="fa fa-times"></i>' +
+								'</button>' +
+								'</div>';
+						}
+
 						return html
 					}
 
@@ -402,6 +423,7 @@
 					document.getElementById("ubah_satuan").value = data[i].harga_kulak;
 					document.getElementById("ubah_jual").value = data[i].harga_jual;
 					document.getElementById("ubah_stok").value = data[i].stok_barang;
+					document.getElementById("ubah_pagu").value = data[i].pagu;
 					var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
 					$("#ubahModal_tombol").html(html);
 
@@ -418,7 +440,7 @@
 				'&jenis=' + document.getElementById("ubah_jenis").value + '&nama=' + document.getElementById("ubah_nama").value +
 				'&distributor=' + document.getElementById("ubah_distributor").value + '&satuan=' + document.getElementById("ubah_satuan").value +
 				'&jual=' + document.getElementById("ubah_jual").value + '&merk=' + document.getElementById("ubah_merk").value +
-				'&stok=' + document.getElementById("ubah_stok").value,
+				'&stok=' + document.getElementById("ubah_stok").value + '&pagu=' + document.getElementById("ubah_pagu").value,
 			url: '<?= base_url() ?>barang_control/ubah',
 			dataType: 'json',
 			success: function(data) {

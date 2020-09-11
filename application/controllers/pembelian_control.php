@@ -18,7 +18,7 @@ class pembelian_control extends CI_Controller
 
 	public function list()
 	{
-		echo json_encode($this->db_model->get_all("tbl_barang")->result());
+		echo json_encode($this->db_model->get_where('tbl_barang', ["hapus" => 0])->result());
 	}
 	public function tambah()
 	{

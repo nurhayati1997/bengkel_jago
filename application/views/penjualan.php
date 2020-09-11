@@ -51,6 +51,7 @@
 								<div class="form-group">
 									<label for="harga">Harga</label>
 									<input type="text" class="form-control input-pill" id="harga" placeholder="Rp" readonly>
+									<input type="text" class="form-control input-pill" id="harga_kulak" placeholder="Rp" style="display: none;">
 								</div>
 							</div>
 							<div class="col-sm-6">
@@ -105,8 +106,8 @@
 						<div class="d-flex align-items-center">
 							<h4 class="card-title">Data Transaksi</h4>
 							<div class="ml-md-auto py-2 py-md-0">
-								<a class="btn btn-primary btn-border btn-round mr-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Hutang</a>
-								<a href="#" class="btn btn-secondary btn-round">Simpan</a>
+								<a onclick="hutang_cek()" class="btn btn-primary btn-border btn-round mr-2">Hutang</a>
+								<a onclick="simpan_penjualan()" class="btn btn-secondary btn-round">Simpan</a>
 							</div>
 
 						</div>
@@ -120,8 +121,8 @@
 										<div class="col-sm-12">
 											<div class="form-group">
 												<label for="nama_client">Nama Client</label>
-												<input type="text" class="form-control input-pill" id="nama_client" list="list_client">
-												<datalist id="list_client">
+												<input oninput="tampil_data_kode_klien()" onchange="tampil_data_kode_klien()" type="text" class="form-control input-pill" id="nama_client" list="list_client">
+												<datalist oninput="tampil_data_kode_klien()" onchange="tampil_data_kode_klien()" id="list_client">
 
 												</datalist>
 											</div>
@@ -152,7 +153,9 @@
 								<tfoot>
 									<tr>
 										<th>TOTAL</th>
-										<th colspan="4" id="total_bayar"></th>
+										<th colspan="4">
+											<form><input type="number" min="0" class="form-control input-pill" id="total_bayar" placeholder="Rp" readonly></form>
+										</th>
 									</tr>
 									<tr>
 										<th>BAYAR</th>
@@ -180,9 +183,15 @@
 <script>
 	var barang = [];
 	var jasa = [];
+	var klien = [];
+
 	var id_selected = '';
+	var id_klien = '';
 	var transaksi = [];
 	var total = 0;
+	var hutang = 0;
+
+	var stok = 0;
 	$(document).ready(function() {
 		list();
 		list_jasa();
@@ -198,12 +207,121 @@
 		});
 	});
 
+	function hutang_cek() {
+		if (hutang == 0) {
+			document.getElementById('collapseExample').style.display = 'block';
+			hutang = 1;
+		} else {
+			document.getElementById('collapseExample').style.display = 'none';
+			hutang = 0;
+		}
+	}
+
+	function simpan_penjualan() {
+		if (hutang == 0) {
+			jual_biasa();
+		} else {
+			jual_hutang();
+		}
+	}
+
+	function jual_hutang() {
+		if (document.getElementById('tgl').value == "") {
+			document.getElementById('tgl').focus();
+		}
+		if (document.getElementById('nama_client').value == "") {
+			document.getElementById('nama_client').focus();
+		}
+		if (document.getElementById('nama_client').value != "" && document.getElementById('tgl').value != "") {
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url() ?>penjualan_control/transaksi',
+				data: 'transaksi=' + transaksi,
+				dataType: 'json',
+				success: function(data) {
+					// console.log(data);
+					looping(data);
+					piutang(data);
+				}
+			});
+		}
+	}
+
+	function piutang(id) {
+		// console.log(transaksi);
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() ?>penjualan_control/jual_hutang',
+			data: 'id=' + id + '&tgl=' + document.getElementById('tgl').value + '&client=' + id_klien,
+			dataType: 'json',
+			success: function(data) {
+				transaksi = [];
+				hutang_cek();
+				document.getElementById('nama_client').value = ""
+				document.getElementById('tgl').value = "";
+
+				document.getElementById('total_bayar').value = "";
+				document.getElementById('bayar').value = "";
+				total = 0;
+				ambil_data();
+			}
+		});
+	}
+
+	function jual_biasa() {
+		// console.log(transaksi);
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() ?>penjualan_control/transaksi',
+			data: 'transaksi=' + transaksi,
+			dataType: 'json',
+			success: function(data) {
+				// console.log(data);
+				looping(data);
+				transaksi = [];
+				document.getElementById('total_bayar').value = "";
+				document.getElementById('bayar').value = "";
+				total = 0;
+				ambil_data();
+			}
+		});
+	}
+
+	function looping(id) {
+		for (var i = 0; i < transaksi.length; i++) {
+			if (transaksi[i].tipe == 0) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= base_url() ?>penjualan_control/barang_insert',
+					data: 'id_transaksi=' + id + '&id_barang=' + transaksi[i].id +
+						'&jumlah=' + transaksi[i].jumlah + '&harga=' + transaksi[i].harga +
+						'&harga_kulak=' + transaksi[i].harga_kulak + '&stok=' + transaksi[i].stok,
+					dataType: 'json',
+					success: function(data) {
+
+					}
+				});
+			} else {
+				$.ajax({
+					type: 'POST',
+					url: '<?= base_url() ?>penjualan_control/jasa_insert',
+					data: 'id_transaksi=' + id + '&id_jasa=' + transaksi[i].id,
+					dataType: 'json',
+					success: function(data) {
+
+					}
+				});
+			}
+		}
+	}
+
 	function list() {
 		$.ajax({
 			type: 'POST',
 			url: '<?= base_url() ?>pembelian_control/list',
 			dataType: 'json',
 			success: function(data) {
+				// console.log(data);
 				barang = data;
 				var html = '';
 				for (var i = 0; i < data.length; i++) {
@@ -220,7 +338,7 @@
 			url: '<?= base_url() ?>penjualan_control/list_client',
 			dataType: 'json',
 			success: function(data) {
-				barang = data;
+				klien = data;
 				var html = '';
 				for (var i = 0; i < data.length; i++) {
 					html += '<option value="' + data[i].nama_client + '">';
@@ -256,7 +374,7 @@
 				'</tr>';
 		}
 		$("#myTabel").html(html);
-		$("#total_bayar").html(total);
+		document.getElementById('total_bayar').value = total;
 		$("#tabel_penjualan").dataTable().fnDestroy();
 	}
 
@@ -273,15 +391,26 @@
 	}
 
 	function tampil_data_kode() {
+		console.log(barang);
 		// alert(document.getElementById('kode').value);
 		for (var i = 0; i < barang.length; i++) {
 			if (document.getElementById('kode').value == barang[i].kode_barang) {
 				document.getElementById('nama').value = barang[i].nama_barang;
 				document.getElementById('harga').value = barang[i].harga_jual;
+				document.getElementById('harga_kulak').value = barang[i].harga_kulak;
 
 				id_selected = barang[i].id_barang;
-
+				stok = barang[i].stok_barang;
 				jumlah_barang();
+			}
+		}
+	}
+
+	function tampil_data_kode_klien() {
+		// alert(document.getElementById('kode').value);
+		for (var i = 0; i < klien.length; i++) {
+			if (document.getElementById('nama_client').value == klien[i].nama_client) {
+				id_klien = klien[i].id_client;
 			}
 		}
 	}
@@ -337,7 +466,8 @@
 				"id": id_selected,
 				"nama": document.getElementById('nama').value,
 				"jumlah": document.getElementById('jumlah').value,
-				"harga": document.getElementById('harga').value
+				"harga": document.getElementById('harga').value,
+				"stok": stok
 			};
 
 			document.getElementById('kode').value = "";
@@ -365,7 +495,9 @@
 				"id": id_selected,
 				"nama": document.getElementById('kode_jasa').value,
 				"jumlah": "1",
-				"harga": document.getElementById('harga_jasa').value
+				"harga": document.getElementById('harga_jasa').value,
+				"harga_kulak": document.getElementById('harga_jasa').value,
+				"stok": 0
 			};
 
 			document.getElementById('kode_jasa').value = "";

@@ -10,7 +10,11 @@ class Db_model extends CI_Model
     {
         return $this->db->get_where($table, $where);
     }
-
+    public function insert_get($tabel, $data)
+    {
+        $this->db->insert($tabel, $data);
+        return $this->db->insert_id();
+    }
     public function get_query($query)
     {
         return $this->db->query($query);

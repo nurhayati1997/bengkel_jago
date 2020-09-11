@@ -20,7 +20,7 @@ class user extends CI_Controller
 	public function get_data()
 	{
 		$tabel = $this->input->post("target");
-		$data = $this->db_model->get_where($tabel, ["hapus", 0])->result_array();
+		$data = $this->db_model->get_where($tabel, ["hapus" => 0])->result_array();
 		echo json_encode($data);
 	}
 

@@ -146,6 +146,9 @@
 							}
 							baris += '</tbody></table>'
 							$("#tabel_user").html(baris)
+							$('#add-row').DataTable({
+								"pageLength": 5,
+							});
 						}
 					});
 				}

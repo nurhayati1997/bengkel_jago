@@ -221,6 +221,10 @@
 							tabel += '</tbody></table>'
 							$("#tempat_tabel").html(tabel)
 							$("#keuntungan").html('Rp. ' + totalKeuntungan)
+
+							$('#add-row').DataTable({
+								"pageLength": 5,
+							});
 						}
 					});
 				}

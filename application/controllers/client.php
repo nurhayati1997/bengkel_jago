@@ -19,7 +19,7 @@ class client extends CI_Controller
 	public function get_data()
 	{
 		$tabel = $this->input->post("target");
-		$data = $this->db_model->get_all($tabel)->result_array();
+		$data = $this->db_model->get_where($tabel, ["hapus"=>0])->result_array();
 		echo json_encode($data);
 	}
 
@@ -48,7 +48,7 @@ class client extends CI_Controller
 			$no_ktp = $this->input->post("no_ktp");
 			$no_hp = $this->input->post("no_hp");
 
-			$this->db_model->insert($tabel, ["nama_client" => $nama, "alamat" => $alamat, "no_ktp" => $no_ktp, "no_telp" => $no_hp]);
+			$this->db_model->insert($tabel, ["nama_client" => $nama, "alamat" => $alamat, "no_ktp" => $no_ktp, "no_telp" => $no_hp, "hapus"=>0]);
 			echo json_encode("");
 		}
 	}
@@ -94,7 +94,7 @@ class client extends CI_Controller
 	{
 		$tabel = $this->input->post("target");
 		$id = $this->input->post("id");
-		$this->db_model->delete($tabel, ["id_client" => $id]);
+		$this->db_model->update($tabel, ["hapus" => 1], ["id_client" => $id]);
 		echo json_encode("");
 	}
 }

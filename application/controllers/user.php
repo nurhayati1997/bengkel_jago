@@ -20,7 +20,7 @@ class user extends CI_Controller
 	public function get_data()
 	{
 		$tabel = $this->input->post("target");
-		$data = $this->db_model->get_all($tabel)->result_array();
+		$data = $this->db_model->get_where($tabel, ["hapus", 0])->result_array();
 		echo json_encode($data);
 	}
 
@@ -44,7 +44,7 @@ class user extends CI_Controller
 			$password = password_hash($this->input->post("password"), PASSWORD_DEFAULT);
 			$rule = $this->input->post("rule");
 
-			$this->db_model->insert($tabel, ["nama" => $nama, "password" => $password, "rule" => $rule]);
+			$this->db_model->insert($tabel, ["nama" => $nama, "password" => $password, "rule" => $rule, "hapus" => 0]);
 			echo json_encode("");
 		}
 	}
@@ -91,7 +91,7 @@ class user extends CI_Controller
 	{
 		$tabel = $this->input->post("target");
 		$id = $this->input->post("id");
-		$this->db_model->delete($tabel, ["id_pengguna" => $id]);
+		$this->db_model->update($tabel, ["hapus" => 1], ["id_pengguna" => $id]);
 		echo json_encode("");
 	}
 }

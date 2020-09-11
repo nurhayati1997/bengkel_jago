@@ -1,294 +1,249 @@
-			<div class="content">
-				<div class="panel-header bg-primary-gradient">
-					<div class="page-inner py-5">
-						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-							<div>
-								<h2 class="text-white pb-2 fw-bold">Piutang</h2>
-						
+<div class="content">
+	<div class="panel-header bg-primary-gradient">
+		<div class="page-inner py-5">
+			<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+				<div>
+					<h2 class="text-white pb-2 fw-bold">Piutang</h2>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="page-inner mt--5">
+		<div class="row mt--2">
+			<div class="col-sm-12">
+				<div class="card card-profile">
+					<div class="card-header" style="background-image: url('<?= base_url() ?>assets/img/blogpost.jpg')">
+						<div class="profile-picture">
+							<div class="avatar avatar-xl">
+								<img src="<?= base_url() ?>assets/img/pembelian.png" alt="..." class="avatar-img rounded-circle">
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="page-inner mt--5">
-				<div class="row mt--2">
-						<div class="col-sm-12">
-							<div class="card card-profile">
-								<div class="card-header" style="background-image: url('<?=base_url()?>assets/img/blogpost.jpg')">
-									<div class="profile-picture">
-										<div class="avatar avatar-xl">
-											<img src="<?=base_url()?>assets/img/pembelian.png" alt="..." class="avatar-img rounded-circle">
-										</div>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="user-profile text-center">
-										<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Data Piutang</h4>
-										<!-- <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+					<div class="card-body">
+						<div class="user-profile text-center">
+							<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Data Piutang</h4>
+							<!-- <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
 											<i class="fa fa-plus"></i>
 											Tambah Data
 										</button> -->
-								</div>
-								<div class="card-footer">
-									<!-- Modal -->
-									<div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header no-bd">
-													<h5 class="modal-title">
-														<span class="fw-mediumbold">Rician</span> 
-														<span class="fw-light">Hutang</span>
-													</h5>
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-												</div>
-												<div class="modal-body">
-													<div class="table-responsive">
-														<table id="add-row" class="display table table-striped table-hover" >
-															<thead>
-																<tr>
-																	<th>Kode</th>
-																	<th>Nama</th>
-																	<th>Harga</th>
-																	<th style="width: 10%">Action</th>
-																</tr>
-															</thead>
-															<tfoot>
-																<tr>
-																	<th colspan="3">TOTAL</th>
-																	<th></th>
-																</tr>
-															</tfoot>
-															<tbody>
-																<tr>
-																	<td>001</td>
-																	<td>System Architect</td>
-																	<td>200.000</td>
-																	<td>
-																		<div class="form-button-action">
-																			<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																				<i class="fa fa-edit"></i>
-																			</button>
-																			<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																				<i class="fa fa-times"></i>
-																			</button>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<td>006</td>
-																	<td>Accountant</td>
-																	<td>450.000</td>
-																	<td>
-																		<div class="form-button-action">
-																			<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																				<i class="fa fa-edit"></i>
-																			</button>
-																			<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																				<i class="fa fa-times"></i>
-																			</button>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<td>007</td>
-																	<td>Junior Technical Author</td>
-																	<td>067</td>
-																	<td>
-																		<div class="form-button-action">
-																			<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																				<i class="fa fa-edit"></i>
-																			</button>
-																			<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																				<i class="fa fa-times"></i>
-																			</button>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<td>023</td>
-																	<td>Software Engineer</td>
-																	<td>54.000</td>
-																	<td>
-																		<div class="form-button-action">
-																			<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																				<i class="fa fa-edit"></i>
-																			</button>
-																			<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																				<i class="fa fa-times"></i>
-																			</button>
-																		</div>
-																	</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</div>
-												<div class="modal-footer no-bd">
-													<button type="button" id="addRowButton" class="btn btn-primary">Add</button>
-													<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-												</div>
+						</div>
+						<div class="card-footer">
+							<!-- Modal -->
+							<div class="modal fade" id="ubahModal" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header no-bd">
+											<h5 class="modal-title">
+												<span class="fw-mediumbold">Rician</span>
+												<span class="fw-light">Hutang</span>
+											</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<div class="table-responsive">
+												<table id="piutang_list_data" class="display table table-striped table-hover">
+													<thead>
+														<tr>
+															<th>Kode</th>
+															<th>Nama</th>
+															<th>Merk</th>
+															<th>Jumlah</th>
+															<th>Harga</th>
+														</tr>
+													</thead>
+													<tfoot>
+														<tr>
+															<th>TOTAL</th>
+															<th colspan="4">
+																<form><input type="number" min="0" class="form-control input-pill" id="total_bayar" placeholder="Rp" readonly></form>
+															</th>
+														</tr>
+													</tfoot>
+													<tbody id="myList">
+
+													</tbody>
+												</table>
 											</div>
 										</div>
-									</div>
-
-									<div class="table-responsive">
-										<table id="add-row" class="display table table-striped table-hover">
-											<thead>
-												<tr>
-													<th>NO</th>
-													<th>NAMA CLIENT</th>
-													<th>TOTAL</th>
-													<th style="width: 10%">Action</th>
-												</tr>
-											</thead>
-											<!-- <tfoot>
-												<tr>
-													<th>Name</th>
-													<th>Position</th>
-													<th>Office</th>
-													<th>Age</th>
-													<th>Start date</th>
-													<th>Salary</th>
-												</tr>
-											</tfoot> -->
-											<tbody>
-												<tr>
-													<td>1</td>
-													<td>008</td>
-													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-																<i class="fa fa-plus"></i>
-																Rincian
-															</button>	
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>987</td>
-													<td>Tokyo</td>
-													<td>
-														<div class="form-button-action">
-															<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-																<i class="fa fa-plus"></i>
-																Rincian
-															</button>	
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td>876</td>
-													<td>San Francisco</td>
-													<td>
-														<div class="form-button-action">
-															<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-																<i class="fa fa-plus"></i>
-																Rincian
-															</button>	
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>867</td>
-													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-																<i class="fa fa-plus"></i>
-																Rincian
-															</button>	
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>5</td>
-													<td>005</td>
-													<td>Tokyo</td>
-													<td>
-														<div class="form-button-action">
-															<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-																<i class="fa fa-plus"></i>
-																Rincian
-															</button>	
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>6</td>
-													<td>342</td>
-													<td>New York</td>
-													<td>
-														<div class="form-button-action">
-															<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-																<i class="fa fa-plus"></i>
-																Rincian
-															</button>	
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>7</td>
-													<td>864</td>
-													<td>San Francisco</td>
-													<td>
-														<div class="form-button-action">
-															<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-																<i class="fa fa-plus"></i>
-																Rincian
-															</button>	
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>8</td>
-													<td>987</td>
-													<td>Tokyo</td>
-													<td>
-														<div class="form-button-action">
-															<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-																<i class="fa fa-plus"></i>
-																Rincian
-															</button>	
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>9</td>
-													<td>543</td>
-													<td>San Francisco</td>
-													<td>
-														<div class="form-button-action">
-															<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-																<i class="fa fa-plus"></i>
-																Rincian
-															</button>	
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>10</td>
-													<td>822</td>
-													<td>Edinburgh</td>
-													<td>
-														<div class="form-button-action">
-															<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-																<i class="fa fa-plus"></i>
-																Rincian
-															</button>	
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
+										<div class="modal-footer no-bd">
+											<div class="form-group">
+												<select class="form-control input-pill" id="status" placeholder="">
+													<option value="0">Hutang</option>
+													<option value="1">Lunas</option>
+												</select>
+											</div>
+											<div id="ubahModal_tombol"></div>
+										</div>
 									</div>
 								</div>
+							</div>
+
+							<div class="table-responsive">
+								<table id="tabel_piutang" class="display table table-striped table-hover">
+									<thead>
+										<tr>
+											<th>TANGGAL TRANSAKSI</th>
+											<th>JATUH TEMPO</th>
+											<th>NAMA CLIENT</th>
+											<th>STATUS</th>
+											<th style="width: 10%">Action</th>
+										</tr>
+									</thead>
+
+									<tbody>
+
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
+<<<<<<< HEAD:application/views/piutang_view.php
 			</div>
+=======
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	$(document).ready(function() {
+		// list();
+		ambil_data();
+	});
+
+	function ambil_data() {
+		$('#tabel_piutang').DataTable({
+			destroy: true,
+			"ajax": {
+				"url": "<?php echo site_url("piutang_control/tampil") ?>",
+				"dataSrc": ""
+			},
+			"columns": [{
+					"data": "tgl_transaksi"
+				},
+				{
+					"data": "tgl_jatuh_tempo"
+				},
+				{
+					"data": "nama_client"
+				},
+				{
+					"data": "status_piutang",
+					"render": function(data, type, row) {
+						if (data == 0) {
+							return "Hutang"
+						} else {
+							return "Lunas"
+						}
+
+					}
+				},
+				{
+					"data": "id_transaksi",
+					"render": function(data, type, row) {
+						// Tampilkan kolom aksi
+						var html = '<div class="form-button-action">' +
+							'<button onclick="ubah_list(' + data + ',' + row.status_piutang + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">' +
+							'<i class="fa fa-edit"></i>' +
+							'</button>';
+						return html
+					}
+
+				}
+			]
+		});
+	}
+
+	function ambil_data_piutang(transaksi, status) {
+		var html = '';
+		var total = 0;
+		for (var i = 0; i < transaksi.length; i++) {
+			var temp = parseInt(transaksi[i].jumlah) * parseInt(transaksi[i].harga);
+			total += temp;
+			// console.log(transaksi[i].tipe);
+			html += '<tr>' +
+				'<td>' + transaksi[i].kode + '</td>' +
+				'<td>' + transaksi[i].nama + '</td>' +
+				'<td>' + transaksi[i].merk + '</td>' +
+				'<td>' + transaksi[i].jumlah + '</td>' +
+				'<td>' + transaksi[i].harga + '</td>' +
+				'</tr>';
+		}
+		$("#myList").html(html);
+		document.getElementById('total_bayar').value = total;
+		document.getElementById('status').value = status;
+		$("#piutang_list_data").dataTable().fnDestroy();
+	}
+
+	function ubah_list(id, status) {
+		$.ajax({
+			type: 'POST',
+			data: 'id=' + id,
+			url: '<?= base_url() ?>piutang_control/ubah_list',
+			dataType: 'json',
+			success: function(data) {
+				// console.log(data);
+				var utang_list = [];
+				for (var i = 0; i < data.length; i++) {
+					var mydata = {
+						"kode": data[i].kode_barang,
+						"nama": data[i].nama_barang,
+						"jumlah": data[i].jumlah_penjualan,
+						"harga": data[i].harga_jual,
+						"merk": data[i].merk_barang
+					};
+
+					utang_list[utang_list.length] = mydata;
+				}
+				ubah_jasa(id);
+				var html = '<button onclick="ubah(' + id + ')" type="button" class="btn btn-primary">Simpan</button>';
+				$("#ubahModal_tombol").html(html);
+				ambil_data_piutang(utang_list, status);
+				$('#ubahModal').modal('show');
+			}
+		});
+	}
+
+	function ubah_jasa(id) {
+		$.ajax({
+			type: 'POST',
+			data: 'id=' + id,
+			url: '<?= base_url() ?>piutang_control/ubah_list_jasa',
+			dataType: 'json',
+			success: function(data) {
+				// console.log(data);
+				for (var i = 0; i < data.length; i++) {
+					var mydata = {
+						"kode": data[i].id_jasa,
+						"nama": data[i].nama_barang,
+						"jumlah": 1,
+						"harga": data[i].harga_jasa,
+						"merk": "-"
+					};
+
+					utang_list[utang_list.length] = mydata;
+				}
+
+			}
+		});
+	}
+
+	function ubah(id) {
+		$.ajax({
+			type: 'POST',
+			data: 'id=' + id + '&status=' + document.getElementById('status').value,
+			url: '<?= base_url() ?>piutang_control/ubah',
+			dataType: 'json',
+			success: function(data) {
+				ambil_data();
+				$('#ubahModal').modal('hide');
+			}
+		});
+	}
+</script>
+>>>>>>> inas:application/views/piutang.php

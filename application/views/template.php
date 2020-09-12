@@ -101,8 +101,16 @@
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Muhammad
-									<span class="user-level">Administrator</span>
+									<?= $this->session->userdata("nama") ?>
+									<span class="user-level">
+										<?php
+										if ($this->session->userdata("rule") == 1) {
+											echo "Administrator";
+										} else {
+											echo "Pegawai/Kasir";
+										}
+										?>
+									</span>
 								</span>
 							</a>
 						</div>

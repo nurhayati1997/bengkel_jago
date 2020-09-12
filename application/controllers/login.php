@@ -91,10 +91,4 @@ class login extends CI_Controller
 		$data['title'] = "Login";
 		redirect('login', $data);
 	}
-
-	public function blocked()
-	{
-		$data['title'] = "403 Forbidden";
-		$this->render_auth("auth/blocked", $data);
-	}
 }

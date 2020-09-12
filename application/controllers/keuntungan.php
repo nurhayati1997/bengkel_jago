@@ -21,6 +21,7 @@ class keuntungan extends CI_Controller
 		$target = $this->input->post('target');
 		$tanggalMulai = $this->input->post('tanggalMulai');
 		$tanggalSelesai = $this->input->post('tanggalSelesai');
+		$this->db->order_by("tgl_transaksi");
 		$data = $this->db_model->get_where("vw_penjualan", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
 		echo json_encode($data);
 	}
@@ -119,6 +120,7 @@ class keuntungan extends CI_Controller
 			$object->getActiveSheet()->setCellValueByColumnAndRow(4, 4, "KASIR");
 		}
 		//import tabel
+		$this->db->order_by("tgl_transaksi");
 		$data = $this->db_model->get_where($target, ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
 		$excel_row = 5;
 		for ($i = 0; $i < count($data); $i++) {
@@ -157,13 +159,21 @@ class keuntungan extends CI_Controller
 		$object->getActiveSheet()->getStyle('A' . $excel_row . ':' . $sampaiKolom . $excel_row)->applyFromArray($color_grey);
 		if ($target == "vw_penjualan") {
 			$object->getActiveSheet()->mergeCells('A' . $excel_row . ':' . 'E' . $excel_row);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(0, $excel_row, "TOTAL");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(5, $excel_row, "=SUM(F5:F" . ($excel_row - 1) . ")");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(6, $excel_row, "=SUM(G5:G" . ($excel_row - 1) . ")");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(7, $excel_row, "=SUM(H5:H" . ($excel_row - 1) . ")");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(8, $excel_row, "=SUM(I5:I" . ($excel_row - 1) . ")");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(9, $excel_row, "=SUM(J5:J" . ($excel_row - 1) . ")");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(3, $excel_row, "=SUM(D5:D" . ($excel_row - 1) . ")");
 		} else {
 			$object->getActiveSheet()->mergeCells('A' . $excel_row . ':' . 'C' . $excel_row);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(0, $excel_row, "TOTAL");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(3, $excel_row, "=SUM(D5:D" . ($excel_row - 1) . ")");
 		}
 
 		//isian total dibawah
-		$object->getActiveSheet()->setCellValueByColumnAndRow(0, $excel_row, "TOTAL");
-		$object->getActiveSheet()->setCellValueByColumnAndRow(3, $excel_row, "=SUM(D5:D" . ($excel_row - 1) . ")");
+
 
 		$object_writer = PHPExcel_IOFactory::createWriter($object, 'Excel5');
 		header('Content-Type: application/vnd.ms-excel');

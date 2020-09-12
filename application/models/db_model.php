@@ -45,7 +45,7 @@ class Db_model extends CI_Model
     {
         $this->db->select('*, SUM(jumlah_penjualan)');
         $this->db->group_by('id_barang');
-        $this->db->order_by('jumlah_penjualan ASC');
+        $this->db->order_by('SUM(jumlah_penjualan) DESC');
         return $this->db->get('vw_penjualan', 10);
     }
 

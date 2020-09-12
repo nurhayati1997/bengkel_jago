@@ -50,19 +50,7 @@
 													<form>
 														<input type="hidden" id="id_client" name="id_client" />
 														<div class="row">
-															<div class="col-sm-6">
-																<div class="form-group">
-																	<label for="pillSelect">Kode Client</label>
-																	<select class="form-control input-pill" id="pillSelect" placeholder="Pill Input">
-																		<option>001</option>
-																		<option>002</option>
-																		<option>003</option>
-																		<option>004</option>
-																		<option>005</option>
-																	</select>
-																</div>
-															</div>
-															<div class="col-sm-6">
+															<div class="col-sm-12">
 																<div class="form-group">
 																	<label for="nama">Nama Client</label>
 																	<input type="text" class="form-control input-pill" id="nama" name="nama" placeholder="Nama">

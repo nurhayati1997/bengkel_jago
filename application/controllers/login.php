@@ -16,6 +16,9 @@ class login extends CI_Controller
 		// if ($this->session->userdata("kode")) {
 		// 	redirect("dashboard");
 		// }
+		if ($this->session->userdata("id_pengguna")) {
+			redirect("dashboard");
+		}
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
 		if ($this->form_validation->run() == false) {
 			$data['title'] = "Login";
@@ -42,49 +45,51 @@ class login extends CI_Controller
 			if (password_verify($password, $user['password'])) {
 				$data = [
 					'id_pengguna' => $user['id_pengguna'],
-					'nama' => $user['nama']
+					'nama' => $user['nama'],
+					'rule' => $user['rule']
 				];
 				$this->session->set_userdata($data);
 
-				redirect('dashboard_control');
+				redirect('dashboard');
 			} else {
 				$this->session->set_flashdata('gagal_login', 'Maaf, Password anda salah :(');
-				$this->load->view('login', $data);
+				$this->load->view('login_view', $data);
 			}
 		} else {
 			$this->session->set_flashdata('gagal_login', 'Silahkan Pilih pengguna dulu ya :)');
-			$this->load->view('login', $data);
+			$this->load->view('login_view', $data);
 		}
 	}
 
-	public function ubahPassword()
-	{
-		$this->form_validation->set_rules('passBaru', 'Password', 'required|trim|min_length[5]|matches[passVerif]');
-		$this->form_validation->set_rules('passVerif', 'Verifikasi Password', 'required|trim|matches[passBaru]');
+	// public function ubahPassword()
+	// {
+	// 	$this->form_validation->set_rules('passBaru', 'Password', 'required|trim|min_length[5]|matches[passVerif]');
+	// 	$this->form_validation->set_rules('passVerif', 'Verifikasi Password', 'required|trim|matches[passBaru]');
 
-		$data['title'] = "Ubah password";
-		if ($this->form_validation->run()) {
-			$password = password_hash($this->$this->input->post("passBaru"), PASSWORD_DEFAULT);
-			$email = $this->session->userdata("reset_email");
+	// 	$data['title'] = "Ubah password";
+	// 	if ($this->form_validation->run()) {
+	// 		$password = password_hash($this->$this->input->post("passBaru"), PASSWORD_DEFAULT);
+	// 		$email = $this->session->userdata("reset_email");
 
-			$data = ["password" => $password];
-			$this->database_model->update("user", $data, ["email" => $email]);
+	// 		$data = ["password" => $password];
+	// 		$this->database_model->update("user", $data, ["email" => $email]);
 
-			$this->session->unset_userdata('reset_email');
+	// 		$this->session->unset_userdata('reset_email');
 
-			$this->session->set_flashdata('berhasil_logout', 'Password berhasil diubah. Silahkan Log in :)');
-			redirect('auth');
-		} else {
-			$this->render_auth("auth/resetPassword", $data);
-		}
-	}
+	// 		$this->session->set_flashdata('berhasil_logout', 'Password berhasil diubah. Silahkan Log in :)');
+	// 		redirect('auth');
+	// 	} else {
+	// 		$this->render_auth("auth/resetPassword", $data);
+	// 	}
+	// }
 
 	public function logout()
 	{
-		$this->session->unset_userdata('kode');
+		$this->session->unset_userdata('id_pengguna');
+		$this->session->unset_userdata('nama');
 		$this->session->set_flashdata('berhasil_logout', 'Anda telah berhasil log out. Terimkasih :)');
 		$data['title'] = "Login";
-		redirect('Auth', $data);
+		redirect('login', $data);
 	}
 
 	public function blocked()

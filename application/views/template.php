@@ -73,7 +73,7 @@
 							</a>
 						</li>
 						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link" href="<?= site_url('logout') ?>" title="logout" aria-expanded="false">
+							<a class="nav-link" href="<?= base_url('login/logout') ?>" title="logout" aria-expanded="false">
 								<i class="fas fa-arrow-circle-right"></i>
 							</a>
 						</li>
@@ -173,11 +173,15 @@
 							</a>
 							<div class="collapse" id="master">
 								<ul class="nav nav-collapse">
-									<li>
-										<a href="<?= site_url('user') ?>">
-											<span class="sub-item">User</span>
-										</a>
-									</li>
+									<?php
+									if ($this->session->userdata("rule") == 1) {
+									?>
+										<li>
+											<a href="<?= site_url('user') ?>">
+												<span class="sub-item">User</span>
+											</a>
+										</li>
+									<?php } ?>
 									<li>
 										<a href="<?= site_url('client') ?>">
 											<span class="sub-item">Client</span>

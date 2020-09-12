@@ -11,7 +11,9 @@ class piutang extends CI_Controller
 
 	public function index()
 	{
-		//echo  'hello panda';
+		if (!$this->session->userdata("id_pengguna")) {
+			redirect("login");
+		}
 		$this->template->load('template', 'piutang_view');
 	}
 	public function tampil()

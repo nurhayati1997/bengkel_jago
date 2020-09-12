@@ -318,7 +318,7 @@
 	function list() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>pembelian/list',
+			url: '<?= base_url() ?>pembelian/lista',
 			dataType: 'json',
 			success: function(data) {
 				// console.log(data);
@@ -427,7 +427,7 @@
 	function list_jasa() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>penjualan/list',
+			url: '<?= base_url() ?>penjualan/lista',
 			dataType: 'json',
 			success: function(data) {
 				jasa = data;

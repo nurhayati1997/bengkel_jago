@@ -18,7 +18,7 @@ class penjualan extends CI_Controller
 		$this->template->load('template', 'penjualan_view');
 	}
 
-	public function list()
+	public function lista()
 	{
 		echo json_encode($this->db_model->get_all("tbl_jasa")->result());
 	}

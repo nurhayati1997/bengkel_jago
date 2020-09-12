@@ -18,7 +18,7 @@ class pembelian extends CI_Controller
 		$this->template->load('template', 'pembelian_view');
 	}
 
-	public function list()
+	public function lista()
 	{
 		echo json_encode($this->db_model->get_where('tbl_barang', ["hapus" => 0])->result());
 	}

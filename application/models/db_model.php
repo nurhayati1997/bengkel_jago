@@ -60,7 +60,8 @@ class Db_model extends CI_Model
     function getJumlahTerbeli()
     {
         $this->db->select('SUM(jumlah_pembelian)');
-        $this->db->where('tgl_pembelian', date("Y/m/d"));
+        $this->db->where('tgl_pembelian >', date("Y/m/d") . " 00:00:00");
+        $this->db->where('tgl_pembelian <', date("Y/m/d") . " 23:59:59");
         $this->db->group_by('tgl_pembelian');
         return $this->db->get('tbl_pembelian');
     }

@@ -228,22 +228,18 @@
 	<!-- Datatables -->
 	<script src="<?= base_url() ?>assets/js/plugin/datatables/datatables.min.js"></script>
 
-<<<<<<< HEAD
 	<!-- jQuery Vector Maps -->
 	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
 	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
-=======
+
 	<!-- Bootstrap Notify -->
 	<script src="<?= base_url() ?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
->>>>>>> inas
-
 	<!-- Sweet Alert -->
 	<script src="<?= base_url() ?>assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 
 	<!-- Atlantis JS -->
 	<script src="<?= base_url() ?>assets/js/atlantis.min.js"></script>
 
-<<<<<<< HEAD
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 
 	<script>
@@ -293,8 +289,6 @@
 			});
 		});
 	</script>
-=======
->>>>>>> inas
 </body>
 
 </html>

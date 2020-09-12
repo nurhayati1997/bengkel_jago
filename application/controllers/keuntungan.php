@@ -77,7 +77,7 @@ class keuntungan extends CI_Controller
 		);
 
 		$teksTarget = "Barang";
-		$sampaiKolom = "K";
+		$sampaiKolom = "L";
 		if ($target == "vw_penjualan_jasa") {
 			$teksTarget = "Jasa";
 			$sampaiKolom = "E";
@@ -113,13 +113,15 @@ class keuntungan extends CI_Controller
 			$object->getActiveSheet()->setCellValueByColumnAndRow(7, 4, "QUANTITY");
 			$object->getActiveSheet()->setCellValueByColumnAndRow(8, 4, "TOTAL");
 			$object->getActiveSheet()->setCellValueByColumnAndRow(9, 4, "UNTUNG");
-			$object->getActiveSheet()->setCellValueByColumnAndRow(10, 4, "KASIR");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(10, 4, "PIUTANG");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(11, 4, "KASIR");
 		} else {
 			$object->getActiveSheet()->setCellValueByColumnAndRow(0, 4, "NO");
 			$object->getActiveSheet()->setCellValueByColumnAndRow(1, 4, "TANGGAL");
 			$object->getActiveSheet()->setCellValueByColumnAndRow(2, 4, "NAMA JASA");
 			$object->getActiveSheet()->setCellValueByColumnAndRow(3, 4, "HARGA JASA");
-			$object->getActiveSheet()->setCellValueByColumnAndRow(4, 4, "KASIR");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(4, 4, "PIUTANG");
+			$object->getActiveSheet()->setCellValueByColumnAndRow(5, 4, "KASIR");
 		}
 		//import tabel
 		$this->db->order_by("tgl_transaksi");
@@ -137,7 +139,16 @@ class keuntungan extends CI_Controller
 				$object->getActiveSheet()->setCellValueByColumnAndRow(7, $excel_row, $data[$i]['jumlah_penjualan']);
 				$object->getActiveSheet()->setCellValueByColumnAndRow(8, $excel_row, $data[$i]['harga_jual'] * $data[$i]['jumlah_penjualan']);
 				$object->getActiveSheet()->setCellValueByColumnAndRow(9, $excel_row, ($data[$i]['harga_jual'] - $data[$i]['harga_kulak']) * $data[$i]['jumlah_penjualan']);
-				$object->getActiveSheet()->setCellValueByColumnAndRow(10, $excel_row, $data[$i]['nama']);
+				$statusPiutang = "";
+				if ($data[$i]['status_piutang'] == 0) {
+					$statusPiutang = "Hutang";
+				} elseif ($data[$i]['status_piutang'] == 1) {
+					$statusPiutang = "Lunas";
+				} else {
+					$statusPiutang = "Cash";
+				}
+				$object->getActiveSheet()->setCellValueByColumnAndRow(10, $excel_row, $statusPiutang);
+				$object->getActiveSheet()->setCellValueByColumnAndRow(11, $excel_row, $data[$i]['nama']);
 			} else {
 				$object->getActiveSheet()->setCellValueByColumnAndRow(0, $excel_row, $i + 1);
 				$object->getActiveSheet()->setCellValueByColumnAndRow(1, $excel_row, $data[$i]['tgl_transaksi']);

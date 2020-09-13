@@ -4,7 +4,24 @@
 			<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 				<div>
 					<h2 class="text-white pb-2 fw-bold">Penjualan</h2>
-
+				</div>
+				<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+					<strong>Data Berhasil di Tambah</strong>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="edit-alert" role="alert">
+					<strong>Data Berhasil di Ubah</strong>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="delete-alert" role="alert">
+					<strong>Data Berhasil di Hapus</strong>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 			</div>
 		</div>
@@ -34,6 +51,7 @@
 
 									</datalist>
 								</div>
+<<<<<<< HEAD
 <<<<<<< HEAD:application/views/penjualan_view.php
 								<div class="price-value">
 									<div class="value">
@@ -41,6 +59,8 @@
 										<span class="month">Barang</span>
 									</div>
 =======
+=======
+>>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
@@ -58,13 +78,17 @@
 								<div class="form-group">
 									<label for="harga">Harga</label>
 									<input type="text" class="form-control input-pill" id="harga" placeholder="Rp" readonly>
+									<input type="text" class="form-control input-pill" id="harga_kulak" placeholder="Rp" style="display: none;">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label for="total">Total</label>
 									<input type="text" class="form-control input-pill" id="total" placeholder="Rp" readonly>
+<<<<<<< HEAD
 >>>>>>> origin/inas:application/views/penjualan.php
+=======
+>>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 								</div>
 							</div>
 						</div>
@@ -113,8 +137,8 @@
 						<div class="d-flex align-items-center">
 							<h4 class="card-title">Data Transaksi</h4>
 							<div class="ml-md-auto py-2 py-md-0">
-								<a class="btn btn-primary btn-border btn-round mr-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Hutang</a>
-								<a href="#" class="btn btn-secondary btn-round">Simpan</a>
+								<a onclick="hutang_cek()" class="btn btn-primary btn-border btn-round mr-2">Hutang</a>
+								<a onclick="simpan_penjualan()" id="tambah_button" class="btn btn-secondary btn-round">Simpan</a>
 							</div>
 
 						</div>
@@ -128,8 +152,8 @@
 										<div class="col-sm-12">
 											<div class="form-group">
 												<label for="nama_client">Nama Client</label>
-												<input type="text" class="form-control input-pill" id="nama_client" list="list_client">
-												<datalist id="list_client">
+												<input oninput="tampil_data_kode_klien()" onchange="tampil_data_kode_klien()" type="text" class="form-control input-pill" id="nama_client" list="list_client">
+												<datalist oninput="tampil_data_kode_klien()" onchange="tampil_data_kode_klien()" id="list_client">
 
 												</datalist>
 											</div>
@@ -146,6 +170,7 @@
 								</form>
 							</div>
 						</div>
+<<<<<<< HEAD
 <<<<<<< HEAD:application/views/penjualan_view.php
 						<div class="col-md-6">
 						<div class="card">
@@ -263,6 +288,8 @@
 								</div>
 							</div>
 =======
+=======
+>>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 						<div class="table-responsive">
 							<table id="tabel_penjualan" class="display table table-striped table-hover">
 								<thead>
@@ -277,7 +304,13 @@
 								<tfoot>
 									<tr>
 										<th>TOTAL</th>
+<<<<<<< HEAD
 										<th colspan="4" id="total_bayar"></th>
+=======
+										<th colspan="4">
+											<form><input type="number" min="0" class="form-control input-pill" id="total_bayar" placeholder="Rp" readonly></form>
+										</th>
+>>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 									</tr>
 									<tr>
 										<th>BAYAR</th>
@@ -294,7 +327,10 @@
 
 								</tbody>
 							</table>
+<<<<<<< HEAD
 >>>>>>> origin/inas:application/views/penjualan.php
+=======
+>>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 						</div>
 					</div>
 				</div>
@@ -306,9 +342,15 @@
 <script>
 	var barang = [];
 	var jasa = [];
+	var klien = [];
+
 	var id_selected = '';
+	var id_klien = '';
 	var transaksi = [];
 	var total = 0;
+	var hutang = 0;
+
+	var stok = 0;
 	$(document).ready(function() {
 		list();
 		list_jasa();
@@ -322,14 +364,129 @@
 		$('form').on('blur', 'input[type=number]', function(e) {
 			$(this).off('wheel.disableScroll')
 		});
+
+		$("#tambah_button").click(function showAlert() {
+			$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+				$("#success-alert").slideUp(500);
+			});
+		});
 	});
+
+	function hutang_cek() {
+		if (hutang == 0) {
+			document.getElementById('collapseExample').style.display = 'block';
+			hutang = 1;
+		} else {
+			document.getElementById('collapseExample').style.display = 'none';
+			hutang = 0;
+		}
+	}
+
+	function simpan_penjualan() {
+		if (hutang == 0) {
+			jual_biasa();
+		} else {
+			jual_hutang();
+		}
+	}
+
+	function jual_hutang() {
+		if (document.getElementById('tgl').value == "") {
+			document.getElementById('tgl').focus();
+		}
+		if (document.getElementById('nama_client').value == "") {
+			document.getElementById('nama_client').focus();
+		}
+		if (document.getElementById('nama_client').value != "" && document.getElementById('tgl').value != "") {
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url() ?>penjualan/transaksi',
+				data: 'transaksi=' + transaksi,
+				dataType: 'json',
+				success: function(data) {
+					// console.log(data);
+					looping(data);
+					piutang(data);
+				}
+			});
+		}
+	}
+
+	function piutang(id) {
+		// console.log(transaksi);
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() ?>penjualan/jual_hutang',
+			data: 'id=' + id + '&tgl=' + document.getElementById('tgl').value + '&client=' + id_klien,
+			dataType: 'json',
+			success: function(data) {
+				transaksi = [];
+				hutang_cek();
+				document.getElementById('nama_client').value = ""
+				document.getElementById('tgl').value = "";
+
+				document.getElementById('total_bayar').value = "";
+				document.getElementById('bayar').value = "";
+				total = 0;
+				ambil_data();
+			}
+		});
+	}
+
+	function jual_biasa() {
+		// console.log(transaksi);
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() ?>penjualan/transaksi',
+			data: 'transaksi=' + transaksi,
+			dataType: 'json',
+			success: function(data) {
+				// console.log(data);
+				looping(data);
+				transaksi = [];
+				document.getElementById('total_bayar').value = "";
+				document.getElementById('bayar').value = "";
+				total = 0;
+				ambil_data();
+			}
+		});
+	}
+
+	function looping(id) {
+		for (var i = 0; i < transaksi.length; i++) {
+			if (transaksi[i].tipe == 0) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= base_url() ?>penjualan/barang_insert',
+					data: 'id_transaksi=' + id + '&id_barang=' + transaksi[i].id +
+						'&jumlah=' + transaksi[i].jumlah + '&harga=' + transaksi[i].harga +
+						'&harga_kulak=' + transaksi[i].harga_kulak + '&stok=' + transaksi[i].stok,
+					dataType: 'json',
+					success: function(data) {
+
+					}
+				});
+			} else {
+				$.ajax({
+					type: 'POST',
+					url: '<?= base_url() ?>penjualan/jasa_insert',
+					data: 'id_transaksi=' + id + '&id_jasa=' + transaksi[i].id,
+					dataType: 'json',
+					success: function(data) {
+
+					}
+				});
+			}
+		}
+	}
 
 	function list() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>pembelian_control/list',
+			url: '<?= base_url() ?>pembelian/lista',
 			dataType: 'json',
 			success: function(data) {
+				// console.log(data);
 				barang = data;
 				var html = '';
 				for (var i = 0; i < data.length; i++) {
@@ -343,10 +500,10 @@
 	function list_client() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>penjualan_control/list_client',
+			url: '<?= base_url() ?>penjualan/list_client',
 			dataType: 'json',
 			success: function(data) {
-				barang = data;
+				klien = data;
 				var html = '';
 				for (var i = 0; i < data.length; i++) {
 					html += '<option value="' + data[i].nama_client + '">';
@@ -382,7 +539,7 @@
 				'</tr>';
 		}
 		$("#myTabel").html(html);
-		$("#total_bayar").html(total);
+		document.getElementById('total_bayar').value = total;
 		$("#tabel_penjualan").dataTable().fnDestroy();
 	}
 
@@ -399,15 +556,26 @@
 	}
 
 	function tampil_data_kode() {
+		console.log(barang);
 		// alert(document.getElementById('kode').value);
 		for (var i = 0; i < barang.length; i++) {
 			if (document.getElementById('kode').value == barang[i].kode_barang) {
 				document.getElementById('nama').value = barang[i].nama_barang;
 				document.getElementById('harga').value = barang[i].harga_jual;
+				document.getElementById('harga_kulak').value = barang[i].harga_kulak;
 
 				id_selected = barang[i].id_barang;
-
+				stok = barang[i].stok_barang;
 				jumlah_barang();
+			}
+		}
+	}
+
+	function tampil_data_kode_klien() {
+		// alert(document.getElementById('kode').value);
+		for (var i = 0; i < klien.length; i++) {
+			if (document.getElementById('nama_client').value == klien[i].nama_client) {
+				id_klien = klien[i].id_client;
 			}
 		}
 	}
@@ -424,7 +592,7 @@
 	function list_jasa() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>penjualan_control/list',
+			url: '<?= base_url() ?>penjualan/lista',
 			dataType: 'json',
 			success: function(data) {
 				jasa = data;
@@ -463,7 +631,8 @@
 				"id": id_selected,
 				"nama": document.getElementById('nama').value,
 				"jumlah": document.getElementById('jumlah').value,
-				"harga": document.getElementById('harga').value
+				"harga": document.getElementById('harga').value,
+				"stok": stok
 			};
 
 			document.getElementById('kode').value = "";
@@ -491,7 +660,9 @@
 				"id": id_selected,
 				"nama": document.getElementById('kode_jasa').value,
 				"jumlah": "1",
-				"harga": document.getElementById('harga_jasa').value
+				"harga": document.getElementById('harga_jasa').value,
+				"harga_kulak": document.getElementById('harga_jasa').value,
+				"stok": 0
 			};
 
 			document.getElementById('kode_jasa').value = "";

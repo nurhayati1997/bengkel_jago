@@ -10,7 +10,11 @@ class Db_model extends CI_Model
     {
         return $this->db->get_where($table, $where);
     }
-
+    public function insert_get($tabel, $data)
+    {
+        $this->db->insert($tabel, $data);
+        return $this->db->insert_id();
+    }
     public function get_query($query)
     {
         return $this->db->query($query);
@@ -41,7 +45,7 @@ class Db_model extends CI_Model
     {
         $this->db->select('*, SUM(jumlah_penjualan)');
         $this->db->group_by('id_barang');
-        $this->db->order_by('jumlah_penjualan ASC');
+        $this->db->order_by('SUM(jumlah_penjualan) DESC');
         return $this->db->get('vw_penjualan', 10);
     }
 
@@ -56,7 +60,8 @@ class Db_model extends CI_Model
     function getJumlahTerbeli()
     {
         $this->db->select('SUM(jumlah_pembelian)');
-        $this->db->where('tgl_pembelian', date("Y/m/d"));
+        $this->db->where('tgl_pembelian >', date("Y/m/d") . " 00:00:00");
+        $this->db->where('tgl_pembelian <', date("Y/m/d") . " 23:59:59");
         $this->db->group_by('tgl_pembelian');
         return $this->db->get('tbl_pembelian');
     }

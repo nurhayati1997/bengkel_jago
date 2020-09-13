@@ -73,7 +73,7 @@
 							</a>
 						</li>
 						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link" href="<?= site_url('logout') ?>" title="logout" aria-expanded="false">
+							<a class="nav-link" href="<?= base_url('login/logout') ?>" title="logout" aria-expanded="false">
 								<i class="fas fa-arrow-circle-right"></i>
 							</a>
 						</li>
@@ -101,8 +101,16 @@
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Muhammad
-									<span class="user-level">Administrator</span>
+									<?= $this->session->userdata("nama") ?>
+									<span class="user-level">
+										<?php
+										if ($this->session->userdata("rule") == 1) {
+											echo "Administrator";
+										} else {
+											echo "Pegawai/Kasir";
+										}
+										?>
+									</span>
 								</span>
 							</a>
 						</div>
@@ -173,11 +181,15 @@
 							</a>
 							<div class="collapse" id="master">
 								<ul class="nav nav-collapse">
-									<li>
-										<a href="<?= site_url('user') ?>">
-											<span class="sub-item">User</span>
-										</a>
-									</li>
+									<?php
+									if ($this->session->userdata("rule") == 1) {
+									?>
+										<li>
+											<a href="<?= site_url('user') ?>">
+												<span class="sub-item">User</span>
+											</a>
+										</li>
+									<?php } ?>
 									<li>
 										<a href="<?= site_url('client') ?>">
 											<span class="sub-item">Client</span>
@@ -229,6 +241,7 @@
 	<script src="<?= base_url() ?>assets/js/plugin/datatables/datatables.min.js"></script>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<!-- jQuery Vector Maps -->
 	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
 	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
@@ -236,7 +249,17 @@
 	<!-- Bootstrap Notify -->
 	<script src="<?= base_url() ?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 >>>>>>> origin/inas
+=======
+	<!-- jQuery Vector Maps -->
+	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+	<!-- Bootstrap Notify -->
+	<script src="<?= base_url() ?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
+>>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
+
+	<!-- Bootstrap Notify -->
+	<script src="<?= base_url() ?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 	<!-- Sweet Alert -->
 	<script src="<?= base_url() ?>assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 
@@ -244,6 +267,9 @@
 	<script src="<?= base_url() ?>assets/js/atlantis.min.js"></script>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 
 	<script>
@@ -293,8 +319,11 @@
 			});
 		});
 	</script>
+<<<<<<< HEAD
 =======
 >>>>>>> origin/inas
+=======
+>>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 </body>
 
 </html>

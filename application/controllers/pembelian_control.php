@@ -13,12 +13,20 @@ class pembelian_control extends CI_Controller
 	public function index()
 	{
 		//echo  'hello panda';
+<<<<<<< HEAD
 		$this->template->load('template', 'pembelian');
+=======
+		$this->template->load('template', 'pembelian_view');
+>>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 	}
 
 	public function list()
 	{
+<<<<<<< HEAD
 		echo json_encode($this->db_model->get_all("tbl_barang")->result());
+=======
+		echo json_encode($this->db_model->get_where('tbl_barang', ["hapus" => 0])->result());
+>>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 	}
 	public function tambah()
 	{

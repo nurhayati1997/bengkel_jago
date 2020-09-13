@@ -29,6 +29,24 @@
 							</button>
 						</div>
 						<div class="card-footer">
+							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+								<strong>Data Berhasil di Tambah</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="edit-alert" role="alert">
+								<strong>Data Berhasil di Ubah</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="delete-alert" role="alert">
+								<strong>Data Berhasil di Hapus</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 							<div class="table-responsive">
 								<table id="tabel_pembelian" class="display table table-striped table-hover">
 									<thead>
@@ -108,7 +126,7 @@
 				</form>
 			</div>
 			<div class="modal-footer no-bd">
-				<button type="button" onclick="tambah()" class="btn btn-primary">Tambah</button>
+				<button type="button" onclick="tambah()" id="tambah_button" class="btn btn-primary">Tambah</button>
 				<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
 			</div>
 		</div>
@@ -213,12 +231,18 @@
 	$(document).ready(function() {
 		list();
 		ambil_data();
+
+		$("#tambah_button").click(function showAlert() {
+			$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+				$("#success-alert").slideUp(500);
+			});
+		});
 	});
 
 	function list() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>pembelian_control/list',
+			url: '<?= base_url() ?>pembelian/lista',
 			dataType: 'json',
 			success: function(data) {
 				barang = data;
@@ -292,7 +316,7 @@
 		if (document.getElementById('kode').value != "" && document.getElementById('harga').value != "" && document.getElementById('jumlah').value != '') {
 			$.ajax({
 				type: 'POST',
-				url: '<?= base_url() ?>pembelian_control/tambah',
+				url: '<?= base_url() ?>pembelian/tambah',
 				data: 'id=' + id_selected + '&jumlah=' + document.getElementById('jumlah').value + '&harga=' + document.getElementById('harga').value +
 					'&stok=' + stok,
 				dataType: 'json',
@@ -302,7 +326,9 @@
 					document.getElementById('kode').value = "";
 					document.getElementById('nama').value = "";
 
+					ambil_data();
 					$('#tambahModal').modal('hide');
+
 				}
 			});
 		}
@@ -321,14 +347,16 @@
 		if (document.getElementById('ubah_kode').value != "" && document.getElementById('ubah_harga').value != "" && document.getElementById('ubah_jumlah').value != '') {
 			$.ajax({
 				type: 'POST',
-				url: '<?= base_url() ?>pembelian_control/ubah',
+				url: '<?= base_url() ?>pembelian/ubah',
 				data: 'id_pembelian=' + id_pembelian + '&id_barang=' + id_barang + '&jumlah=' + document.getElementById('ubah_jumlah').value +
 					'&stok=' + stok + '&stok_ubah=' + stok_ubah,
 				dataType: 'json',
 				success: function(data) {
-					console.log(data);
-					ambil_data();
+					// console.log(data);
+
 					$('#ubahModal').modal('hide');
+					ambil_data();
+
 				}
 			});
 		}
@@ -338,11 +366,13 @@
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
-			url: '<?= base_url() ?>pembelian_control/hapus',
+			url: '<?= base_url() ?>pembelian/hapus',
 			dataType: 'json',
 			success: function(data) {
-				console.log(data);
+				// console.log(data);
+
 				$('#hapusModal').modal('hide');
+
 				ambil_data();
 			}
 		});
@@ -352,7 +382,7 @@
 		$('#tabel_pembelian').DataTable({
 			destroy: true,
 			"ajax": {
-				"url": "<?php echo site_url("pembelian_control/tampil") ?>",
+				"url": "<?php echo site_url("pembelian/tampil") ?>",
 				"dataSrc": ""
 			},
 			"columns": [{
@@ -398,7 +428,7 @@
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
-			url: '<?= base_url() ?>pembelian_control/ubah_list',
+			url: '<?= base_url() ?>pembelian/ubah_list',
 			dataType: 'json',
 			success: function(data) {
 				// console.log(data);
@@ -410,11 +440,17 @@
 					document.getElementById("ubah_harga").value = data[i].harga_kulak;
 					document.getElementById("ubah_jumlah").value = data[i].jumlah_pembelian;
 
-					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
+					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" id="ubah_button" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
 					$("#ubahModal_tombol").html(html);
 					stok_ubah = data[i].jumlah_pembelian;
 					stok = data[i].stok_barang;
 					$('#ubahModal').modal('show');
+
+					$("#ubah_button").click(function showAlert() {
+						$("#edit-alert").fadeTo(2000, 500).slideUp(500, function() {
+							$("#edit-alert").slideUp(500);
+						});
+					});
 				}
 			}
 		});
@@ -424,5 +460,11 @@
 		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" data-dismiss="modal" class="btn btn-danger">Hapus</button>';
 		$("#hapusModal_tombol").html(html);
 		$('#hapusModal').modal('show');
+
+		$("#hapus_button").click(function showAlert() {
+			$("#delete-alert").fadeTo(2000, 500).slideUp(500, function() {
+				$("#delete-alert").slideUp(500);
+			});
+		});
 	}
 </script>

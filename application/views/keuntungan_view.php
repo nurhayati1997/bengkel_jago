@@ -194,7 +194,8 @@
 					var tanggalSelesai = $("#tanggalSelesai").val()
 					var keuntungan = 0;
 					var totalKeuntungan = 0;
-					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>TANGGAL</th><th>KODE</th><th>NAMA</th><th>MERK</th><th>KULAK</th><th>JUAL</th><th>QUANTITY</th><th>TOTAL</th><th>UNTUNG</th><th>KASIR</th></tr></thead><tbody>'
+					var statusHutang = ""
+					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>TANGGAL</th><th>KODE</th><th>NAMA</th><th>MERK</th><th>KULAK</th><th>JUAL</th><th>QUANTITY</th><th>TOTAL</th><th>UNTUNG</th><th>PIUTANG</th><th>KASIR</th></tr></thead><tbody>'
 					$.ajax({
 						url: '<?= base_url() ?>keuntungan/getDataBarang',
 						method: 'post',
@@ -215,6 +216,14 @@
 								tabel += '<td>' + data[i].jumlah_penjualan + '</td>'
 								tabel += '<td>' + formatRupiah((data[i].harga_jual * data[i].jumlah_penjualan).toString()) + '</td>'
 								tabel += '<td>' + formatRupiah(keuntungan.toString()) + '</td>'
+								if (data[i].status_piutang == 0) {
+									statusHutang = "Hutang"
+								} else if (data[i].status_piutang == 1) {
+									statusHutang = "Lunas"
+								} else {
+									statusHutang = "Cash"
+								}
+								tabel += '<td>' + statusHutang + '</td>'
 								tabel += '<td>' + data[i].nama + '</td>'
 								tabel += '</tr>'
 							}
@@ -254,6 +263,9 @@
 							tabel += '</tbody></table>'
 							$("#tempat_tabel").html(tabel)
 							$("#keuntungan").html('Rp. ' + formatRupiah(totalKeuntungan.toString()))
+							$('#add-row').DataTable({
+								"pageLength": 5,
+							});
 						}
 					});
 				}

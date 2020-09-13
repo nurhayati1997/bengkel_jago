@@ -12,14 +12,16 @@ class client extends CI_Controller
 
 	public function index()
 	{
-		//echo  'hello panda';
+		if (!$this->session->userdata("id_pengguna")) {
+			redirect("login");
+		}
 		$this->template->load('template', 'client_view');
 	}
 
 	public function get_data()
 	{
 		$tabel = $this->input->post("target");
-		$data = $this->db_model->get_where($tabel, ["hapus"=>0])->result_array();
+		$data = $this->db_model->get_where($tabel, ["hapus" => 0])->result_array();
 		echo json_encode($data);
 	}
 
@@ -48,7 +50,7 @@ class client extends CI_Controller
 			$no_ktp = $this->input->post("no_ktp");
 			$no_hp = $this->input->post("no_hp");
 
-			$this->db_model->insert($tabel, ["nama_client" => $nama, "alamat" => $alamat, "no_ktp" => $no_ktp, "no_telp" => $no_hp, "hapus"=>0]);
+			$this->db_model->insert($tabel, ["nama_client" => $nama, "alamat" => $alamat, "no_ktp" => $no_ktp, "no_telp" => $no_hp, "hapus" => 0]);
 			echo json_encode("");
 		}
 	}

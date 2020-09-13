@@ -12,11 +12,13 @@ class penjualan extends CI_Controller
 
 	public function index()
 	{
-		//echo  'hello panda';
+		if (!$this->session->userdata("id_pengguna")) {
+			redirect("login");
+		}
 		$this->template->load('template', 'penjualan_view');
 	}
 
-	public function list()
+	public function lista()
 	{
 		echo json_encode($this->db_model->get_all("tbl_jasa")->result());
 	}

@@ -73,7 +73,7 @@
 							</a>
 						</li>
 						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link" href="<?= site_url('logout') ?>" title="logout" aria-expanded="false">
+							<a class="nav-link" href="<?= base_url('login/logout') ?>" title="logout" aria-expanded="false">
 								<i class="fas fa-arrow-circle-right"></i>
 							</a>
 						</li>
@@ -101,8 +101,16 @@
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Muhammad
-									<span class="user-level">Administrator</span>
+									<?= $this->session->userdata("nama") ?>
+									<span class="user-level">
+										<?php
+										if ($this->session->userdata("rule") == 1) {
+											echo "Administrator";
+										} else {
+											echo "Pegawai/Kasir";
+										}
+										?>
+									</span>
 								</span>
 							</a>
 						</div>
@@ -173,11 +181,15 @@
 							</a>
 							<div class="collapse" id="master">
 								<ul class="nav nav-collapse">
-									<li>
-										<a href="<?= site_url('user') ?>">
-											<span class="sub-item">User</span>
-										</a>
-									</li>
+									<?php
+									if ($this->session->userdata("rule") == 1) {
+									?>
+										<li>
+											<a href="<?= site_url('user') ?>">
+												<span class="sub-item">User</span>
+											</a>
+										</li>
+									<?php } ?>
 									<li>
 										<a href="<?= site_url('client') ?>">
 											<span class="sub-item">Client</span>
@@ -234,6 +246,9 @@
 	<!-- Bootstrap Notify -->
 	<script src="<?= base_url() ?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
+
+	<!-- Bootstrap Notify -->
+	<script src="<?= base_url() ?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 	<!-- Sweet Alert -->
 	<script src="<?= base_url() ?>assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 

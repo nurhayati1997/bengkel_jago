@@ -12,11 +12,13 @@ class pembelian extends CI_Controller
 
 	public function index()
 	{
-		//echo  'hello panda';
+		if (!$this->session->userdata("id_pengguna")) {
+			redirect("login");
+		}
 		$this->template->load('template', 'pembelian_view');
 	}
 
-	public function list()
+	public function lista()
 	{
 		echo json_encode($this->db_model->get_where('tbl_barang', ["hapus" => 0])->result());
 	}

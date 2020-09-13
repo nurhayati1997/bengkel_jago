@@ -13,6 +13,9 @@ class user extends CI_Controller
 
 	public function index()
 	{
+		if (!$this->session->userdata("id_pengguna") or $this->session->userdata("rule") != 1) {
+			redirect("login");
+		}
 		//echo  'hello panda';
 		$this->template->load('template', 'user_view');
 	}

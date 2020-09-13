@@ -242,7 +242,7 @@
 	function list() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>pembelian/list',
+			url: '<?= base_url() ?>pembelian/lista',
 			dataType: 'json',
 			success: function(data) {
 				barang = data;

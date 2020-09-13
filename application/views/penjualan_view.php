@@ -4,7 +4,24 @@
 			<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 				<div>
 					<h2 class="text-white pb-2 fw-bold">Penjualan</h2>
-
+				</div>
+				<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+					<strong>Data Berhasil di Tambah</strong>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="edit-alert" role="alert">
+					<strong>Data Berhasil di Ubah</strong>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="delete-alert" role="alert">
+					<strong>Data Berhasil di Hapus</strong>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 			</div>
 		</div>
@@ -107,7 +124,7 @@
 							<h4 class="card-title">Data Transaksi</h4>
 							<div class="ml-md-auto py-2 py-md-0">
 								<a onclick="hutang_cek()" class="btn btn-primary btn-border btn-round mr-2">Hutang</a>
-								<a onclick="simpan_penjualan()" class="btn btn-secondary btn-round">Simpan</a>
+								<a onclick="simpan_penjualan()" id="tambah_button" class="btn btn-secondary btn-round">Simpan</a>
 							</div>
 
 						</div>
@@ -204,6 +221,12 @@
 		});
 		$('form').on('blur', 'input[type=number]', function(e) {
 			$(this).off('wheel.disableScroll')
+		});
+
+		$("#tambah_button").click(function showAlert() {
+			$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+				$("#success-alert").slideUp(500);
+			});
 		});
 	});
 

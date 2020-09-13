@@ -29,6 +29,24 @@
 							</button>
 						</div>
 						<div class="card-footer">
+							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+								<strong>Data Berhasil di Tambah</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="edit-alert" role="alert">
+								<strong>Data Berhasil di Ubah</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="delete-alert" role="alert">
+								<strong>Data Berhasil di Hapus</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 							<div class="table-responsive">
 								<table id="tabel_pembelian" class="display table table-striped table-hover">
 									<thead>
@@ -108,7 +126,7 @@
 				</form>
 			</div>
 			<div class="modal-footer no-bd">
-				<button type="button" onclick="tambah()" class="btn btn-primary">Tambah</button>
+				<button type="button" onclick="tambah()" id="tambah_button" class="btn btn-primary">Tambah</button>
 				<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
 			</div>
 		</div>
@@ -213,6 +231,12 @@
 	$(document).ready(function() {
 		list();
 		ambil_data();
+
+		$("#tambah_button").click(function showAlert() {
+			$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+				$("#success-alert").slideUp(500);
+			});
+		});
 	});
 
 	function list() {
@@ -302,7 +326,9 @@
 					document.getElementById('kode').value = "";
 					document.getElementById('nama').value = "";
 
+					ambil_data();
 					$('#tambahModal').modal('hide');
+
 				}
 			});
 		}
@@ -326,9 +352,11 @@
 					'&stok=' + stok + '&stok_ubah=' + stok_ubah,
 				dataType: 'json',
 				success: function(data) {
-					console.log(data);
-					ambil_data();
+					// console.log(data);
+
 					$('#ubahModal').modal('hide');
+					ambil_data();
+
 				}
 			});
 		}
@@ -341,8 +369,10 @@
 			url: '<?= base_url() ?>pembelian/hapus',
 			dataType: 'json',
 			success: function(data) {
-				console.log(data);
+				// console.log(data);
+
 				$('#hapusModal').modal('hide');
+
 				ambil_data();
 			}
 		});
@@ -410,11 +440,17 @@
 					document.getElementById("ubah_harga").value = data[i].harga_kulak;
 					document.getElementById("ubah_jumlah").value = data[i].jumlah_pembelian;
 
-					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
+					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" id="ubah_button" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
 					$("#ubahModal_tombol").html(html);
 					stok_ubah = data[i].jumlah_pembelian;
 					stok = data[i].stok_barang;
 					$('#ubahModal').modal('show');
+
+					$("#ubah_button").click(function showAlert() {
+						$("#edit-alert").fadeTo(2000, 500).slideUp(500, function() {
+							$("#edit-alert").slideUp(500);
+						});
+					});
 				}
 			}
 		});
@@ -424,5 +460,11 @@
 		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" data-dismiss="modal" class="btn btn-danger">Hapus</button>';
 		$("#hapusModal_tombol").html(html);
 		$('#hapusModal').modal('show');
+
+		$("#hapus_button").click(function showAlert() {
+			$("#delete-alert").fadeTo(2000, 500).slideUp(500, function() {
+				$("#delete-alert").slideUp(500);
+			});
+		});
 	}
 </script>

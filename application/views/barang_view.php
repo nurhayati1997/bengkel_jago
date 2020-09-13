@@ -277,18 +277,6 @@
 			});
 		});
 
-		$("#ubah_button").click(function showAlert() {
-			$("#edit-alert").fadeTo(2000, 500).slideUp(500, function() {
-				$("#edit-alert").slideUp(500);
-			});
-		});
-
-		$("#hapus_button").click(function showAlert() {
-			$("#delete-alert").fadeTo(2000, 500).slideUp(500, function() {
-				$("#delete-alert").slideUp(500);
-			});
-		});
-
 		//datatabel
 		ambil_data();
 	});
@@ -427,6 +415,12 @@
 					var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
 					$("#ubahModal_tombol").html(html);
 
+					$("#ubah_button").click(function showAlert() {
+						$("#edit-alert").fadeTo(2000, 500).slideUp(500, function() {
+							$("#edit-alert").slideUp(500);
+						});
+					});
+
 					$('#ubahModal').modal('show');
 				}
 			}
@@ -446,6 +440,7 @@
 			success: function(data) {
 				// console.log(data);
 				$('#ubahModal').modal('hide');
+
 				ambil_data();
 			}
 		});
@@ -454,6 +449,13 @@
 	function hapus_list(id) {
 		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" data-dismiss="modal" class="btn btn-danger">Hapus</button>';
 		$("#hapusModal_tombol").html(html);
+
+		$("#hapus_button").click(function showAlert() {
+			$("#delete-alert").fadeTo(2000, 500).slideUp(500, function() {
+				$("#delete-alert").slideUp(500);
+			});
+		});
+
 		$('#hapusModal').modal('show');
 	}
 
@@ -466,16 +468,9 @@
 			success: function(data) {
 				// console.log(data);
 				$('#hapusModal').modal('hide');
+
 				ambil_data();
 			}
 		});
 	}
-
-	function hide_allert() {
-		window.setTimeout(function() {
-			$(".alert").fadeTo(500, 0).slideUp(500, function() {
-				$(this).remove();
-			});
-		}, 2000);
-	} 
 </script>

@@ -29,6 +29,24 @@
 										</button> -->
 						</div>
 						<div class="card-footer">
+							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+								<strong>Data Berhasil di Tambah</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="edit-alert" role="alert">
+								<strong>Data Berhasil di Ubah</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="delete-alert" role="alert">
+								<strong>Data Berhasil di Hapus</strong>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 							<!-- Modal -->
 							<div class="modal fade" id="ubahModal" tabindex="-1" role="dialog" aria-hidden="true">
 								<div class="modal-dialog" role="document">
@@ -198,10 +216,17 @@
 					utang_list[utang_list.length] = mydata;
 				}
 				ubah_jasa(id);
-				var html = '<button onclick="ubah(' + id + ')" type="button" class="btn btn-primary">Simpan</button>';
+				var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" class="btn btn-primary">Simpan</button>';
 				$("#ubahModal_tombol").html(html);
 				ambil_data_piutang(utang_list, status);
 				$('#ubahModal').modal('show');
+
+				$("#ubah_button").click(function showAlert() {
+					$("#edit-alert").fadeTo(2000, 500).slideUp(500, function() {
+						$("#edit-alert").slideUp(500);
+					});
+				});
+
 			}
 		});
 	}

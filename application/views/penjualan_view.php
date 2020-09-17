@@ -51,17 +51,6 @@
 
 									</datalist>
 								</div>
-<<<<<<< HEAD
-<<<<<<< HEAD:application/views/penjualan_view.php
-								<div class="price-value">
-									<div class="value">
-										<span class="currency">Penjualan</span>
-										<span class="month">Barang</span>
-									</div>
-=======
-=======
->>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
-							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label for="jumlah">Jumlah</label>
@@ -85,10 +74,6 @@
 								<div class="form-group">
 									<label for="total">Total</label>
 									<input type="text" class="form-control input-pill" id="total" placeholder="Rp" readonly>
-<<<<<<< HEAD
->>>>>>> origin/inas:application/views/penjualan.php
-=======
->>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 								</div>
 							</div>
 						</div>
@@ -116,7 +101,6 @@
 									<label for="kode_jasa">Nama Jasa</label>
 									<input oninput="tampil_data_kode_jasa()" onchange="tampil_data_kode_jasa()" type="text" class="form-control input-pill" id="kode_jasa" autocomplete="TRUE" list="kodes_jasa" placeholder="">
 									<datalist onchange="tampil_data_kode_jasa()" id="kodes_jasa">
-
 									</datalist>
 								</div>
 							</div>
@@ -170,126 +154,6 @@
 								</form>
 							</div>
 						</div>
-<<<<<<< HEAD
-<<<<<<< HEAD:application/views/penjualan_view.php
-						<div class="col-md-6">
-						<div class="card">
-								<div class="card-header">
-									<div class="d-flex align-items-center">
-										<h4 class="card-title">Data Transaksi</h4>
-										<div class="ml-md-auto py-2 py-md-0">
-											<a class="btn btn-primary btn-border btn-round mr-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Hutang</a>
-											<a href="#" class="btn btn-success btn-round">Tambah</a>
-										</div>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="collapse" id="collapseExample">
-										<div class="card-body">
-											<form>
-												<div class="row">
-													<div class="col-sm-12">
-														<div class="form-group">
-															<label for="pillSelect">Nama Client</label>
-															<select class="form-control input-pill" id="pillSelect" placeholder="Pill Input">
-																<option>mohammad client</option>
-																<option>siti client</option>
-																<option>abdul pelanggan</option>
-															</select>
-														</div>
-													</div>
-													<div class="ml-md-auto py-2 py-md-0">
-														<a href="#" class="btn btn-primary btn-round">Tambah Hutang</a>
-													</div>
-												</div>
-											</form>
-										</div>
-									</div>
-									<div class="table-responsive">
-										<table id="add-row" class="display table table-striped table-hover" >
-											<thead>
-												<tr>
-													<th>Kode</th>
-													<th>Nama</th>
-													<th>Harga</th>
-													<th style="width: 10%">Action</th>
-												</tr>
-											</thead>
-											<tfoot>
-												<tr>
-													<th colspan="3">TOTAL</th>
-													<th></th>
-												</tr>
-											</tfoot>
-											<tbody>
-												<tr>
-													<td>001</td>
-													<td>System Architect</td>
-													<td>200.000</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>006</td>
-													<td>Accountant</td>
-													<td>450.000</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>007</td>
-													<td>Junior Technical Author</td>
-													<td>067</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>023</td>
-													<td>Software Engineer</td>
-													<td>54.000</td>
-													<td>
-														<div class="form-button-action">
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-																<i class="fa fa-edit"></i>
-															</button>
-															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<i class="fa fa-times"></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-=======
-=======
->>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 						<div class="table-responsive">
 							<table id="tabel_penjualan" class="display table table-striped table-hover">
 								<thead>
@@ -304,13 +168,10 @@
 								<tfoot>
 									<tr>
 										<th>TOTAL</th>
-<<<<<<< HEAD
 										<th colspan="4" id="total_bayar"></th>
-=======
 										<th colspan="4">
 											<form><input type="number" min="0" class="form-control input-pill" id="total_bayar" placeholder="Rp" readonly></form>
 										</th>
->>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 									</tr>
 									<tr>
 										<th>BAYAR</th>
@@ -327,10 +188,6 @@
 
 								</tbody>
 							</table>
-<<<<<<< HEAD
->>>>>>> origin/inas:application/views/penjualan.php
-=======
->>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 						</div>
 					</div>
 				</div>

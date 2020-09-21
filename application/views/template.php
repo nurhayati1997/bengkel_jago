@@ -240,23 +240,18 @@
 	<!-- Datatables -->
 	<script src="<?= base_url() ?>assets/js/plugin/datatables/datatables.min.js"></script>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	<!-- jQuery Vector Maps -->
 	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
 	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
-=======
-	<!-- Bootstrap Notify -->
-	<script src="<?= base_url() ?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
->>>>>>> origin/inas
-=======
-	<!-- jQuery Vector Maps -->
-	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
-	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
 	<!-- Bootstrap Notify -->
 	<script src="<?= base_url() ?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
->>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
+	<!-- jQuery Vector Maps -->
+	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+	<!-- Bootstrap Notify -->
+	<script src="<?= base_url() ?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
 	<!-- Bootstrap Notify -->
 	<script src="<?= base_url() ?>assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
@@ -266,10 +261,6 @@
 	<!-- Atlantis JS -->
 	<script src="<?= base_url() ?>assets/js/atlantis.min.js"></script>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 
 	<script>
@@ -319,11 +310,6 @@
 			});
 		});
 	</script>
-<<<<<<< HEAD
-=======
->>>>>>> origin/inas
-=======
->>>>>>> fee71f209c3d554cb75a33c9e8d967b0fa0437ef
 </body>
 
 </html>

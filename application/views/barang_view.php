@@ -59,6 +59,9 @@
 											<th>KODE BARANG</th>
 											<th>JENIS BARANG</th>
 											<th>NAMA BARANG</th>
+											<th>MERK BARANG</th>
+											<th>KETERANGAN</th>
+											<th>LOKASI</th>
 											<th>STOK</th>
 											<th>DISTRIBUTOR</th>
 											<th>HARGA KULAK</th>
@@ -104,8 +107,8 @@
 							<div class="form-group">
 								<label for="jenis">Jenis Barang</label>
 								<select class="form-control input-pill" id="jenis" placeholder="">
-									<option value="0">Sepeda Motor</option>
 									<option value="1">Mobil</option>
+									<option value="0">Sepeda Motor</option>
 								</select>
 							</div>
 						</div>
@@ -119,6 +122,18 @@
 							<div class="form-group">
 								<label for="merk">Merk</label>
 								<input type="text" class="form-control input-pill" id="merk" placeholder="">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="ket">Keterangan</label>
+								<input type="text" class="form-control input-pill" id="ket" placeholder="">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="lokasi">Lokasi</label>
+								<input type="text" class="form-control input-pill" id="lokasi" placeholder="">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -185,8 +200,8 @@
 							<div class="form-group">
 								<label for="ubah_jenis">Jenis Barang</label>
 								<select class="form-control input-pill" id="ubah_jenis" placeholder="">
-									<option value="0">Sepeda Motor</option>
 									<option value="1">Mobil</option>
+									<option value="0">Sepeda Motor</option>
 								</select>
 							</div>
 						</div>
@@ -200,6 +215,18 @@
 							<div class="form-group">
 								<label for="ubah_merk">Merk</label>
 								<input type="text" class="form-control input-pill" id="ubah_merk" placeholder="">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="ubah_ket">Keterangan</label>
+								<input type="text" class="form-control input-pill" id="ubah_ket" placeholder="">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="ubah_lokasi">Lokasi</label>
+								<input type="text" class="form-control input-pill" id="ubah_lokasi" placeholder="">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -315,7 +342,8 @@
 				data: 'tabel="tbl_barang"' + '&kode=' + document.getElementById("kode").value +
 					'&jenis=' + document.getElementById("jenis").value + '&nama=' + document.getElementById("nama").value +
 					'&distributor=' + document.getElementById("distributor").value + '&satuan=' + document.getElementById("satuan").value +
-					'&jual=' + document.getElementById("jual").value + '&merk=' + document.getElementById("merk").value + '&pagu=' + document.getElementById("pagu").value,
+					'&jual=' + document.getElementById("jual").value + '&merk=' + document.getElementById("merk").value + '&pagu=' + document.getElementById("pagu").value +
+					'&ket=' + document.getElementById("ket").value + '&lokasi=' + document.getElementById("lokasi").value,
 				url: '<?= base_url() ?>barang/tambah',
 				dataType: 'json',
 				success: function(data) {
@@ -358,6 +386,15 @@
 				},
 				{
 					"data": "nama_barang"
+				},
+				{
+					"data": "merk_barang"
+				},
+				{
+					"data": "keterangan"
+				},
+				{
+					"data": "lokasi"
 				},
 				{
 					"data": "stok_barang"
@@ -412,6 +449,8 @@
 					document.getElementById("ubah_jual").value = data[i].harga_jual;
 					document.getElementById("ubah_stok").value = data[i].stok_barang;
 					document.getElementById("ubah_pagu").value = data[i].pagu;
+					document.getElementById("ubah_ket").value = data[i].keterangan;
+					document.getElementById("ubah_lokasi").value = data[i].lokasi;
 					var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
 					$("#ubahModal_tombol").html(html);
 
@@ -434,7 +473,8 @@
 				'&jenis=' + document.getElementById("ubah_jenis").value + '&nama=' + document.getElementById("ubah_nama").value +
 				'&distributor=' + document.getElementById("ubah_distributor").value + '&satuan=' + document.getElementById("ubah_satuan").value +
 				'&jual=' + document.getElementById("ubah_jual").value + '&merk=' + document.getElementById("ubah_merk").value +
-				'&stok=' + document.getElementById("ubah_stok").value + '&pagu=' + document.getElementById("ubah_pagu").value,
+				'&stok=' + document.getElementById("ubah_stok").value + '&pagu=' + document.getElementById("ubah_pagu").value +
+				'&ket=' + document.getElementById("ubah_ket").value + '&lokasi=' + document.getElementById("ubah_lokasi").value,
 			url: '<?= base_url() ?>barang/ubah',
 			dataType: 'json',
 			success: function(data) {

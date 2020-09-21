@@ -61,7 +61,7 @@
 
 				<div class="container-fluid">
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-
+						
 						<li class="nav-item">
 							<a class="nav-link" href="<?= site_url('penjualan') ?>" title="penjualan" role="button" aria-expanded="false">
 								<i class="fas fa-th-list"></i>
@@ -77,13 +77,16 @@
 								<i class="fas fa-arrow-circle-right"></i>
 							</a>
 						</li>
-						<li class="nav-item dropdown hidden-caret">
+						<div class="ml-md-auto py-2 py-md-0">
+							<a href="#" class="btn btn-white btn-border btn-round mr-2">Backup</a>
+						</div>
+						<!-- <li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" aria-expanded="false">
 								<div class="avatar-sm">
 									<img src="<?= base_url() ?>assets/img/logo_user.jpg" alt="..." class="avatar-img rounded-circle">
 								</div>
 							</a>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</nav>
@@ -144,6 +147,12 @@
 							<a href="<?= site_url('barang') ?>">
 								<i class="fas fa-layer-group"></i>
 								<p>Barang</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= site_url('jasa') ?>">
+								<i class="fas fa-tachometer-alt"></i>
+								<p>Jasa</p>
 							</a>
 						</li>
 						<li class="nav-item">

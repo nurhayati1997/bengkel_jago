@@ -276,4 +276,35 @@ class keuntungan extends CI_Controller
 	// 	}
 	// 	return $hasil;
 	// }
+
+	public function eksportDb()
+	{
+		$file = "backupDB(" . date("Y-m-d") . ").txt";
+		$txt = fopen($file, "w") or die("Unable to open file!");
+
+
+		$tabels = ["tbl_barang", "tbl_client", "tbl_jasa", "tbl_pembelian", "tbl_pengguna", "tbl_penjualan", "tbl_penjualan_jasa", "tbl_piutang", "tbl_transaksi"];
+
+		foreach ($tabels as $tb) {
+			fwrite($txt, "|-" . $tb . "-|");
+			$datas = $this->db_model->get_all($tb)->result_array();
+			foreach ($datas as $baris) {
+				foreach ($baris as $key => $data) {
+					fwrite($txt, $data . "|k|");
+				}
+				fwrite($txt, "-b-");
+			}
+			fwrite($txt, "|-" . $tb . "-|");
+		}
+		fclose($txt);
+
+		header('Content-Description: File Transfer');
+		header('Content-Disposition: attachment; filename=' . basename($file));
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate');
+		header('Pragma: public');
+		header('Content-Length: ' . filesize($file));
+		header("Content-Type: text/plain");
+		readfile($file);
+	}
 }

@@ -16,9 +16,11 @@ class dashboard extends CI_Controller
 			redirect("login");
 		}
 		//jumlah jenis barang terjual ini
-		$data['jumlahBarangTerjual'] = $this->db_model->getJumlahTerjual()->row_array()['SUM(jumlah_penjualan)'];
+		$data['jumlahBarangTerjual'] = $this->db_model->getJumlahTerjual()->row_array();
 		if (!$data['jumlahBarangTerjual']) {
 			$data['jumlahBarangTerjual'] = 0;
+		} else {
+			$data['jumlahBarangTerjual'] = $data['jumlahBarangTerjual']['SUM(jumlah_penjualan)'];
 		}
 		//hutang orang
 		$hutang = $this->db_model->get_where('vw_piutang', ['status_piutang' => 0])->result_array();
@@ -35,9 +37,11 @@ class dashboard extends CI_Controller
 		}
 		$data['keuntungan'] = number_format($data["keuntungan"], 0, '', '.');
 		//barang terbeli
-		$data['jumlahJenisBarangTerbeli'] = $this->db_model->getJumlahTerbeli()->row_array()['SUM(jumlah_pembelian)'];
+		$data['jumlahJenisBarangTerbeli'] = $this->db_model->getJumlahTerbeli()->row_array();
 		if (!$data['jumlahJenisBarangTerbeli']) {
 			$data['jumlahJenisBarangTerbeli'] = 0;
+		} else {
+			$data['jumlahJenisBarangTerbeli'] = $data['jumlahJenisBarangTerbeli']['SUM(jumlah_pembelian)'];
 		}
 
 		//barang terlaris

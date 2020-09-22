@@ -61,7 +61,7 @@
 
 				<div class="container-fluid">
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-						
+
 						<li class="nav-item">
 							<a class="nav-link" href="<?= site_url('penjualan') ?>" title="penjualan" role="button" aria-expanded="false">
 								<i class="fas fa-th-list"></i>
@@ -78,7 +78,7 @@
 							</a>
 						</li>
 						<div class="ml-md-auto py-2 py-md-0">
-							<a href="#" class="btn btn-white btn-border btn-round mr-2">Backup</a>
+							<a href="#" onClick="backup()" class="badge badge-light mr-2">Backup</a>
 						</div>
 						<!-- <li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" aria-expanded="false">
@@ -318,6 +318,21 @@
 
 			});
 		});
+
+		function backup() {
+			var barang = "vw_penjualan";
+			var jasa = "vw_penjualan_jasa";
+
+			var tanggal = new Date();
+			var dd = String(tanggal.getDate()).padStart(2, '0');
+			var mm = String(tanggal.getMonth() + 1).padStart(2, '0'); //January is 0!
+			var yyyy = tanggal.getFullYear();
+
+			tanggal = yyyy + '/' + mm + '/' + dd;
+			window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + barang + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal
+			window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + jasa + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal
+			window.location.href = '<?= base_url() ?>keuntungan/eksportDb'
+		}
 	</script>
 </body>
 

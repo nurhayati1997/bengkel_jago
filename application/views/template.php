@@ -78,7 +78,12 @@
 							</a>
 						</li>
 						<div class="ml-md-auto py-2 py-md-0">
-							<a href="#" onClick="backup()" class="badge badge-light mr-2">Backup</a>
+							<select class="badge badge-light mr-2" id="backup" onchange="backup()">
+								<option value="0">Back Up</option>
+								<option value="1">Barang</option>
+								<option value="2">Jasa</option>
+								<option value="3">Data Base</option>
+							</select>
 						</div>
 						<!-- <li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" aria-expanded="false">
@@ -329,9 +334,15 @@
 			var yyyy = tanggal.getFullYear();
 
 			tanggal = yyyy + '/' + mm + '/' + dd;
-			window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + barang + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal
-			window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + jasa + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal
-			window.location.href = '<?= base_url() ?>keuntungan/eksportDb'
+			var pilihan = $("#backup").val()
+			if (pilihan == 1) {
+				window.open('<?= base_url() ?>keuntungan/eksport?target=' + barang + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal);
+			} else if (pilihan == 2) {
+				window.open('<?= base_url() ?>keuntungan/eksport?target=' + jasa + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal);
+			} else if (pilihan == 3) {
+				window.open('<?= base_url() ?>keuntungan/eksportDb');
+			}
+			$("#backup").val(0)
 		}
 	</script>
 </body>

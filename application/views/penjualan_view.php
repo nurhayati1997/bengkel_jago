@@ -51,6 +51,7 @@
 
 									</datalist>
 								</div>
+							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label for="jumlah">Jumlah</label>
@@ -168,15 +169,15 @@
 								<tfoot>
 									<tr>
 										<th>TOTAL</th>
-										<th colspan="4" id="total_bayar"></th>
+										<!-- <th colspan="4" id="total_bayar"></th> -->
 										<th colspan="4">
-											<form><input type="number" min="0" class="form-control input-pill" id="total_bayar" placeholder="Rp" readonly></form>
+											<form><input type="number" min="0" class="form-control input-pill" id="total_bayar" placeholder="Rp" readonly /></form>
 										</th>
 									</tr>
 									<tr>
 										<th>BAYAR</th>
 										<th colspan="4">
-											<form><input oninput="kembalian()" onchange="kembalian()" type="number" min="0" class="form-control input-pill" id="bayar" placeholder="Rp"></form>
+											<form><input oninput="kembalian()" onchange="kembalian()" type="number" min="0" class="form-control input-pill" id="bayar" placeholder="Rp" /></form>
 										</th>
 									</tr>
 									<tr>
@@ -343,11 +344,11 @@
 			url: '<?= base_url() ?>pembelian/lista',
 			dataType: 'json',
 			success: function(data) {
-				// console.log(data);
+				console.log(data);
 				barang = data;
 				var html = '';
 				for (var i = 0; i < data.length; i++) {
-					html += '<option value="' + data[i].kode_barang + '">';
+					html += '<option value="' + data[i].kode_barang + '">' + data[i].nama_barang + ' | ' + data[i].merk_barang + ' | ' + data[i].keterangan + '</option>';
 				}
 				$("#kodes").html(html);
 			}

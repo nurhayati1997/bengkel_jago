@@ -88,7 +88,7 @@
 												<div class="col-7 col-stats">
 													<div class="numbers">
 														<p class="card-category">Total Keuntungan :</p>
-														<h4 class="card-title" id="keuntungan">Rp. 3.000.000</h4>
+														<h4 class="card-title" id="keuntungan">Rp. 0</h4>
 													</div>
 												</div>
 											</div>
@@ -242,7 +242,7 @@
 					var tanggalMulai = $("#tanggalMulai").val()
 					var tanggalSelesai = $("#tanggalSelesai").val()
 					var totalKeuntungan = 0;
-					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>TANGGAL</th><th>JASA</th><th>HARGA</th><th>KASIR</th></tr></thead><tbody>'
+					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>JASA</th><th>HARGA</th><th>JUMLAH</th><th>TOTAL</th></tr></thead><tbody>'
 					$.ajax({
 						url: '<?= base_url() ?>keuntungan/getDataJasa',
 						method: 'post',
@@ -250,13 +250,13 @@
 						dataType: 'json',
 						success: function(data) {
 							for (let i = 0; i < data.length; i++) {
-								totalKeuntungan += parseInt(data[i].harga_jasa)
+								totalKeuntungan += parseInt(data[i][3])
 								tabel += '<tr>'
 								tabel += '<td>' + (i + 1) + '</td>'
-								tabel += '<td>' + formatTanggal(data[i].tgl_transaksi) + '</td>'
-								tabel += '<td>' + data[i].nama_jasa + '</td>'
-								tabel += '<td>' + formatRupiah(data[i].harga_jasa.toString()) + '</td>'
-								tabel += '<td>' + data[i].nama + '</td>'
+								tabel += '<td>' + data[i][0] + '</td>'
+								tabel += '<td>' + formatRupiah(data[i][1].toString()) + '</td>'
+								tabel += '<td>' + data[i][2] + '</td>'
+								tabel += '<td>' + formatRupiah(data[i][3].toString()) + '</td>'
 								tabel += '</tr>'
 
 							}

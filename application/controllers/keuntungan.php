@@ -30,11 +30,15 @@ class keuntungan extends CI_Controller
 
 	public function getDataJasa()
 	{
-		$target = $this->input->post('target');
 		$tanggalMulai = $this->input->post('tanggalMulai');
 		$tanggalSelesai = $this->input->post('tanggalSelesai');
-		$data = $this->db_model->get_where("vw_penjualan_jasa", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
-		echo json_encode($data);
+		$jasa = $this->db_model->get_all("tbl_jasa")->result_array();
+		$hasil = array();
+		for ($i = 0; $i < count($jasa); $i++) {
+			$jumlahJasa = $this->db_model->get_where("vw_penjualan_jasa", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai, 'id_jasa' => $jasa[$i]["id_jasa"]])->num_rows();
+			array_push($hasil, [$jasa[$i]["nama_jasa"], $jasa[$i]["harga_jasa"], $jumlahJasa, $jasa[$i]["harga_jasa"] * $jumlahJasa]);
+		}
+		echo json_encode($hasil);
 	}
 
 	function eksport()
@@ -234,48 +238,6 @@ class keuntungan extends CI_Controller
 		}
 		echo json_encode($hasil);
 	}
-
-	// public function getDataJasa()
-	// {
-	// 	$hasil = array();
-	// 	//hasil[[tanggal,[[a,b,..],[a,b,..],...]],...]
-	// 	$tanggalMulai = $this->input->post('tanggalMulai');
-	// 	$tanggalSelesai = $this->input->post('tanggalSelesai');
-	// 	$this->db->group_by("tgl_transaksi");
-	// 	$tanggal = $this->db_model->get_where("vw_penjualan_jasa", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
-	// 	for ($i = 0; $i < count($tanggal); $i++) {
-	// 		$tgl = $tanggal[$i]["tgl_transaksi"];
-	// 		$jasa = $this->db_model->get_where("vw_penjualan_jasa", ['tgl_transaksi' => $tgl])->result_array();
-	// 		array_push($hasil, array($tgl, $jasa));
-	// 	}
-	// 	echo json_encode($this->hitungJasa($hasil));
-	// }
-
-	// public function hitungJasa($data)
-	// {
-	// 	$penghitung = array();
-	// 	$hasil = array();
-	// 	//penghitung[[tanggal, [[nama jasa, jumlah],...]],....]
-	// 	for ($i = 0; $i < count($data); $i++) {
-	// 		array_push($penghitung, array($data[$i][0], array()));
-	// 		for ($j = 0; $j < count($data[$i][1]); $j++) {
-	// 			if (array_key_exists($data[$i][1][$j]["id_jasa"], $penghitung[$i][1])) {
-	// 				$penghitung[$i][1][$data[$i][1][$j]["id_jasa"]][1] += 1;
-	// 			} else {
-	// 				$penghitung[$i][1][$data[$i][1][$j]["id_jasa"]] = array($data[$i][1][$j]["nama_jasa"], 1);
-	// 			}
-	// 		}
-	// 	}
-
-	// 	// //hasil[[tanggal,[[namajasa, jumlah], [namajasa, jumlah],....]], ....]
-	// 	for ($i = 0; $i < count($penghitung); $i++) {
-	// 		array_push($hasil, array($penghitung[$i][0], array()));
-	// 		foreach ($penghitung[$i][1] as $data) {
-	// 			array_push($hasil[$i][1], array($data[0], $data[1]));
-	// 		}
-	// 	}
-	// 	return $hasil;
-	// }
 
 	public function eksportDb()
 	{

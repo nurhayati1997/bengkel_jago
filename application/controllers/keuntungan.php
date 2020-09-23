@@ -6,15 +6,15 @@ class keuntungan extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		if (!$this->session->userdata("id_pengguna")) {
+			redirect("login");
+		}
 		$this->load->model('db_model');
 		$this->load->library('form_validation');
 	}
 
 	public function index()
 	{
-		if (!$this->session->userdata("id_pengguna")) {
-			redirect("login");
-		}
 		$this->template->load('template', 'keuntungan_view');
 	}
 
@@ -280,31 +280,30 @@ class keuntungan extends CI_Controller
 	public function eksportDb()
 	{
 		$file = "backupDB(" . date("Y-m-d") . ").txt";
-		$txt = fopen($file, "w") or die("Unable to open file!");
-
+		$txt = "";
 
 		$tabels = ["tbl_barang", "tbl_client", "tbl_jasa", "tbl_pembelian", "tbl_pengguna", "tbl_penjualan", "tbl_penjualan_jasa", "tbl_piutang", "tbl_transaksi"];
 
 		foreach ($tabels as $tb) {
-			fwrite($txt, "|-" . $tb . "-|");
+			$txt .= "|-" . $tb . "-|";
 			$datas = $this->db_model->get_all($tb)->result_array();
 			foreach ($datas as $baris) {
 				foreach ($baris as $key => $data) {
-					fwrite($txt, $key . "->" . $data . "|k|");
+					$txt .= $key . "->" . $data . "|k|";
 				}
-				fwrite($txt, "-b-");
+				$txt .= "-b-";
 			}
-			fwrite($txt, "|-" . $tb . "-|");
+			$txt .= "|-" . $tb . "-|";
 		}
-		fclose($txt);
 
 		header('Content-Description: File Transfer');
-		header('Content-Disposition: attachment; filename=' . basename($file));
+		header('Content-Type: application/octet-stream');
+		header('Content-disposition: attachment; filename=' . $file);
+		header('Content-Length: ' . strlen($txt));
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Expires: 0');
-		header('Cache-Control: must-revalidate');
 		header('Pragma: public');
-		header('Content-Length: ' . filesize($file));
-		header("Content-Type: text/plain");
-		readfile($file);
+		echo $txt;
+		exit;
 	}
 }

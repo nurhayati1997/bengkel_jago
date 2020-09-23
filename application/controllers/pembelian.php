@@ -7,14 +7,14 @@ class pembelian extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		if (!$this->session->userdata("id_pengguna")) {
+			redirect("login");
+		}
 		$this->load->model('db_model');
 	}
 
 	public function index()
 	{
-		if (!$this->session->userdata("id_pengguna")) {
-			redirect("login");
-		}
 		$this->template->load('template', 'pembelian_view');
 	}
 

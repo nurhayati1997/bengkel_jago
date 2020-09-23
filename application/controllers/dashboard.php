@@ -6,15 +6,15 @@ class dashboard extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		if (!$this->session->userdata("id_pengguna")) {
+			redirect("login");
+		}
 		$this->load->model('db_model');
 		$this->load->library('form_validation');
 	}
 
 	public function index()
 	{
-		if (!$this->session->userdata("id_pengguna")) {
-			redirect("login");
-		}
 		//jumlah jenis barang terjual ini
 		$data['jumlahBarangTerjual'] = $this->db_model->getJumlahTerjual()->row_array();
 		if (!$data['jumlahBarangTerjual']) {

@@ -46,8 +46,15 @@ class stok extends CI_Controller
 			$tabel = $this->input->post("target");
 			$id = $this->input->post("id");
 			$pagu = $this->input->post("pagu");
+			$jenis = $this->input->post("jenis");
 
-			$this->db_model->update($tabel, ["pagu" => $pagu], ["id_barang" => $id]);
+			if ($jenis == "pagu") {
+				$data = ["pagu" => $pagu];
+			} else {
+				$data = ["stok_barang" => $pagu];
+			}
+
+			$this->db_model->update($tabel, $data, ["id_barang" => $id]);
 			echo json_encode("");
 		}
 	}

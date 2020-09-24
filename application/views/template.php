@@ -74,7 +74,7 @@
 						</li>
 						<li class="nav-item dropdown hidden-caret">
 							<a class="nav-link" href="<?= base_url('login/logout') ?>" title="logout" aria-expanded="false">
-								<i class="fas fa-arrow-circle-right"></i>
+								<i class="fa fa-power-off" aria-hidden="true"></i>
 							</a>
 						</li>
 						<div class="ml-md-auto py-2 py-md-0">

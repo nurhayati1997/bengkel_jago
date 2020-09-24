@@ -62,7 +62,7 @@
 										</div>
 										<div class="col-sm-3">
 											<div class="dropdown">
-												<select class="btn btn-warning btn-round dropdown-toggle" onChange="tampilkan()" id="jenisLaporan">
+												<select class="btn btn-warning btn-border btn-round dropdown-toggle" onChange="tampilkan()" id="jenisLaporan">
 													<option value="1">Barang</option>
 													<option value="2">Jasa</option>
 												</select>

@@ -86,6 +86,7 @@
 							<small class="text-danger" id="pesan_error"></small>
 							<form>
 								<input type="hidden" id="id_barang" name="id_barang" />
+								<input type="hidden" id="jenis" name="jenis" />
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="form-group">
@@ -111,7 +112,7 @@
 				var beginTabel = 'class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>KODE</th><th>NAMA</th><th>MERK</th><th>STOK</th>'
 				var stokWarning = '<table id="tabelWarning" ' + beginTabel + "</thead><tbody>";
 				var stokAman = '<table id="tabelAman" ' + beginTabel + "</thead><tbody>";
-				var stokPagu = '<table id="tabelPagu" ' + beginTabel + '<th>PAGU</th><th style="width: 10%">Action</th></tr></thead><tbody>';
+				var stokPagu = '<table id="tabelPagu" ' + beginTabel + '<th>PAGU</th><th style="width: 20%">Action</th></tr></thead><tbody>';
 				var noWarning = 1;
 				var noAman = 1;
 				var baris = '';
@@ -130,7 +131,11 @@
 								stokWarning += '<tr><td>' + noWarning + '</td>' + baris + '</tr>'
 								noWarning += 1
 							}
-							stokPagu += '<tr><td>' + (i + 1) + '</td>' + baris + ' <td> ' + data[i].pagu + ' </td><td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_barang + ')"><i class="fa fa-edit"></i > </button></div> </td></tr > '
+							stokPagu += '<tr><td>' + (i + 1) + '</td>' + baris + ' <td> ' + data[i].pagu + ' </td><td><div class="form-button-action"><button type="button" title="Edit Pagu" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_barang + ', \'pagu\')"><i class="fa fa-edit"></i > </button> '
+							<?php if ($this->session->userdata("rule") == 1) : ?>
+								stokPagu += '<button type="button" title="Sesuaikan Stok" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_barang + ', \'stok\')"><i class="fa fa-th-list" aria-hidden="true"></i> </button>'
+							<?php endif; ?>
+							stokPagu += '</div> </td></tr > '
 						}
 						$("#tempatTabelWarning").html(stokWarning + '</tbody></table>')
 						$("#tempatTabelAman").html(stokAman + '</tbody></table>')
@@ -149,8 +154,9 @@
 				});
 			}
 
-			function tryEdit(id) {
+			function tryEdit(id, jenis) {
 				$("#id_barang").val(id)
+				$("#jenis").val(jenis)
 				$.ajax({
 					url: '<?= base_url() ?>stok/get_dataByid',
 					method: 'post',
@@ -158,7 +164,11 @@
 					dataType: 'json',
 					success: function(data) {
 						$('#pesan_error').html("")
-						$("#pagu").val(data.pagu)
+						if (jenis == "pagu") {
+							$("#pagu").val(data.pagu)
+						} else {
+							$("#pagu").val(data.stok_barang)
+						}
 						$("#modal_edit").modal('show')
 					}
 				});
@@ -166,16 +176,18 @@
 
 			function edit() {
 				var id = $("#id_barang").val()
+				var jenis = $("#jenis").val()
 				var pagu = $("#pagu").val()
 				$.ajax({
 					url: '<?= base_url() ?>stok/ubah_data',
 					method: 'post',
-					data: "target=tbl_barang&id=" + id + "&pagu=" + pagu,
+					data: "target=tbl_barang&id=" + id + "&pagu=" + pagu + "&jenis=" + jenis,
 					dataType: 'json',
 					success: function(data) {
 						if (data == "") {
 							tampilkan()
 							$("#id_barang").val("")
+							$("#jenis").val("")
 							$("#pagu").val("")
 							$('#pesan_error').html("")
 							$("#modal_edit").modal('hide')

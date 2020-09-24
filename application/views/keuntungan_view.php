@@ -39,7 +39,7 @@
 											</div>
 										</div>
 									</div>
-									<a href="#" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3" onclick="tampilkan()">Proses</a>
+									<a href="#" id="tombolProses" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3" onclick="tampilkan()">Proses</a>
 								</form>
 								<div class="row py-3">
 									<div class="col-md-12">
@@ -190,6 +190,7 @@
 				}
 
 				function barangByDate() {
+					$("#tombolProses").html('<i class="fas fa-spinner fa-pulse"></i> Memproses...')
 					var tanggalMulai = $("#tanggalMulai").val()
 					var tanggalSelesai = $("#tanggalSelesai").val()
 					var keuntungan = 0;
@@ -234,6 +235,7 @@
 							$('#add-row').DataTable({
 								"pageLength": 5,
 							});
+							$("#tombolProses").html('Proses')
 						}
 					});
 				}

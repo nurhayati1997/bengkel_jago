@@ -105,7 +105,7 @@
 													<input type="hidden" id="id_hapus" name="id_hapus" />
 												</div>
 												<div class="modal-footer no-bd">
-													<button type="button" id="edit" onClick="hapus()" class="btn btn-primary">Hapus</button>
+													<button type="button" id="hapus" onClick="hapus()" class="btn btn-primary">Hapus</button>
 													<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
 												</div>
 											</div>
@@ -125,6 +125,7 @@
 				tampilkan()
 
 				function tampilkan() {
+					$("#tempat_tabel").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
 					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>KODE CLIENT</th><th>NAMA CLIENT</th><th>ALAMAT</th><th>NO KTP</th><th>NO HP</th><th style="width: 10%">Action</th></tr></thead><tbody>'
 					$.ajax({
 						url: '<?= base_url() ?>client/get_data',
@@ -140,7 +141,7 @@
 								tabel += '<td>' + data[i].alamat + '</td>'
 								tabel += '<td>' + data[i].no_ktp + '</td>'
 								tabel += '<td>' + data[i].no_telp + '</td>'
-								tabel += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="Edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_client + ')"><i class="fa fa-edit"></i></button><button type="button" title="hapus ?" class="btn btn-link btn-danger"><i class="fa fa-times" onClick="tryHapus(' + data[i].id_client + ')"></i></button></div></td></tr>'
+								tabel += '<td><div class="form-button-action"><button type="button" data-toggle="tooltip" title="Edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_client + '" onClick="tryEdit(' + data[i].id_client + ')"><i class="fa fa-edit"></i></button><button type="button" title="hapus ?" class="btn btn-link btn-danger" id="hapus' + data[i].id_client + '" onClick="tryHapus(' + data[i].id_client + ')"><i class="fa fa-times"></i></button></div></td></tr>'
 							}
 							tabel += '</tbody></table>'
 							$("#tempat_tabel").html(tabel)
@@ -161,6 +162,7 @@
 				}
 
 				function tambah() {
+					$("#tambah").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
 					var nama = $("#nama").val()
 					var alamat = $("#alamat").val()
 					var no_ktp = $("#no_ktp").val()
@@ -181,12 +183,13 @@
 							} else {
 								$('#pesan_error').html(data)
 							}
-
+							$("#tambah").html('Tambah')
 						}
 					});
 				}
 
 				function tryEdit(id) {
+					$("#edit" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
 					$("#edit").show()
 					$("#id_client").val(id)
 					$("#tambah").hide()
@@ -203,11 +206,13 @@
 							$("#no_ktp").val(data.no_ktp)
 							$("#no_hp").val(data.no_telp)
 							$("#modal_tambah").modal('show')
+							$("#edit" + id).html('<i class="fa fa-edit"></i>')
 						}
 					});
 				}
 
 				function edit() {
+					$("#edit").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
 					var id = $("#id_client").val()
 					var nama = $("#nama").val()
 					var alamat = $("#alamat").val()
@@ -230,11 +235,13 @@
 							} else {
 								$('#pesan_error').html(data)
 							}
+							$("#edit").html('Edit')
 						}
 					});
 				}
 
 				function tryHapus(id) {
+					$("#hapus" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
 					$.ajax({
 						url: '<?= base_url() ?>client/get_dataByid',
 						method: 'post',
@@ -243,12 +250,15 @@
 						success: function(data) {
 							$("#id_hapus").val(id)
 							$("#teksHapus").html("apakah anda yakin ingin menghapus client dengan nama '" + data.nama_client + "' ?")
+
+							$("#hapus" + id).html('<i class="fa fa-times"></i>')
 						}
 					});
 					$("#hapus_modal").modal('show')
 				}
 
 				function hapus() {
+					$("#hapus").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
 					var id = $("#id_hapus").val()
 					$.ajax({
 						url: '<?= base_url() ?>client/hapus_data',
@@ -260,6 +270,7 @@
 							$("#teksHapus").html("")
 							tampilkan()
 							$("#hapus_modal").modal('hide')
+							$("#hapus").html('Hapus')
 						}
 					});
 				}

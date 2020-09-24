@@ -108,13 +108,13 @@
 													<input type="hidden" id="id_hapus" name="id_hapus" />
 												</div>
 												<div class="modal-footer no-bd">
-													<button type="button" id="edit" onClick="hapus()" class="btn btn-primary">Hapus</button>
+													<button type="button" id="hapus" onClick="hapus()" class="btn btn-primary">Hapus</button>
 													<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="table-responsive" id="tabel_user">
+									<div class="table-responsive" id="tempatTabel">
 
 									</div>
 								</div>
@@ -129,7 +129,8 @@
 				tampilkan()
 
 				function tampilkan() {
-					var baris = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>KODE USER</th><th>NAMA USER</th><th>RULE</th><th style="width: 10%">Action</th></tr></thead><tbody>'
+					$("#tempatTabel").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
+					var baris = '<table id="tabelUser" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>KODE USER</th><th>NAMA USER</th><th>RULE</th><th style="width: 10%">Action</th></tr></thead><tbody>'
 					$.ajax({
 						url: '<?= base_url() ?>user/get_data',
 						method: 'post',
@@ -142,11 +143,15 @@
 								baris += '<td>' + data[i].id_pengguna + '</td>'
 								baris += '<td>' + data[i].nama + '</td>'
 								baris += '<td>' + data[i].rule + '</td>'
-								baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_pengguna + ')"><i class="fa fa-edit"></i></button><button type="button" title="hapus?" class="btn btn-link btn-danger" onClick="tryHapus(' + data[i].id_pengguna + ')"><i class="fa fa-times"></i></button></div></td></tr>'
+								baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_pengguna + '" onClick="tryEdit(' + data[i].id_pengguna + ')"><i class="fa fa-edit"></i></button>'
+								if (data[i].id_pengguna != <?= $this->session->userdata("id_pengguna") ?>) {
+									baris += '<button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_pengguna + '" onClick="tryHapus(' + data[i].id_pengguna + ')"><i class="fa fa-times"></i></button>'
+								}
+								baris += '</div></td></tr>'
 							}
 							baris += '</tbody></table>'
-							$("#tabel_user").html(baris)
-							$('#add-row').DataTable({
+							$("#tempatTabel").html(baris)
+							$('#tabelUser').DataTable({
 								"pageLength": 5,
 							});
 						}
@@ -165,6 +170,7 @@
 				}
 
 				function tambah() {
+					$("#tambah").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
 					var nama = $("#nama").val()
 					var password = $("#password").val()
 					var verifpass = $("#verifpass").val()
@@ -185,12 +191,14 @@
 							} else {
 								$('#pesan_error').html(data)
 							}
+							$("#tambah").html('Tambah')
 
 						}
 					});
 				}
 
 				function tryEdit(id) {
+					$("#edit" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
 					$("#edit").show()
 					$("#id_user").val(id)
 					$("#tambah").hide()
@@ -204,11 +212,13 @@
 							$("#tambah_modal").modal('show')
 							$("#nama").val(data.nama)
 							$("#rule").val(data.rule)
+							$("#edit" + id).html('<i class="fa fa-edit"></i>')
 						}
 					});
 				}
 
 				function edit() {
+					$("#edit").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
 					var password = $("#password").val()
 					var id = $("#id_user").val()
 					var verifpass = $("#verifpass").val()
@@ -230,11 +240,13 @@
 							} else {
 								$('#pesan_error').html(data)
 							}
+							$("#edit").html('Edit')
 						}
 					});
 				}
 
 				function tryHapus(id) {
+					$("#hapus" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
 					$.ajax({
 						url: '<?= base_url() ?>user/get_dataByid',
 						method: 'post',
@@ -243,12 +255,15 @@
 						success: function(data) {
 							$("#id_hapus").val(id)
 							$("#teksHapus").html("apakah anda yakin ingin menghapus pengguna dengan nama '" + data.nama + "' ?")
+
+							$("#hapus" + id).html('<i class="fa fa-times"></i>')
 						}
 					});
 					$("#hapus_modal").modal('show')
 				}
 
 				function hapus() {
+					$("#hapus").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
 					var id = $("#id_hapus").val()
 					$.ajax({
 						url: '<?= base_url() ?>user/hapus_data',
@@ -260,6 +275,7 @@
 							$("#teksHapus").html("")
 							tampilkan()
 							$("#hapus_modal").modal('hide')
+							$("#hapus").html('Hapus')
 						}
 					});
 				}

@@ -109,6 +109,9 @@
 			tampilkan()
 
 			function tampilkan() {
+				$("#tempatTabelWarning").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
+				$("#tempatTabelAman").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
+				$("#tempatTabelPagu").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
 				var beginTabel = 'class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>KODE</th><th>NAMA</th><th>MERK</th><th>STOK</th>'
 				var stokWarning = '<table id="tabelWarning" ' + beginTabel + "</thead><tbody>";
 				var stokAman = '<table id="tabelAman" ' + beginTabel + "</thead><tbody>";
@@ -131,9 +134,9 @@
 								stokWarning += '<tr><td>' + noWarning + '</td>' + baris + '</tr>'
 								noWarning += 1
 							}
-							stokPagu += '<tr><td>' + (i + 1) + '</td>' + baris + ' <td> ' + data[i].pagu + ' </td><td><div class="form-button-action"><button type="button" title="Edit Pagu" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_barang + ', \'pagu\')"><i class="fa fa-edit"></i > </button> '
+							stokPagu += '<tr><td>' + (i + 1) + '</td>' + baris + ' <td> ' + data[i].pagu + ' </td><td><div class="form-button-action"><button type="button" title="Edit Pagu" class="btn btn-link btn-primary btn-lg" id="pagu' + data[i].id_barang + '" onClick="tryEdit(' + data[i].id_barang + ', \'pagu\')"><i class="fa fa-edit"></i > </button> '
 							<?php if ($this->session->userdata("rule") == 1) : ?>
-								stokPagu += '<button type="button" title="Sesuaikan Stok" class="btn btn-link btn-primary btn-lg" onClick="tryEdit(' + data[i].id_barang + ', \'stok\')"><i class="fa fa-th-list" aria-hidden="true"></i> </button>'
+								stokPagu += '<button type="button" title="Sesuaikan Stok" class="btn btn-link btn-primary btn-lg" id="stok' + data[i].id_barang + '" onClick="tryEdit(' + data[i].id_barang + ', \'stok\')"><i class="fa fa-th-list" aria-hidden="true"></i> </button>'
 							<?php endif; ?>
 							stokPagu += '</div> </td></tr > '
 						}
@@ -155,6 +158,11 @@
 			}
 
 			function tryEdit(id, jenis) {
+				if (jenis == "pagu") {
+					$("#pagu" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
+				} else {
+					$("#stok" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
+				}
 				$("#id_barang").val(id)
 				$("#jenis").val(jenis)
 				$.ajax({
@@ -166,8 +174,10 @@
 						$('#pesan_error').html("")
 						if (jenis == "pagu") {
 							$("#pagu").val(data.pagu)
+							$("#pagu" + id).html('<i class="fa fa-edit"></i >')
 						} else {
 							$("#pagu").val(data.stok_barang)
+							$("#stok" + id).html('<i class="fa fa-th-list" aria-hidden="true"></i>')
 						}
 						$("#modal_edit").modal('show')
 					}
@@ -175,6 +185,7 @@
 			}
 
 			function edit() {
+				$("#edit" + id).html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
 				var id = $("#id_barang").val()
 				var jenis = $("#jenis").val()
 				var pagu = $("#pagu").val()
@@ -194,6 +205,7 @@
 						} else {
 							$('#pesan_error').html(data)
 						}
+						$("#edit").html('Edit')
 					}
 				});
 			}

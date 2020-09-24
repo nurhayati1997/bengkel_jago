@@ -38,6 +38,11 @@
 												<input type="date" class="form-control input-pill" id="tanggalSelesai" placeholder="Rp">
 											</div>
 										</div>
+										<div class="col-sm-12">
+											<div class="form-group">
+												<div id="pesanError" class="badge badge-danger"></div>
+											</div>
+										</div>
 									</div>
 									<a href="#" id="tombolProses" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3" onclick="tampilkan()">Proses</a>
 								</form>
@@ -55,7 +60,8 @@
 								<div class="card-header">
 									<div class="d-flex align-items-center">
 										<div class="col-sm-6">
-											<h4 class="card-title">Data Transaksi</h4>
+											<h5 class="card-title">Data Transaksi</h5>
+											<div id="judulTanggal" class="badge badge-info"></div>
 										</div>
 										<div class="col-sm-3">
 											<button class="btn btn-primary btn-border btn-round mr-2" onclick="eksport()">Cetak</button>
@@ -182,10 +188,21 @@
 				function tampilkan() {
 					tampilkanChart()
 					var jenisLaporan = $("#jenisLaporan").val();
-					if (jenisLaporan == "1") {
-						barangByDate()
+
+					var tanggalMulai = $("#tanggalMulai").val()
+					var tanggalSelesai = $("#tanggalSelesai").val()
+
+					if (tanggalMulai > tanggalSelesai) {
+						$("#pesanError").html("Tanggal Mulai tidak Boleh Melebihi tanggal Selesai")
 					} else {
-						jasaByDate()
+						$("#pesanError").html("")
+						if (jenisLaporan == "1") {
+							barangByDate()
+						} else {
+							jasaByDate()
+						}
+						$("#judulTanggal").html("Tanggal : " +
+							tanggalMulai + " Sampai " + tanggalSelesai)
 					}
 				}
 

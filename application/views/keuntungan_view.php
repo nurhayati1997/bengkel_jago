@@ -307,7 +307,15 @@
 					}
 					var tanggalMulai = $("#tanggalMulai").val()
 					var tanggalSelesai = $("#tanggalSelesai").val()
-					window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + target + '&tanggalMulai=' + tanggalMulai + '&tanggalSelesai=' + tanggalSelesai
+
+					if (tanggalMulai > tanggalSelesai) {
+						$("#pesanError").html("Tanggal Mulai tidak Boleh Melebihi tanggal Selesai")
+					} else {
+						$("#pesanError").html("")
+						window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + target + '&tanggalMulai=' + tanggalMulai + '&tanggalSelesai=' + tanggalSelesai
+						$("#judulTanggal").html("Tanggal : " +
+							tanggalMulai + " Sampai " + tanggalSelesai)
+					}
 				}
 
 				function formatRupiah(angka, prefix) {

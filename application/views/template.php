@@ -325,6 +325,8 @@
 		});
 
 		function backup() {
+			var pilihan = $("#backup").val()
+			$("#backup").html('<option value="0"><i class="fas fa-spinner fa-pulse"> Memproses..</option>')
 			var barang = "vw_penjualan";
 			var jasa = "vw_penjualan_jasa";
 
@@ -334,15 +336,14 @@
 			var yyyy = tanggal.getFullYear();
 
 			tanggal = yyyy + '/' + mm + '/' + dd;
-			var pilihan = $("#backup").val()
 			if (pilihan == 1) {
-				window.open('<?= base_url() ?>keuntungan/eksport?target=' + barang + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal);
+				window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + barang + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal
 			} else if (pilihan == 2) {
-				window.open('<?= base_url() ?>keuntungan/eksport?target=' + jasa + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal);
+				window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + jasa + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal
 			} else if (pilihan == 3) {
-				window.open('<?= base_url() ?>keuntungan/eksportDb');
+				window.location.href = '<?= base_url() ?>keuntungan/eksportDb'
 			}
-			$("#backup").val(0)
+			$("#backup").html('<option value="0" selected>Back Up</option><option value="1">Barang</option><option value="2">Jasa</option><option value="3">Data Base</option>')
 		}
 	</script>
 </body>

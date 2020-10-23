@@ -3,8 +3,8 @@
 					<div class="page-inner py-5">
 						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 							<div>
-								<h2 class="text-white pb-2 fw-bold">Dashboard</h2>
-
+								<h2 class="text-white pb-2 fw-bold">Dashboard </h2>
+								<!-- <i class="fa fa-spinner fa-spin"></i> -->
 							</div>
 						</div>
 					</div>

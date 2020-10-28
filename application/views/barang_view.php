@@ -34,7 +34,7 @@
 						</div>
 						<div class="card-footer">
 
-							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+							<!-- <div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
 								<strong>Data Berhasil di Tambah</strong>
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
@@ -51,13 +51,13 @@
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-							</div>
+							</div> -->
 							<div class="table-responsive">
 								<table id="myTable" class="display table table-striped table-hover">
 									<thead>
 										<tr>
 											<th>KODE BARANG</th>
-											<th>JENIS BARANG</th>
+											<th>JENIS MOBIL</th>
 											<th>NAMA BARANG</th>
 											<th>MERK BARANG</th>
 											<th>KETERANGAN</th>
@@ -105,11 +105,8 @@
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="jenis">Jenis Barang</label>
-								<select class="form-control input-pill" id="jenis" placeholder="">
-									<option value="1">Mobil</option>
-									<option value="0">Sepeda Motor</option>
-								</select>
+								<label for="jenis">Jenis Mobil</label>
+								<input type="text" class="form-control input-pill" id="jenis" placeholder="">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -144,7 +141,7 @@
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="satuan">Harga Satuan</label>
+								<label for="satuan">Harga Kulak</label>
 								<input type="number" min="0" class="form-control input-pill" id="satuan" placeholder="Rp">
 							</div>
 						</div>
@@ -164,7 +161,7 @@
 				</form>
 			</div>
 			<div class="modal-footer no-bd">
-				<button onclick="tambah()" id="tambah_button" type="button" data-dismiss="modal" class="btn btn-primary">Tambah</button>
+				<button onclick="tambah()" id="tambah_button" type="button" class="btn btn-primary">Tambah</button>
 				<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
 			</div>
 		</div>
@@ -198,11 +195,8 @@
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="ubah_jenis">Jenis Barang</label>
-								<select class="form-control input-pill" id="ubah_jenis" placeholder="">
-									<option value="1">Mobil</option>
-									<option value="0">Sepeda Motor</option>
-								</select>
+								<label for="ubah_jenis">Jenis Mobil</label>
+								<input type="text" class="form-control input-pill" id="ubah_jenis" placeholder="">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -231,13 +225,7 @@
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="ubah_stok">Stok</label>
-								<input type="number" min="0" class="form-control input-pill" id="ubah_stok" placeholder="">
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label for="ubah_satuan">Harga Satuan</label>
+								<label for="ubah_satuan">Harga Kulak</label>
 								<input type="number" min="0" class="form-control input-pill" id="ubah_satuan" placeholder="Rp">
 							</div>
 						</div>
@@ -356,6 +344,7 @@
 					document.getElementById("jual").value = "";
 					document.getElementById("pagu").value = "";
 
+					$('#addRowModal').modal('hide');
 					ambil_data();
 				}
 			});
@@ -374,15 +363,7 @@
 					"data": "kode_barang"
 				},
 				{
-					"data": "jenis",
-					"render": function(data, type, row) {
-						if (data == 0) {
-							return "Sepeda Motor"
-						} else {
-							return "Mobil"
-						}
-
-					}
+					"data": "jenis"
 				},
 				{
 					"data": "nama_barang"
@@ -447,7 +428,6 @@
 					document.getElementById("ubah_distributor").value = data[i].distributor;
 					document.getElementById("ubah_satuan").value = data[i].harga_kulak;
 					document.getElementById("ubah_jual").value = data[i].harga_jual;
-					document.getElementById("ubah_stok").value = data[i].stok_barang;
 					document.getElementById("ubah_pagu").value = data[i].pagu;
 					document.getElementById("ubah_ket").value = data[i].keterangan;
 					document.getElementById("ubah_lokasi").value = data[i].lokasi;
@@ -472,8 +452,7 @@
 			data: 'id=' + id + '&kode=' + document.getElementById("ubah_kode").value +
 				'&jenis=' + document.getElementById("ubah_jenis").value + '&nama=' + document.getElementById("ubah_nama").value +
 				'&distributor=' + document.getElementById("ubah_distributor").value + '&satuan=' + document.getElementById("ubah_satuan").value +
-				'&jual=' + document.getElementById("ubah_jual").value + '&merk=' + document.getElementById("ubah_merk").value +
-				'&stok=' + document.getElementById("ubah_stok").value + '&pagu=' + document.getElementById("ubah_pagu").value +
+				'&jual=' + document.getElementById("ubah_jual").value + '&merk=' + document.getElementById("ubah_merk").value + '&pagu=' + document.getElementById("ubah_pagu").value +
 				'&ket=' + document.getElementById("ubah_ket").value + '&lokasi=' + document.getElementById("ubah_lokasi").value,
 			url: '<?= base_url() ?>barang/ubah',
 			dataType: 'json',

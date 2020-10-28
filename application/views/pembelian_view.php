@@ -29,7 +29,7 @@
 							</button>
 						</div>
 						<div class="card-footer">
-							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+							<!-- <div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
 								<strong>Data Berhasil di Tambah</strong>
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
@@ -46,14 +46,14 @@
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-							</div>
+							</div> -->
 							<div class="table-responsive">
 								<table id="tabel_pembelian" class="display table table-striped table-hover">
 									<thead>
 										<tr>
 											<th>TANGGAL</th>
-											<th>KODE BARANG</th>
-											<th>NAMA BARANG</th>
+											<th>KODE</th>
+											<th>NAMA</th>
 											<th>HARGA KULAK</th>
 											<th>JUMLAH PEMBELIAN</th>
 											<th>AKSI</th>
@@ -112,6 +112,12 @@
 						</div>
 						<div class="col-sm-12">
 							<div class="form-group">
+								<label for="keterangan">Keterangan</label>
+								<textarea type="text" class="form-control input-pill" id="keterangan" readonly> </textarea>
+							</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="form-group">
 								<label for="harga">Harga</label>
 								<input oninput="jumlah_barang()" onchange="jumlah_barang()" type="text" class="form-control input-pill" id="harga" placeholder="" readonly>
 							</div>
@@ -154,7 +160,7 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="ubah_kode">Kode barang</label>
+								<label for="ubah_kode">Id Barang</label>
 								<input oninput="ubah_tampil_data_kode()" onchange="ubah_tampil_data_kode()" type="text" class="form-control input-pill" id="ubah_kode" autocomplete="TRUE" list="kodes" placeholder="" readonly>
 								<datalist onchange="ubah_tampil_data_kode()" id="kodes">
 
@@ -248,7 +254,7 @@
 				barang = data;
 				var html = '';
 				for (var i = 0; i < data.length; i++) {
-					html += '<option value="' + data[i].kode_barang + '">';
+					html += '<option value="' + data[i].id_barang + '">' + data[i].nama_barang + ' | ' + data[i].jenis + ' | ' + data[i].merk_barang + ' | ' + data[i].keterangan + ' | ' + data[i].kode_barang + '</option>';;
 				}
 				$("#kodes").html(html);
 			}
@@ -258,8 +264,9 @@
 	function tampil_data_kode() {
 		// alert(document.getElementById('kode').value);
 		for (var i = 0; i < barang.length; i++) {
-			if (document.getElementById('kode').value == barang[i].kode_barang) {
+			if (document.getElementById('kode').value == barang[i].id_barang) {
 				document.getElementById('nama').value = barang[i].nama_barang;
+				document.getElementById('keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
 				document.getElementById('harga').value = barang[i].harga_jual;
 
 				id_selected = barang[i].id_barang;
@@ -274,6 +281,7 @@
 		for (var i = 0; i < barang.length; i++) {
 			if (document.getElementById('ubah_kode').value == barang[i].kode_barang) {
 				document.getElementById('ubah_nama').value = barang[i].nama_barang;
+				document.getElementById('ubah_keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
 				document.getElementById('ubah_harga').value = barang[i].harga_jual;
 
 				id_selected = barang[i].id_barang;

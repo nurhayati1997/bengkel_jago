@@ -32,7 +32,7 @@ class pembelian extends CI_Controller
 			"tgl_pembelian" => $tgl,
 			"harga_kulak" => $this->input->post("harga", TRUE),
 			"jumlah_pembelian" => $this->input->post("jumlah", TRUE),
-			"id_pengguna" => 1
+			"id_pengguna" => $this->session->userdata("id_pengguna")
 		];
 		$this->db_model->insert('tbl_pembelian', $data);
 

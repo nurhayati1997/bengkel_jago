@@ -247,7 +247,7 @@
 							}
 							tabel += '</tbody></table>'
 							$("#tempat_tabel").html(tabel)
-							$("#keuntungan").html('Rp. ' + totalKeuntungan)
+							$("#keuntungan").html('Rp. ' + formatRupiah(totalKeuntungan.toString()))
 
 							$('#add-row').DataTable({
 								"pageLength": 5,

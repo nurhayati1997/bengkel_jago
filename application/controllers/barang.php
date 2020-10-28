@@ -11,6 +11,7 @@ class barang extends CI_Controller
 			redirect("login");
 		}
 		$this->load->model('db_model');
+		$this->load->library('form_validation');
 	}
 
 	public function index()
@@ -19,7 +20,7 @@ class barang extends CI_Controller
 	}
 	public function tampil()
 	{
-		echo json_encode($this->db_model->get_all("tbl_barang")->result());
+		echo json_encode($this->db_model->get_where("tbl_barang", ["hapus" => 0])->result());
 	}
 
 	public function tambah()
@@ -38,7 +39,7 @@ class barang extends CI_Controller
 			"hapus" => 0
 		];
 		$this->db_model->insert('tbl_barang', $data);
-		echo json_encode($data);
+		echo json_encode("");
 	}
 	function ubah_list()
 	{
@@ -57,7 +58,6 @@ class barang extends CI_Controller
 			"merk_barang" => $this->input->post("merk", TRUE),
 			"harga_kulak" => $this->input->post("satuan", TRUE),
 			"harga_jual" => $this->input->post("jual", TRUE),
-			"stok_barang" => $this->input->post("stok", TRUE),
 			"pagu" => $this->input->post("pagu", TRUE)
 		];
 		$this->db_model->update('tbl_barang', $data, array('id_barang' => $this->input->post('id', TRUE)));

@@ -32,7 +32,7 @@ class penjualan extends CI_Controller
 		$tgl = date('Y-m-d');
 
 		$data = [
-			"id_pengguna" => 1,
+			"id_pengguna" => $this->session->userdata("id_pengguna"),
 			"tgl_transaksi" => $tgl
 		];
 		echo json_encode($this->db_model->insert_get("tbl_transaksi", $data));

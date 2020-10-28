@@ -60,8 +60,8 @@
 																<div class="form-group">
 																	<label for="pillSelect">Rule</label>
 																	<select name="rule" id="rule" class="form-control input-pill" id="pillSelect" placeholder="Pill Input">
-																		<option>1</option>
 																		<option>2</option>
+																		<option>1</option>
 																	</select>
 																</div>
 															</div>

@@ -34,7 +34,7 @@
 						</div>
 						<div class="card-footer">
 
-							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+							<!-- <div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
 								<strong>Data Berhasil di Tambah</strong>
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
@@ -51,17 +51,8 @@
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-							</div>
-							<div class="table-responsive">
-								<table id="myTable" class="display table table-striped table-hover">
-									<thead>
-										<tr>
-											<th>NAMA JASA</th>
-											<th>HARGA JASA</th>
-											<th style="width: 10%">AKSI</th>
-										</tr>
-									</thead>
-								</table>
+							</div> -->
+							<div class="table-responsive" id="tempatTabel">
 							</div>
 						</div>
 					</div>
@@ -87,6 +78,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				<small class="text-danger" id="pesan_error_tambah"></small>
 				<form>
 					<div class="row">
 						<div class="col-sm-6">
@@ -98,14 +90,14 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="harga_jasa">Harga Jasa</label>
-								<input type="text" class="form-control input-pill" id="harga_jasa" placeholder="">
+								<input type="number" class="form-control input-pill" id="harga_jasa" placeholder="">
 							</div>
 						</div>
 					</div>
 				</form>
 			</div>
 			<div class="modal-footer no-bd">
-				<button onclick="tambah()" id="tambah_button" type="button" data-dismiss="modal" class="btn btn-primary">Tambah</button>
+				<button onclick="tambah()" id="tambah_button" class="btn btn-primary">Tambah</button>
 				<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
 			</div>
 		</div>
@@ -129,25 +121,27 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				<small class="text-danger" id="pesan_error_ubah"></small>
 				<form>
+					<input type="hidden" class="form-control input-pill" id="idJasa" placeholder="">
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="nama_jasa">Nama Jasa</label>
-								<input type="text" class="form-control input-pill" id="nama_jasa" placeholder="">
+								<input type="text" class="form-control input-pill" id="ubah_nama_jasa" placeholder="">
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="harga_jasa">Harga Jasa</label>
-								<input type="text" class="form-control input-pill" id="harga_jasa" placeholder="">
+								<input type="text" class="form-control input-pill" id="ubah_harga_jasa" placeholder="">
 							</div>
 						</div>
 					</div>
 				</form>
 			</div>
-			<div class="modal-footer no-bd" id="ubahModal_tombol">
-				<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+			<div class="modal-footer no-bd">
+				<button onclick="edit()" id="ubahModal_tombol" class="btn btn-primary">Ubah</button>
 			</div>
 		</div>
 	</div>
@@ -170,217 +164,150 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<p>Apakah anda ingin mengapus data ? </br> <span style="color: red;">*Data yang telah dihapus tidak dapat dikembalikan lagi</span></p>
+				<p id="teksHapus"></p>
+				<input type="hidden" id="id_hapus" name="id_hapus" />
 			</div>
-			<div class="modal-footer no-bd" id="hapusModal_tombol">
-				<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+			<div class="modal-footer no-bd">
+				<button type="button" id="hapus" onClick="hapus()" class="btn btn-primary">Hapus</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
 			</div>
 		</div>
 	</div>
 </div>
 
 <script>
-	$(document).ready(function() {
-		// $("#success-alert").hide();
-		$("#tambah_button").click(function showAlert() {
-			$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
-				$("#success-alert").slideUp(500);
-			});
-		});
+	tampilkan()
 
-		//datatabel
-		ambil_data();
-	});
+	function tampilkan() {
+		$("#tempatTabel").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
+		var baris = '<table id="tabelJasa" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>NAMA JASA</th><th>HARGA</th><th style="width: 10%">Action</th></tr></thead><tbody>'
+		$.ajax({
+			url: '<?= base_url() ?>jasa/tampil',
+			method: 'post',
+			dataType: 'json',
+			success: function(data) {
+				for (let i = 0; i < data.length; i++) {
+					baris += '<tr>'
+					baris += '<td>' + (i + 1) + '</td>'
+					baris += '<td>' + data[i].nama_jasa + '</td>'
+					baris += '<td>' + data[i].harga_jasa + '</td>'
+					baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_jasa + '" onClick="tryEdit(' + data[i].id_jasa + ')"><i class="fa fa-edit"></i></button>'
+					baris += '<button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_jasa + '" onClick="tryHapus(' + data[i].id_jasa + ')"><i class="fa fa-times"></i></button>'
+					baris += '</div></td></tr>'
+				}
+				baris += '</tbody></table>'
+				$("#tempatTabel").html(baris)
+				$('#tabelTabel').DataTable({
+					"pageLength": 5,
+				});
+			}
+		});
+	}
+
+	function tryTambah() {
+		$("#nama_jasa").val("")
+		$("#harga_jasa").val("")
+		$("#addRowModal").modal('show')
+		$('#pesan_error_tambah').html("")
+	}
 
 	function tambah() {
-		if (document.getElementById("pagu").value == "") {
-			document.getElementById("pagu").focus();
-		}
-		if (document.getElementById("jual").value == "") {
-			document.getElementById("jual").focus();
-		}
-		if (document.getElementById("satuan").value == "") {
-			document.getElementById("satuan").focus();
-		}
-		if (document.getElementById("merk").value == "") {
-			document.getElementById("merk").focus();
-		}
-		if (document.getElementById("distributor").value == "") {
-			document.getElementById("distributor").focus();
-		}
-		if (document.getElementById("nama").value == "") {
-			document.getElementById("nama").focus();
-		}
-		if (document.getElementById("jenis").value == "") {
-			document.getElementById("jenis").focus();
-		}
-		if (document.getElementById("kode").value == "") {
-			document.getElementById("kode").focus();
-		}
-		if (document.getElementById("kode").value != "" && document.getElementById("jenis").value != "" && document.getElementById("nama").value != "" &&
-			document.getElementById("distributor").value != "" && document.getElementById("merk").value != "" && document.getElementById("satuan").value != "" &&
-			document.getElementById("jual").value != "" && document.getElementById("pagu").value != "") {
-			// console.log("sukses");
-			$.ajax({
-				type: 'POST',
-				data: 'tabel="tbl_barang"' + '&kode=' + document.getElementById("kode").value +
-					'&jenis=' + document.getElementById("jenis").value + '&nama=' + document.getElementById("nama").value +
-					'&distributor=' + document.getElementById("distributor").value + '&satuan=' + document.getElementById("satuan").value +
-					'&jual=' + document.getElementById("jual").value + '&merk=' + document.getElementById("merk").value + '&pagu=' + document.getElementById("pagu").value,
-				url: '<?= base_url() ?>barang/tambah',
-				dataType: 'json',
-				success: function(data) {
-					document.getElementById("kode").value = "";
-					document.getElementById("nama").value = "";
-					document.getElementById("jenis").value = "";
-					document.getElementById("merk").value = "";
-					document.getElementById("distributor").value = "";
-					document.getElementById("satuan").value = "";
-					document.getElementById("jual").value = "";
-					document.getElementById("pagu").value = "";
-
-					ambil_data();
-				}
-			});
-		}
-		// console.log(document.getElementById("kode").value);
-	}
-
-	function ambil_data() {
-		$('#myTable').DataTable({
-			destroy: true,
-			"ajax": {
-				"url": "<?php echo site_url("barang/tampil") ?>",
-				"dataSrc": ""
-			},
-			"columns": [{
-					"data": "kode_barang"
-				},
-				{
-					"data": "jenis",
-					"render": function(data, type, row) {
-						if (data == 0) {
-							return "Sepeda Motor"
-						} else {
-							return "Mobil"
-						}
-
-					}
-				},
-				{
-					"data": "nama_barang"
-				},
-				{
-					"data": "stok_barang"
-				},
-				{
-					"data": "distributor"
-				},
-				{
-					"data": "harga_kulak"
-				},
-				{
-					"data": "harga_jual"
-				},
-				{
-					"data": "id_barang",
-					"render": function(data, type, row) {
-						// Tampilkan kolom aksi
-						var html = "";
-						if (row.hapus == 0) {
-							html += '<div class="form-button-action">' +
-								'<button onclick="ubah_list(' + data + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">' +
-								'<i class="fa fa-edit"></i>' +
-								'</button>' + '<button onclick="hapus_list(' + data + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">' +
-								'<i class="fa fa-times"></i>' +
-								'</button>' +
-								'</div>';
-						}
-
-						return html
-					}
-
-				}
-			]
-		});
-	}
-
-	function ubah_list(id) {
+		$("#tambah_button").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
+		var nama = $("#nama_jasa").val()
+		var harga = $("#harga_jasa").val()
 		$.ajax({
-			type: 'POST',
-			data: 'id=' + id,
-			url: '<?= base_url() ?>barang/ubah_list',
+			url: '<?= base_url() ?>jasa/tambah',
+			method: 'post',
+			data: "target=tbl_jasa&nama=" + nama + "&harga=" + harga,
 			dataType: 'json',
 			success: function(data) {
-				// console.log(data);
-				for (var i = 0; i < data.length; i++) {
-					document.getElementById("ubah_kode").value = data[i].kode_barang;
-					document.getElementById("ubah_nama").value = data[i].nama_barang;
-					document.getElementById("ubah_jenis").value = data[i].jenis;
-					document.getElementById("ubah_merk").value = data[i].merk_barang;
-					document.getElementById("ubah_distributor").value = data[i].distributor;
-					document.getElementById("ubah_satuan").value = data[i].harga_kulak;
-					document.getElementById("ubah_jual").value = data[i].harga_jual;
-					document.getElementById("ubah_stok").value = data[i].stok_barang;
-					document.getElementById("ubah_pagu").value = data[i].pagu;
-					var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
-					$("#ubahModal_tombol").html(html);
-
-					$("#ubah_button").click(function showAlert() {
-						$("#edit-alert").fadeTo(2000, 500).slideUp(500, function() {
-							$("#edit-alert").slideUp(500);
-						});
-					});
-
-					$('#ubahModal').modal('show');
+				if (data == "") {
+					$("#addRowModal").modal('hide')
+					tampilkan()
+					$("#nama_jasa").val("")
+					$("#harga_jasa").val("")
+				} else {
+					$('#pesan_error_tambah').html(data)
 				}
+				$("#tambah_button").html('Tambah')
 			}
 		});
 	}
 
-	function ubah(id) {
+	function tryEdit(id) {
+		$("#edit" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
+		$("#ubahModal").show()
+		$("#idJasa").val(id)
 		$.ajax({
-			type: 'POST',
-			data: 'id=' + id + '&kode=' + document.getElementById("ubah_kode").value +
-				'&jenis=' + document.getElementById("ubah_jenis").value + '&nama=' + document.getElementById("ubah_nama").value +
-				'&distributor=' + document.getElementById("ubah_distributor").value + '&satuan=' + document.getElementById("ubah_satuan").value +
-				'&jual=' + document.getElementById("ubah_jual").value + '&merk=' + document.getElementById("ubah_merk").value +
-				'&stok=' + document.getElementById("ubah_stok").value + '&pagu=' + document.getElementById("ubah_pagu").value,
-			url: '<?= base_url() ?>barang/ubah',
+			url: '<?= base_url() ?>jasa/ubah_list',
+			method: 'post',
+			data: "target=tbl_jasa&id=" + id,
 			dataType: 'json',
 			success: function(data) {
-				// console.log(data);
-				$('#ubahModal').modal('hide');
-
-				ambil_data();
+				$("#ubahModal").modal('show')
+				$("#ubah_nama_jasa").val(data[0].nama_jasa)
+				$("#ubah_harga_jasa").val(data[0].harga_jasa)
+				$("#edit" + id).html('<i class="fa fa-edit"></i>')
 			}
 		});
 	}
 
-	function hapus_list(id) {
-		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" data-dismiss="modal" class="btn btn-danger">Hapus</button>';
-		$("#hapusModal_tombol").html(html);
-
-		$("#hapus_button").click(function showAlert() {
-			$("#delete-alert").fadeTo(2000, 500).slideUp(500, function() {
-				$("#delete-alert").slideUp(500);
-			});
-		});
-
-		$('#hapusModal').modal('show');
-	}
-
-	function hapus(id) {
+	function edit() {
+		$("#ubahModal_tombol").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
+		var id = $("#idJasa").val()
+		var nama = $("#ubah_nama_jasa").val()
+		var harga = $("#ubah_harga_jasa").val()
 		$.ajax({
-			type: 'POST',
-			data: 'id=' + id,
-			url: '<?= base_url() ?>barang/hapus',
+			url: '<?= base_url() ?>jasa/ubah',
+			method: 'post',
+			data: "target=tbl_jasa&id=" + id + "&nama=" + nama + "&harga=" + harga,
 			dataType: 'json',
 			success: function(data) {
-				// console.log(data);
-				$('#hapusModal').modal('hide');
+				if (data == "") {
+					$("#ubahModal").modal('hide')
+					tampilkan()
+					$("#ubah_nama_jasa").val("")
+					$("#ubah_harga_jasa").val("")
+					$('#pesan_error_ubah').html("")
+				} else {
+					$('#pesan_error_ubah').html(data)
+				}
+				$("#ubahModal_tombol").html('Edit')
+			}
+		});
+	}
 
-				ambil_data();
+	function tryHapus(id) {
+		$("#hapus" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
+		$.ajax({
+			url: '<?= base_url() ?>jasa/ubah_list',
+			method: 'post',
+			data: "target=tbl_jasa&id=" + id,
+			dataType: 'json',
+			success: function(data) {
+				$("#id_hapus").val(id)
+				$("#teksHapus").html("apakah anda yakin ingin menghapus Jasa dengan nama '" + data[0].nama_jasa + "' ?")
+
+				$("#hapus" + id).html('<i class="fa fa-times"></i>')
+			}
+		});
+		$("#hapusModal").modal('show')
+	}
+
+	function hapus() {
+		$("#hapus").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
+		var id = $("#id_hapus").val()
+		$.ajax({
+			url: '<?= base_url() ?>jasa/hapus',
+			method: 'post',
+			data: "target=tbl_jasa&id=" + id,
+			dataType: 'json',
+			success: function(data) {
+				$("#id_hapus").val("")
+				$("#teksHapus").html("")
+				tampilkan()
+				$("#hapusModal").modal('hide')
+				$("#hapus").html('Hapus')
 			}
 		});
 	}

@@ -115,12 +115,13 @@
 										for ($i = 0; $i < count($terlaris); $i++) { ?>
 											<div class="d-flex">
 												<div class="flex-1 pt-1 ml-2">
-													<h6 class="fw-bold mb-1"><?= $terlaris[$i]["nama_barang"] ?></h6>
+													<h6 class="fw-bold mb-1"><?= $terlaris[$i]["nama_barang"]." | ".$terlaris[$i]["merk_barang"] ." | " . $terlaris[$i]["jenis"] ?></h6>
 												</div>
 												<div class="d-flex ml-auto align-items-center">
 													<h3 class="text-default fw-bold"><?= $terlaris[$i]["SUM(jumlah_penjualan)"] ?></h3>
 												</div>
 											</div>
+											<hr style="height:1px;color:gray;background-color:white">
 										<?php } ?>
 									</div>
 								</div>

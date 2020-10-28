@@ -124,7 +124,7 @@
 						</div>
 					</div>
 					<ul class="nav nav-primary">
-						<li class="nav-item">
+						<li class="nav-item <?php if($this->uri->segment(1) == "dashboard") echo "active" ?>"">
 							<a href="<?= site_url('dashboard') ?>">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
@@ -136,31 +136,37 @@
 							</span>
 							<h4 class="text-section">Menu</h4>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item <?php if($this->uri->segment(1) == "penjualan") echo "active" ?>"">
 							<a href="<?= site_url('penjualan') ?>">
 								<i class="fas fa-th-list"></i>
 								<p>Penjualan</p>
 							</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item <?php if($this->uri->segment(1) == "pembelian") echo "active" ?>"">
 							<a href="<?= site_url('pembelian') ?>">
 								<i class="fas fa-desktop"></i>
 								<p>Pembelian</p>
 							</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item <?php if($this->uri->segment(1) == "barang") echo "active" ?>"">
 							<a href="<?= site_url('barang') ?>">
 								<i class="fas fa-layer-group"></i>
 								<p>Barang</p>
 							</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item <?php if($this->uri->segment(1) == "jasa") echo "active" ?>"">
 							<a href="<?= site_url('jasa') ?>">
 								<i class="fas fa-tachometer-alt"></i>
 								<p>Jasa</p>
 							</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item <?php if($this->uri->segment(1) == "piutang") echo "active" ?>">
+							<a href="<?= site_url('piutang') ?>">
+								<i class="fas fa-pen-square"></i>
+								<p>Piutang</p>
+							</a>
+						</li>
+						<li class="nav-item <?php if($this->uri->segment(1) == "stok" || $this->uri->segment(1) == "keuntungan") echo "active" ?>">
 							<a data-toggle="collapse" href="#tables">
 								<i class="fas fa-table"></i>
 								<p>Laporan</p>
@@ -181,13 +187,7 @@
 								</ul>
 							</div>
 						</li>
-						<li class="nav-item">
-							<a href="<?= site_url('piutang') ?>">
-								<i class="fas fa-pen-square"></i>
-								<p>Piutang</p>
-							</a>
-						</li>
-						<li class="nav-item">
+						<li class="nav-item <?php if($this->uri->segment(1) == "user" || $this->uri->segment(1) == "client") echo "active" ?>">
 							<a data-toggle="collapse" href="#master">
 								<i class="fas fa-archive"></i>
 								<p>Master Data</p>

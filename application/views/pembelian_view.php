@@ -23,7 +23,7 @@
 					<div class="card-body">
 						<div class="user-profile text-center">
 							<div class="name">Transaksi Pembelian</div>
-							<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#tambahModal">
+							<button class="btn btn-primary btn-round ml-auto" id="tombolTambah" onclick="tryTambah()">
 								<i class="fa fa-plus"></i>
 								Tambah Data
 							</button>
@@ -311,7 +311,14 @@
 		}
 	}
 
+	function tryTambah() {
+		$("#tombolTambah").html('<i class="fas fa-spinner fa-pulse"></i> Memuat..')
+		$("#tambahModal").modal('show')
+		$("#tombolTambah").html('<i class="fa fa-plus"></i> Tambah Data')
+	}
+
 	function tambah() {
+		$("#tambah_button").html('<i class="fas fa-spinner fa-pulse"></i> Memuat..')
 		if (document.getElementById('jumlah').value == '') {
 			document.getElementById('jumlah').focus();
 		}
@@ -340,9 +347,11 @@
 				}
 			});
 		}
+		$("#tambah_button").html('Tambah')
 	}
 
 	function ubah(id_pembelian, id_barang) {
+		$("#ubah_button").html('<i class="fas fa-spinner fa-pulse"></i> Memuat..')
 		if (document.getElementById('ubah_jumlah').value == '') {
 			document.getElementById('ubah_jumlah').focus();
 		}
@@ -360,17 +369,17 @@
 					'&stok=' + stok + '&stok_ubah=' + stok_ubah,
 				dataType: 'json',
 				success: function(data) {
-					// console.log(data);
-
 					$('#ubahModal').modal('hide');
 					ambil_data();
 
 				}
 			});
 		}
+		$("#ubah_button").html('Ubah')
 	}
 
 	function hapus(id) {
+		$("#hapus_button").html('<i class="fas fa-spinner fa-pulse"></i> Memuat..')
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
@@ -384,6 +393,7 @@
 				ambil_data();
 			}
 		});
+		$("#hapus_button").html('Hapus')
 	}
 
 	function ambil_data() {
@@ -417,10 +427,10 @@
 					"render": function(data, type, row) {
 						// Tampilkan kolom aksi
 						var html = '<div class="form-button-action">' +
-							'<button onclick="ubah_list(' + data + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">' +
+							'<button onclick="ubah_list(' + data + ')" id="edit' + data + '" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">' +
 							'<i class="fa fa-edit"></i>' +
 							'</button>' +
-							'<button onclick="hapus_list(' + data + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">' +
+							'<button onclick="hapus_list(' + data + ')" id="hapus' + data + '" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">' +
 							'<i class="fa fa-times"></i>' +
 							'</button>' +
 							'</div>';
@@ -433,6 +443,7 @@
 	}
 
 	function ubah_list(id) {
+		$("#edit" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
@@ -448,7 +459,7 @@
 					document.getElementById("ubah_harga").value = data[i].harga_kulak;
 					document.getElementById("ubah_jumlah").value = data[i].jumlah_pembelian;
 
-					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" id="ubah_button" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
+					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" id="ubah_button" type="button" class="btn btn-primary">Ubah</button>';
 					$("#ubahModal_tombol").html(html);
 					stok_ubah = data[i].jumlah_pembelian;
 					stok = data[i].stok_barang;
@@ -462,10 +473,12 @@
 				}
 			}
 		});
+		$("#edit" + id).html('<i class="fa fa-edit"></i>')
 	}
 
 	function hapus_list(id) {
-		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" data-dismiss="modal" class="btn btn-danger">Hapus</button>';
+		$("#hapus" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
+		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" class="btn btn-danger">Hapus</button>';
 		$("#hapusModal_tombol").html(html);
 		$('#hapusModal').modal('show');
 
@@ -474,5 +487,6 @@
 				$("#delete-alert").slideUp(500);
 			});
 		});
+		$("#hapus" + id).html('<i class="fa fa-times"></i>')
 	}
 </script>

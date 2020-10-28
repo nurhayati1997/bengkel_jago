@@ -27,7 +27,7 @@
 					<div class="card-body">
 						<div class="user-profile text-center">
 							<div class="name">Gudang Barang</div>
-							<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+							<button class="btn btn-primary btn-round ml-auto" onclick="tryTambah()" id="tombolTambah">
 								<i class="fa fa-plus"></i>
 								Tambah Data
 							</button>
@@ -56,17 +56,17 @@
 								<table id="myTable" class="display table table-striped table-hover">
 									<thead>
 										<tr>
-											<th>KODE BARANG</th>
+											<th style="width: 1%">AKSI</th>
+											<th>NAMA</th>
+											<th>MERK</th>
 											<th>JENIS MOBIL</th>
-											<th>NAMA BARANG</th>
-											<th>MERK BARANG</th>
 											<th>KETERANGAN</th>
+											<th>KODE</th>
 											<th>LOKASI</th>
 											<th>STOK</th>
 											<th>DISTRIBUTOR</th>
 											<th>HARGA KULAK</th>
 											<th>HARGA JUAL</th>
-											<th style="width: 10%">AKSI</th>
 										</tr>
 									</thead>
 								</table>
@@ -296,7 +296,14 @@
 		ambil_data();
 	});
 
+	function tryTambah() {
+		$("#tombolTambah").html('<i class="fas fa-spinner fa-pulse"></i> Memuat..')
+		$("#addRowModal").modal('show')
+		$("#tombolTambah").html('<i class="fa fa-plus"></i> Tambah Data')
+	}
+
 	function tambah() {
+		$("#tambah_button").html('<i class="fas fa-spinner fa-pulse"></i> Memuat..')
 		if (document.getElementById("pagu").value == "") {
 			document.getElementById("pagu").focus();
 		}
@@ -349,6 +356,7 @@
 				}
 			});
 		}
+		$("#tambah_button").html('Tambah')
 		// console.log(document.getElementById("kode").value);
 	}
 
@@ -360,10 +368,21 @@
 				"dataSrc": ""
 			},
 			"columns": [{
-					"data": "kode_barang"
-				},
-				{
-					"data": "jenis"
+					"data": "id_barang",
+					"render": function(data, type, row) {
+						// Tampilkan kolom aksi
+						var html = "";
+						if (row.hapus == 0) {
+							html += '<div class="form-button-action">' +
+								'<button onclick="ubah_list(' + data + ')" id="edit' + data + '" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">' +
+								'<i class="fa fa-edit"></i>' +
+								'</button>' + '<button onclick="hapus_list(' + data + ')" id="hapus' + data + '" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">' +
+								'<i class="fa fa-times"></i>' +
+								'</button>' +
+								'</div>';
+						}
+						return html
+					}
 				},
 				{
 					"data": "nama_barang"
@@ -372,7 +391,13 @@
 					"data": "merk_barang"
 				},
 				{
+					"data": "jenis"
+				},
+				{
 					"data": "keterangan"
+				},
+				{
+					"data": "kode_barang"
 				},
 				{
 					"data": "lokasi"
@@ -388,31 +413,13 @@
 				},
 				{
 					"data": "harga_jual"
-				},
-				{
-					"data": "id_barang",
-					"render": function(data, type, row) {
-						// Tampilkan kolom aksi
-						var html = "";
-						if (row.hapus == 0) {
-							html += '<div class="form-button-action">' +
-								'<button onclick="ubah_list(' + data + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">' +
-								'<i class="fa fa-edit"></i>' +
-								'</button>' + '<button onclick="hapus_list(' + data + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">' +
-								'<i class="fa fa-times"></i>' +
-								'</button>' +
-								'</div>';
-						}
-
-						return html
-					}
-
 				}
 			]
 		});
 	}
 
 	function ubah_list(id) {
+		$("#edit" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
@@ -431,7 +438,7 @@
 					document.getElementById("ubah_pagu").value = data[i].pagu;
 					document.getElementById("ubah_ket").value = data[i].keterangan;
 					document.getElementById("ubah_lokasi").value = data[i].lokasi;
-					var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" data-dismiss="modal" class="btn btn-primary">Ubah</button>';
+					var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" class="btn btn-primary">Ubah</button>';
 					$("#ubahModal_tombol").html(html);
 
 					$("#ubah_button").click(function showAlert() {
@@ -444,9 +451,11 @@
 				}
 			}
 		});
+		$("#edit" + id).html('<i class="fa fa-edit"></i>')
 	}
 
 	function ubah(id) {
+		$("#ubah_button").html('<i class="fas fa-spinner fa-pulse"></i> Memuat..')
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id + '&kode=' + document.getElementById("ubah_kode").value +
@@ -463,10 +472,12 @@
 				ambil_data();
 			}
 		});
+		$("#ubah_button").html('Ubah')
 	}
 
 	function hapus_list(id) {
-		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" data-dismiss="modal" class="btn btn-danger">Hapus</button>';
+		$("#hapus" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
+		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" class="btn btn-danger">Hapus</button>';
 		$("#hapusModal_tombol").html(html);
 
 		$("#hapus_button").click(function showAlert() {
@@ -476,9 +487,11 @@
 		});
 
 		$('#hapusModal').modal('show');
+		$("#hapus" + id).html('<i class="fa fa-times"></i>')
 	}
 
 	function hapus(id) {
+		$("#hapus_button").html('<i class="fas fa-spinner fa-pulse"></i> Memuat..')
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
@@ -491,5 +504,7 @@
 				ambil_data();
 			}
 		});
+
+		$("#hapus_button").html('Hapus')
 	}
 </script>

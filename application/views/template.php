@@ -61,7 +61,17 @@
 
 				<div class="container-fluid">
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-
+						<div class="ml-md-auto py-2 py-md-0">
+							<a class="nav-link badge badge-light" href="'<?= base_url() ?>keuntungan/eksportDb" title="logout" aria-expanded="false">
+								Back up Database
+							</a>
+							<!-- <select class="badge badge-light mr-2" id="backup" onchange="backup()">
+								<option value="0">Back Up</option>
+								<option value="1">Barang</option>
+								<option value="2">Jasa</option>
+								<option value="3">Data Base</option>
+							</select> -->
+						</div>
 						<li class="nav-item">
 							<a class="nav-link" href="<?= site_url('penjualan') ?>" title="penjualan" role="button" aria-expanded="false">
 								<i class="fas fa-th-list"></i>
@@ -77,14 +87,6 @@
 								<i class="fa fa-power-off" aria-hidden="true"></i>
 							</a>
 						</li>
-						<div class="ml-md-auto py-2 py-md-0">
-							<select class="badge badge-light mr-2" id="backup" onchange="backup()">
-								<option value="0">Back Up</option>
-								<option value="1">Barang</option>
-								<option value="2">Jasa</option>
-								<option value="3">Data Base</option>
-							</select>
-						</div>
 						<!-- <li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" aria-expanded="false">
 								<div class="avatar-sm">
@@ -124,10 +126,10 @@
 						</div>
 					</div>
 					<ul class="nav nav-primary">
-						<li class="nav-item <?php if($this->uri->segment(1) == "dashboard") echo "active" ?>"">
-							<a href="<?= site_url('dashboard') ?>">
-								<i class="fas fa-home"></i>
-								<p>Dashboard</p>
+						<li class="nav-item <?php if ($this->uri->segment(1) == "dashboard") echo "active" ?>"">
+							<a href=" <?= site_url('dashboard') ?>">
+							<i class="fas fa-home"></i>
+							<p>Dashboard</p>
 							</a>
 						</li>
 						<li class="nav-section">
@@ -136,82 +138,100 @@
 							</span>
 							<h4 class="text-section">Menu</h4>
 						</li>
-						<li class="nav-item <?php if($this->uri->segment(1) == "penjualan") echo "active" ?>"">
-							<a href="<?= site_url('penjualan') ?>">
-								<i class="fas fa-th-list"></i>
-								<p>Penjualan</p>
+						<li class="nav-item <?php if ($this->uri->segment(1) == "penjualan") echo "active" ?>"">
+							<a href=" <?= site_url('penjualan') ?>">
+							<i class="fas fa-th-list"></i>
+							<p>Penjualan</p>
 							</a>
 						</li>
-						<li class="nav-item <?php if($this->uri->segment(1) == "pembelian") echo "active" ?>"">
-							<a href="<?= site_url('pembelian') ?>">
-								<i class="fas fa-desktop"></i>
-								<p>Pembelian</p>
+						<li class="nav-item <?php if ($this->uri->segment(1) == "pembelian") echo "active" ?>"">
+							<a href=" <?= site_url('pembelian') ?>">
+							<i class="fas fa-desktop"></i>
+							<p>Pembelian</p>
 							</a>
 						</li>
-						<li class="nav-item <?php if($this->uri->segment(1) == "barang") echo "active" ?>"">
-							<a href="<?= site_url('barang') ?>">
-								<i class="fas fa-layer-group"></i>
-								<p>Barang</p>
+						<li class="nav-item <?php if ($this->uri->segment(1) == "barang") echo "active" ?>"">
+							<a href=" <?= site_url('barang') ?>">
+							<i class="fas fa-layer-group"></i>
+							<p>Barang</p>
 							</a>
 						</li>
-						<li class="nav-item <?php if($this->uri->segment(1) == "jasa") echo "active" ?>"">
-							<a href="<?= site_url('jasa') ?>">
-								<i class="fas fa-tachometer-alt"></i>
-								<p>Jasa</p>
+						<li class="nav-item <?php if ($this->uri->segment(1) == "jasa") echo "active" ?>"">
+							<a href=" <?= site_url('jasa') ?>">
+							<i class="fas fa-tachometer-alt"></i>
+							<p>Jasa</p>
 							</a>
 						</li>
-						<li class="nav-item <?php if($this->uri->segment(1) == "piutang") echo "active" ?>">
+						<li class="nav-item <?php if ($this->uri->segment(1) == "piutang") echo "active" ?>">
 							<a href="<?= site_url('piutang') ?>">
 								<i class="fas fa-pen-square"></i>
 								<p>Piutang</p>
 							</a>
 						</li>
-						<li class="nav-item <?php if($this->uri->segment(1) == "stok" || $this->uri->segment(1) == "keuntungan") echo "active" ?>">
-							<a data-toggle="collapse" href="#tables">
-								<i class="fas fa-table"></i>
-								<p>Laporan</p>
-								<span class="caret"></span>
-							</a>
-							<div class="collapse" id="tables">
-								<ul class="nav nav-collapse">
-									<li>
-										<a href="<?= site_url('keuntungan') ?>">
-											<span class="sub-item">Keuntungan</span>
-										</a>
-									</li>
-									<li>
-										<a href="<?= site_url('stok') ?>">
-											<span class="sub-item">Stok</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</li>
-						<li class="nav-item <?php if($this->uri->segment(1) == "user" || $this->uri->segment(1) == "client") echo "active" ?>">
-							<a data-toggle="collapse" href="#master">
-								<i class="fas fa-archive"></i>
-								<p>Master Data</p>
-								<span class="caret"></span>
-							</a>
-							<div class="collapse" id="master">
-								<ul class="nav nav-collapse">
-									<?php
-									if ($this->session->userdata("rule") == 1) {
-									?>
+						<?php
+						if ($this->session->userdata("rule") == 1) {
+						?>
+							<li class="nav-item <?php if ($this->uri->segment(1) == "stok" || $this->uri->segment(1) == "keuntungan") echo "active" ?>">
+								<a data-toggle="collapse" href="#tables">
+									<i class="fas fa-table"></i>
+									<p>Laporan</p>
+									<span class="caret"></span>
+								</a>
+								<div class="collapse" id="tables">
+									<ul class="nav nav-collapse">
+										<li>
+											<a href="<?= site_url('keuntungan') ?>">
+												<span class="sub-item">Keuntungan</span>
+											</a>
+										</li>
+										<li>
+											<a href="<?= site_url('stok') ?>">
+												<span class="sub-item">Stok</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+						<?php } else { ?>
+							<li class="nav-item <?php if ($this->uri->segment(1) == "stok") echo "active" ?>">
+								<a href="<?= site_url('stok') ?>">
+									<i class="far fa-folder-open"></i>
+									<p>Stok Barang</p>
+								</a>
+							</li>
+						<?php } ?>
+						<?php
+						if ($this->session->userdata("rule") == 1) {
+						?>
+							<li class="nav-item <?php if ($this->uri->segment(1) == "user" || $this->uri->segment(1) == "client") echo "active" ?>">
+								<a data-toggle="collapse" href="#master">
+									<i class="fas fa-archive"></i>
+									<p>Master Data</p>
+									<span class="caret"></span>
+								</a>
+								<div class="collapse" id="master">
+									<ul class="nav nav-collapse">
 										<li>
 											<a href="<?= site_url('user') ?>">
 												<span class="sub-item">User</span>
 											</a>
 										</li>
-									<?php } ?>
-									<li>
-										<a href="<?= site_url('client') ?>">
-											<span class="sub-item">Client</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</li>
+										<li>
+											<a href="<?= site_url('client') ?>">
+												<span class="sub-item">Client</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+						<?php } else { ?>
+							<li class="nav-item <?php if ($this->uri->segment(1) == "client") echo "active" ?>">
+								<a href="<?= site_url('client') ?>">
+									<i class="fas fa-user-cog"></i>
+									<p>Client</p>
+								</a>
+							</li>
+						<?php } ?>
 					</ul>
 				</div>
 			</div>
@@ -324,27 +344,27 @@
 			});
 		});
 
-		function backup() {
-			var pilihan = $("#backup").val()
-			$("#backup").html('<option value="0"><i class="fas fa-spinner fa-pulse"> Memproses..</option>')
-			var barang = "vw_penjualan";
-			var jasa = "vw_penjualan_jasa";
+		// function backup() {
+		// 	var pilihan = $("#backup").val()
+		// 	$("#backup").html('<option value="0"><i class="fas fa-spinner fa-pulse"> Memproses..</option>')
+		// 	var barang = "vw_penjualan";
+		// 	var jasa = "vw_penjualan_jasa";
 
-			var tanggal = new Date();
-			var dd = String(tanggal.getDate()).padStart(2, '0');
-			var mm = String(tanggal.getMonth() + 1).padStart(2, '0'); //January is 0!
-			var yyyy = tanggal.getFullYear();
+		// 	var tanggal = new Date();
+		// 	var dd = String(tanggal.getDate()).padStart(2, '0');
+		// 	var mm = String(tanggal.getMonth() + 1).padStart(2, '0'); //January is 0!
+		// 	var yyyy = tanggal.getFullYear();
 
-			tanggal = yyyy + '/' + mm + '/' + dd;
-			if (pilihan == 1) {
-				window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + barang + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal
-			} else if (pilihan == 2) {
-				window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + jasa + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal
-			} else if (pilihan == 3) {
-				window.location.href = '<?= base_url() ?>keuntungan/eksportDb'
-			}
-			$("#backup").html('<option value="0" selected>Back Up</option><option value="1">Barang</option><option value="2">Jasa</option><option value="3">Data Base</option>')
-		}
+		// 	tanggal = yyyy + '/' + mm + '/' + dd;
+		// 	if (pilihan == 1) {
+		// 		window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + barang + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal
+		// 	} else if (pilihan == 2) {
+		// 		window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + jasa + '&tanggalMulai=' + tanggal + '&tanggalSelesai=' + tanggal
+		// 	} else if (pilihan == 3) {
+		// 		window.location.href = '<?= base_url() ?>keuntungan/eksportDb'
+		// 	}
+		// 	$("#backup").html('<option value="0" selected>Back Up</option><option value="1">Barang</option><option value="2">Jasa</option><option value="3">Data Base</option>')
+		// }
 	</script>
 </body>
 

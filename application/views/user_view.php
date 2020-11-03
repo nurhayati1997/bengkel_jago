@@ -58,10 +58,10 @@
 															</div>
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<label for="pillSelect">Rule</label>
+																	<label for="pillSelect">Jabatan</label>
 																	<select name="rule" id="rule" class="form-control input-pill" id="pillSelect" placeholder="Pill Input">
-																		<option>2</option>
-																		<option>1</option>
+																		<option value="2">Pegawai/Kasir</option>
+																		<option value="1">Administrator</option>
 																	</select>
 																</div>
 															</div>
@@ -130,7 +130,7 @@
 
 				function tampilkan() {
 					$("#tempatTabel").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
-					var baris = '<table id="tabelUser" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>KODE USER</th><th>NAMA USER</th><th>RULE</th><th style="width: 10%">Action</th></tr></thead><tbody>'
+					var baris = '<table id="tabelUser" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>KODE</th><th>NAMA</th><th>JABATAN</th><th style="width: 10%">Action</th></tr></thead><tbody>'
 					$.ajax({
 						url: '<?= base_url() ?>user/get_data',
 						method: 'post',
@@ -142,7 +142,11 @@
 								baris += '<td>' + (i + 1) + '</td>'
 								baris += '<td>' + data[i].id_pengguna + '</td>'
 								baris += '<td>' + data[i].nama + '</td>'
-								baris += '<td>' + data[i].rule + '</td>'
+								if (data[i].rule == 1){
+									baris += '<td>Administrator</td>'
+								}else{
+									baris += '<td>Pegawai/Kasir</td>'
+								}
 								baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_pengguna + '" onClick="tryEdit(' + data[i].id_pengguna + ')"><i class="fa fa-edit"></i></button>'
 								if (data[i].id_pengguna != <?= $this->session->userdata("id_pengguna") ?>) {
 									baris += '<button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_pengguna + '" onClick="tryHapus(' + data[i].id_pengguna + ')"><i class="fa fa-times"></i></button>'

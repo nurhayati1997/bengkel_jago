@@ -216,7 +216,7 @@
 					utang_list[utang_list.length] = mydata;
 				}
 				ubah_jasa(id);
-				var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" class="btn btn-primary">Simpan</button>';
+				var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" class="btn btn-primary">Simpan</button> <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>';
 				$("#ubahModal_tombol").html(html);
 				ambil_data_piutang(utang_list, status);
 				$('#ubahModal').modal('show');

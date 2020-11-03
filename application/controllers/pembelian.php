@@ -71,7 +71,13 @@ class pembelian extends CI_Controller
 
 	public function tampil()
 	{
-		echo json_encode($this->db_model->get_all("view_pembelian")->result());
+		$bulan = $this->input->post("bulan");
+		$tahun = $this->input->post("tahun");
+		// $bulan = "10";
+		// $tahun = "2020";
+		$mulai = strtotime($tahun . "/" . $bulan . "/" . "1");
+		$sampai = strtotime($tahun . "/" . $bulan . "/" . "31");
+		echo json_encode($this->db_model->get_where("view_pembelian", ['tgl_pembelian >=' => date("Y/m/d", $mulai), 'tgl_pembelian <=' => date("Y/m/d", $sampai)])->result());
 	}
 
 	public function hapus()

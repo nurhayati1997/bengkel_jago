@@ -74,7 +74,7 @@
 							<h5 class="modal-title">
 								<span class="fw-mediumbold">
 									Edit</span>
-								<span class="fw-light">
+								<span class="fw-light" id="judul">
 									Pagu Barang
 								</span>
 							</h5>
@@ -90,8 +90,8 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="form-group">
-											<label for="pagu">Jumla Pagu</label>
-											<input type="number" class="form-control input-pill" id="pagu" name="pagu" placeholder="Jumlah Pagu">
+											<label for="pagu" id="judulJumlah">Jumlah Pagu</label>
+											<input type="number" class="form-control input-pill" id="pagu" name="pagu" placeholder="Jumlah">
 										</div>
 									</div>
 								</div>
@@ -134,7 +134,7 @@
 								stokWarning += '<tr><td>' + noWarning + '</td>' + baris + '</tr>'
 								noWarning += 1
 							}
-							stokPagu += '<tr><td>' + (i + 1) + '</td>' + baris + ' <td> ' + data[i].pagu + ' </td><td><div class="form-button-action"><button type="button" title="Edit Pagu" class="btn btn-link btn-primary btn-lg" id="pagu' + data[i].id_barang + '" onClick="tryEdit(' + data[i].id_barang + ', \'pagu\')"><i class="fa fa-edit"></i > </button> '
+							stokPagu += '<tr><td>' + (i + 1) + '</td>' + baris + ' <td> ' + data[i].pagu + ' </td><td><div class="form-button-action"><button type="button" title="Edit Pagu" class="btn btn-link btn-success btn-lg" id="pagu' + data[i].id_barang + '" onClick="tryEdit(' + data[i].id_barang + ', \'pagu\')"><i class="fa fa-edit"></i > </button> '
 							<?php if ($this->session->userdata("rule") == 1) : ?>
 								stokPagu += '<button type="button" title="Sesuaikan Stok" class="btn btn-link btn-primary btn-lg" id="stok' + data[i].id_barang + '" onClick="tryEdit(' + data[i].id_barang + ', \'stok\')"><i class="fa fa-th-list" aria-hidden="true"></i> </button>'
 							<?php endif; ?>
@@ -160,8 +160,10 @@
 			function tryEdit(id, jenis) {
 				if (jenis == "pagu") {
 					$("#pagu" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
+					$("#judul").html("Pagu Barang")
 				} else {
 					$("#stok" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
+					$("#judul").html("Stok Barang")
 				}
 				$("#id_barang").val(id)
 				$("#jenis").val(jenis)
@@ -175,9 +177,11 @@
 						if (jenis == "pagu") {
 							$("#pagu").val(data.pagu)
 							$("#pagu" + id).html('<i class="fa fa-edit"></i >')
+							$("#judulJumlah").html("Jumlah Pagu")
 						} else {
 							$("#pagu").val(data.stok_barang)
 							$("#stok" + id).html('<i class="fa fa-th-list" aria-hidden="true"></i>')
+							$("#judulJumlah").html("Jumlah Stok")
 						}
 						$("#modal_edit").modal('show')
 					}

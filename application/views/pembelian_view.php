@@ -28,6 +28,39 @@
 								Tambah Data
 							</button>
 						</div>
+						<div class="row m-2 p-2" style="background-color: royalblue; color:seashell;">
+							<div class="col-2">
+							</div>
+							<div class="col-2">Menampilkan data </div>
+							<div class="col-1">
+								Bulan :
+							</div>
+							<div class="col-3">
+								<select class="form-control form-control-sm" id="bulan" onchange="ambil_data()">
+									<option value="1" <?php if (date('m') == 1) echo "selected"; ?>>Januari</option>
+									<option value="2" <?php if (date('m') == 2) echo "selected"; ?>>Februari</option>
+									<option value="3" <?php if (date('m') == 3) echo "selected"; ?>>April</option>
+									<option value="4" <?php if (date('m') == 4) echo "selected"; ?>>Maret</option>
+									<option value="5" <?php if (date('m') == 5) echo "selected"; ?>>Mei</option>
+									<option value="6" <?php if (date('m') == 6) echo "selected"; ?>>Juni</option>
+									<option value="7" <?php if (date('m') == 7) echo "selected"; ?>>Juli</option>
+									<option value="8" <?php if (date('m') == 8) echo "selected"; ?>>Agustus</option>
+									<option value="9" <?php if (date('m') == 9) echo "selected"; ?>>September</option>
+									<option value="10" <?php if (date('m') == 10) echo "selected"; ?>>Oktober</option>
+									<option value="11" <?php if (date('m') == 11) echo "selected"; ?>>November</option>
+									<option value="12" <?php if (date('m') == 12) echo "selected"; ?>>Desember</option>
+								</select>
+							</div>
+							<div class="col-1">
+								Tahun :
+							</div>
+							<div class="col-3">
+								<select class="form-control form-control-sm" id="tahun" onchange="ambil_data()">
+									<?php for ($i = 2020; $i < date("Y") + 1; $i++) { ?>
+										<option value="<?php echo $i;  ?>"><?php echo $i;  ?></option>
+									<?php } ?>
+								</select></div>
+						</div>
 						<div class="card-footer">
 							<!-- <div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
 								<strong>Data Berhasil di Tambah</strong>
@@ -47,19 +80,7 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div> -->
-							<div class="table-responsive">
-								<table id="tabel_pembelian" class="display table table-striped table-hover">
-									<thead>
-										<tr>
-											<th>TANGGAL</th>
-											<th>KODE</th>
-											<th>NAMA</th>
-											<th>HARGA KULAK</th>
-											<th>JUMLAH PEMBELIAN</th>
-											<th>AKSI</th>
-										</tr>
-									</thead>
-								</table>
+							<div class="table-responsive" id="tempatTabel">
 							</div>
 						</div>
 					</div>
@@ -91,7 +112,8 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="kode">Kode barang</label>
+								<label for="kode">Id barang</label>
+								<div id="errorBarang"></div>
 								<input oninput="tampil_data_kode()" onchange="tampil_data_kode()" type="text" class="form-control input-pill" id="kode" autocomplete="TRUE" list="kodes" placeholder="">
 								<datalist onchange="tampil_data_kode()" id="kodes">
 
@@ -118,7 +140,7 @@
 						</div>
 						<div class="col-sm-12">
 							<div class="form-group">
-								<label for="harga">Harga</label>
+								<label for="harga">Harga Satuan</label>
 								<input oninput="jumlah_barang()" onchange="jumlah_barang()" type="text" class="form-control input-pill" id="harga" placeholder="" readonly>
 							</div>
 						</div>
@@ -133,6 +155,7 @@
 			</div>
 			<div class="modal-footer no-bd">
 				<button type="button" onclick="tambah()" id="tambah_button" class="btn btn-primary">Tambah</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
 				<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
 			</div>
 		</div>
@@ -177,6 +200,12 @@
 							<div class="form-group">
 								<label for="nama">Nama Barang</label>
 								<input type="text" class="form-control input-pill" id="ubah_nama" readonly>
+							</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label for="ubah_keterangan">Keterangan</label>
+								<textarea type="text" class="form-control input-pill" id="ubah_keterangan" readonly> </textarea>
 							</div>
 						</div>
 						<div class="col-sm-12">
@@ -234,6 +263,7 @@
 	var id_selected = '';
 	var stok = 0;
 	var stok_ubah = 0;
+	var barangKosong = true;
 	$(document).ready(function() {
 		list();
 		ambil_data();
@@ -263,6 +293,8 @@
 
 	function tampil_data_kode() {
 		// alert(document.getElementById('kode').value);
+		$("#errorBarang").html("")
+		barangKosong = true;
 		for (var i = 0; i < barang.length; i++) {
 			if (document.getElementById('kode').value == barang[i].id_barang) {
 				document.getElementById('nama').value = barang[i].nama_barang;
@@ -272,7 +304,16 @@
 				id_selected = barang[i].id_barang;
 				stok = barang[i].stok_barang;
 				jumlah_barang();
+				barangKosong = false;
 			}
+		}
+
+		if (barangKosong) {
+			$("#errorBarang").html("<small class='text-danger'>id tidak ditemukan.</small>")
+			document.getElementById('jumlah').value = "";
+			document.getElementById('nama').value = "";
+			document.getElementById('keterangan').value = "";
+			document.getElementById('harga').value = "";
 		}
 	}
 
@@ -280,7 +321,7 @@
 		// alert(document.getElementById('kode').value);
 		for (var i = 0; i < barang.length; i++) {
 			if (document.getElementById('ubah_kode').value == barang[i].kode_barang) {
-				document.getElementById('ubah_nama').value = barang[i].nama_barang;
+				document.getElementById('ubah_nama').value = barang[i].nama_barang + "sdf";
 				document.getElementById('ubah_keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
 				document.getElementById('ubah_harga').value = barang[i].harga_jual;
 
@@ -319,33 +360,37 @@
 
 	function tambah() {
 		$("#tambah_button").html('<i class="fas fa-spinner fa-pulse"></i> Memuat..')
-		if (document.getElementById('jumlah').value == '') {
-			document.getElementById('jumlah').focus();
-		}
-		if (document.getElementById('harga').value == "") {
-			document.getElementById('harga').focus();
-		}
-		if (document.getElementById('kode').value == "") {
-			document.getElementById('kode').focus();
-		}
-		if (document.getElementById('kode').value != "" && document.getElementById('harga').value != "" && document.getElementById('jumlah').value != '') {
-			$.ajax({
-				type: 'POST',
-				url: '<?= base_url() ?>pembelian/tambah',
-				data: 'id=' + id_selected + '&jumlah=' + document.getElementById('jumlah').value + '&harga=' + document.getElementById('harga').value +
-					'&stok=' + stok,
-				dataType: 'json',
-				success: function(data) {
-					document.getElementById('jumlah').value = "";
-					document.getElementById('harga').value = "";
-					document.getElementById('kode').value = "";
-					document.getElementById('nama').value = "";
+		if (barangKosong) {
+			$("#errorBarang").html("<small class='text-danger'>id tidak ditemukan.</small>")
+		} else {
+			if (document.getElementById('jumlah').value == '') {
+				document.getElementById('jumlah').focus();
+			}
+			if (document.getElementById('harga').value == "") {
+				document.getElementById('harga').focus();
+			}
+			if (document.getElementById('kode').value == "") {
+				document.getElementById('kode').focus();
+			}
+			if (document.getElementById('kode').value != "" && document.getElementById('harga').value != "" && document.getElementById('jumlah').value != '') {
+				$.ajax({
+					type: 'POST',
+					url: '<?= base_url() ?>pembelian/tambah',
+					data: 'id=' + id_selected + '&jumlah=' + document.getElementById('jumlah').value + '&harga=' + document.getElementById('harga').value +
+						'&stok=' + stok,
+					dataType: 'json',
+					success: function(data) {
+						document.getElementById('jumlah').value = "";
+						document.getElementById('harga').value = "";
+						document.getElementById('kode').value = "";
+						document.getElementById('nama').value = "";
 
-					ambil_data();
-					$('#tambahModal').modal('hide');
+						ambil_data();
+						$('#tambahModal').modal('hide');
 
-				}
-			});
+					}
+				});
+			}
 		}
 		$("#tambah_button").html('Tambah')
 	}
@@ -397,48 +442,35 @@
 	}
 
 	function ambil_data() {
-		$('#tabel_pembelian').DataTable({
-			destroy: true,
-			"ajax": {
-				"url": "<?php echo site_url("pembelian/tampil") ?>",
-				"dataSrc": ""
-			},
-			"columns": [{
-					"data": "tgl_pembelian",
-					"render": function(data, type, row) {
-						var tanggal = data.split(" ");
-						return tanggal[0]
-					}
-				},
-				{
-					"data": "kode_barang"
-				},
-				{
-					"data": "nama_barang"
-				},
-				{
-					"data": "harga_kulak"
-				},
-				{
-					"data": "jumlah_pembelian"
-				},
-				{
-					"data": "id_pembelian",
-					"render": function(data, type, row) {
-						// Tampilkan kolom aksi
-						var html = '<div class="form-button-action">' +
-							'<button onclick="ubah_list(' + data + ')" id="edit' + data + '" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">' +
-							'<i class="fa fa-edit"></i>' +
-							'</button>' +
-							'<button onclick="hapus_list(' + data + ')" id="hapus' + data + '" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">' +
-							'<i class="fa fa-times"></i>' +
-							'</button>' +
-							'</div>';
-						return html
-					}
+		var tahun = $("#tahun").val();
+		var bulan = $("#bulan").val();
+		$("#tempatTabel").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
+		var baris = '<table id="tabel_pembelian" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>TANGGAL</th><th>KODE</th><th>NAMA</th><th>HARGA KULAK</th><th>JUMLAH PEMBELIAN</th><th style="width: 10%">Action</th></tr></thead><tbody>'
+		$.ajax({
+			url: '<?= base_url() ?>pembelian/tampil',
+			method: 'post',
+			data: "tahun=" + tahun + "&bulan=" + bulan,
+			dataType: 'json',
+			success: function(data) {
+				for (let i = 0; i < data.length; i++) {
+					baris += '<tr>'
+					baris += '<td>' + (i + 1) + '</td>'
+					baris += '<td>' + data[i].tgl_pembelian.split(" ")[0] + '</td>'
+					baris += '<td>' + data[i].kode_barang + '</td>'
+					baris += '<td>' + data[i].nama_barang + '</td>'
+					baris += '<td>' + data[i].harga_kulak + '</td>'
+					baris += '<td>' + data[i].jumlah_pembelian + '</td>'
+					baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_pembelian + '" onClick="ubah_list(' + data[i].id_pembelian + ')"><i class="fa fa-edit"></i></button>'
+					baris += '<button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_pembelian + '" onClick="hapus_list(' + data[i].id_pembelian + ')"><i class="fa fa-times"></i></button>'
 
+					baris += '</div></td></tr>'
 				}
-			]
+				baris += '</tbody></table>'
+				$("#tempatTabel").html(baris)
+				$('#tabel_pembelian').DataTable({
+					"pageLength": 5,
+				});
+			}
 		});
 	}
 
@@ -457,9 +489,10 @@
 					document.getElementById("ubah_kode").value = data[i].kode_barang;
 					document.getElementById("ubah_nama").value = data[i].nama_barang;
 					document.getElementById("ubah_harga").value = data[i].harga_kulak;
+					document.getElementById('ubah_keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
 					document.getElementById("ubah_jumlah").value = data[i].jumlah_pembelian;
 
-					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" id="ubah_button" type="button" class="btn btn-primary">Ubah</button>';
+					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" id="ubah_button" type="button" class="btn btn-primary">Ubah</button><button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>';
 					$("#ubahModal_tombol").html(html);
 					stok_ubah = data[i].jumlah_pembelian;
 					stok = data[i].stok_barang;
@@ -478,7 +511,7 @@
 
 	function hapus_list(id) {
 		$("#hapus" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
-		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" class="btn btn-danger">Hapus</button>';
+		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" class="btn btn-danger">Hapus</button><button type="button" class="btn btn-info" data-dismiss="modal">Batal</button>';
 		$("#hapusModal_tombol").html(html);
 		$('#hapusModal').modal('show');
 

@@ -46,6 +46,7 @@
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label for="kode">Id barang</label>
+									<div id="errorBarang"></div>
 									<input oninput="tampil_data_kode()" onchange="tampil_data_kode()" type="text" class="form-control input-pill" id="kode" autocomplete="TRUE" list="kodes" placeholder="">
 									<datalist onchange="tampil_data_kode()" id="kodes">
 
@@ -106,6 +107,7 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label for="kode_jasa">Nama Jasa</label>
+									<div id="errorJasa"></div>
 									<input oninput="tampil_data_kode_jasa()" onchange="tampil_data_kode_jasa()" type="text" class="form-control input-pill" id="kode_jasa" autocomplete="TRUE" list="kodes_jasa" placeholder="">
 									<datalist onchange="tampil_data_kode_jasa()" id="kodes_jasa">
 									</datalist>
@@ -131,9 +133,8 @@
 								<a onclick="hutang_cek()" class="btn btn-primary btn-border btn-round mr-2">Hutang</a>
 								<a onclick="simpan_penjualan()" id="tambah_button" class="btn btn-secondary btn-round">Simpan</a>
 							</div>
-
 						</div>
-
+						<div id="errorSimpan"></div>
 					</div>
 					<div class="card-body">
 						<div class="collapse" id="collapseExample">
@@ -143,6 +144,7 @@
 										<div class="col-sm-12">
 											<div class="form-group">
 												<label for="nama_client">Nama Client</label>
+												<div id="errorKlien"></div>
 												<input oninput="tampil_data_kode_klien()" onchange="tampil_data_kode_klien()" type="text" class="form-control input-pill" id="nama_client" list="list_client">
 												<datalist oninput="tampil_data_kode_klien()" onchange="tampil_data_kode_klien()" id="list_client">
 
@@ -213,6 +215,9 @@
 	var transaksi = [];
 	var total = 0;
 	var hutang = 0;
+	var barangKosong = true;
+	var jasaKosong = true;
+	var klienKosong = true;
 
 	var stok = 0;
 	$(document).ready(function() {
@@ -257,24 +262,32 @@
 	}
 
 	function jual_hutang() {
-		if (document.getElementById('tgl').value == "") {
-			document.getElementById('tgl').focus();
-		}
-		if (document.getElementById('nama_client').value == "") {
-			document.getElementById('nama_client').focus();
-		}
-		if (document.getElementById('nama_client').value != "" && document.getElementById('tgl').value != "") {
-			$.ajax({
-				type: 'POST',
-				url: '<?= base_url() ?>penjualan/transaksi',
-				data: 'transaksi=' + transaksi,
-				dataType: 'json',
-				success: function(data) {
-					// console.log(data);
-					looping(data);
-					piutang(data);
-				}
-			});
+		if (transaksi.length < 1) {
+			$("#errorSimpan").html("<small class='text-danger'>Catatan pembelian kosong.</small>")
+		} else if (klienKosong) {
+			$("#errorSimpan").html("<small class='text-danger'>klien tidak ditemukan.</small>")
+		} else {
+			if (document.getElementById('tgl').value == "") {
+				document.getElementById('tgl').focus();
+			}
+			if (document.getElementById('nama_client').value == "") {
+				document.getElementById('nama_client').focus();
+			}
+			if (document.getElementById('nama_client').value != "" && document.getElementById('tgl').value != "") {
+				$.ajax({
+					type: 'POST',
+					url: '<?= base_url() ?>penjualan/transaksi',
+					data: 'transaksi=' + transaksi,
+					dataType: 'json',
+					success: function(data) {
+						// console.log(data);
+						looping(data);
+						piutang(data);
+
+						$("#errorSimpan").html("")
+					}
+				});
+			}
 		}
 	}
 
@@ -301,21 +314,26 @@
 
 	function jual_biasa() {
 		// console.log(transaksi);
-		$.ajax({
-			type: 'POST',
-			url: '<?= base_url() ?>penjualan/transaksi',
-			data: 'transaksi=' + transaksi,
-			dataType: 'json',
-			success: function(data) {
-				// console.log(data);
-				looping(data);
-				transaksi = [];
-				document.getElementById('total_bayar').value = "";
-				document.getElementById('bayar').value = "";
-				total = 0;
-				ambil_data();
-			}
-		});
+		if (transaksi.length < 1) {
+			$("#errorSimpan").html("<small class='text-danger'>Catatan pembelian kosong.</small>")
+		} else {
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url() ?>penjualan/transaksi',
+				data: 'transaksi=' + transaksi,
+				dataType: 'json',
+				success: function(data) {
+					// console.log(data);
+					looping(data);
+					transaksi = [];
+					document.getElementById('total_bayar').value = "";
+					document.getElementById('bayar').value = "";
+					total = 0;
+					ambil_data();
+					$("#errorSimpan").html("")
+				}
+			});
+		}
 	}
 
 	function looping(id) {
@@ -423,6 +441,8 @@
 	function tampil_data_kode() {
 		//console.log(barang);
 		// alert(document.getElementById('kode').value);
+		$("#errorBarang").html("")
+		barangKosong = true;
 		for (var i = 0; i < barang.length; i++) {
 			if (document.getElementById('kode').value == barang[i].id_barang) {
 				document.getElementById('nama').value = barang[i].nama_barang;
@@ -433,16 +453,33 @@
 				id_selected = barang[i].id_barang;
 				stok = barang[i].stok_barang;
 				jumlah_barang();
+				barangKosong = false
 			}
+		}
+
+		if (barangKosong) {
+			$("#errorBarang").html("<small class='text-danger'>id tidak ditemukan.</small>")
+			document.getElementById('jumlah').value = "";
+			document.getElementById('nama').value = "";
+			document.getElementById('keterangan').value = "";
+			document.getElementById('harga').value = "";
+			document.getElementById('total').value = "";
 		}
 	}
 
 	function tampil_data_kode_klien() {
+		$("#errorKlien").html("")
+		klienKosong = true;
 		// alert(document.getElementById('kode').value);
 		for (var i = 0; i < klien.length; i++) {
 			if (document.getElementById('nama_client').value == klien[i].nama_client) {
 				id_klien = klien[i].id_client;
+				klienKosong = false
 			}
+		}
+		if (klienKosong) {
+			$("#errorKlien").html("<small class='text-danger'>Klien tidak ditemukan.</small>")
+			document.getElementById('tgl').value = "";
 		}
 	}
 
@@ -474,70 +511,87 @@
 
 	function tampil_data_kode_jasa() {
 		// alert(document.getElementById('kode').value);
+		$("#errorJasa").html("")
+		jasaKosong = true;
 		for (var i = 0; i < jasa.length; i++) {
 			if (document.getElementById('kode_jasa').value == jasa[i].nama_jasa) {
 				document.getElementById('harga_jasa').value = formatRupiah(jasa[i].harga_jasa.toString());
 
 				id_selected = jasa[i].id_jasa;
+				jasaKosong = false;
 			}
+		}
+
+		if (jasaKosong) {
+			$("#errorJasa").html("<small class='text-danger'>Jasa tidak ditemukan.</small>")
+			$("#harga_jasa").val("")
 		}
 	}
 
 	function tambah_array() {
 		$("#tambahBarang").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
-		if (document.getElementById('kode').value == "") {
-			document.getElementById('kode').focus();
-		}
-		if (document.getElementById('jumlah').value == "") {
-			document.getElementById('jumlah').focus();
-		}
-		if (document.getElementById('kode').value != "" && document.getElementById('jumlah').value != "") {
-			var data = {
-				"no": transaksi.length,
-				"tipe": 0,
-				"id": id_selected,
-				"nama": document.getElementById('nama').value,
-				"jumlah": document.getElementById('jumlah').value,
-				"harga": parseInt(document.getElementById('harga').value.replace(/\./g, '')),
-				"stok": stok
-			};
-			document.getElementById('kode').value = "";
-			document.getElementById('nama').value = "";
-			document.getElementById('keterangan').value = "";
-			document.getElementById('harga').value = "";
-			document.getElementById('jumlah').value = "";
-			document.getElementById('total').value = "";
+		if (barangKosong) {
+			$("#errorBarang").html("<small class='text-danger'>id tidak ditemukan.</small>")
+		} else {
+			if (document.getElementById('kode').value == "") {
+				document.getElementById('kode').focus();
+			}
+			if (document.getElementById('jumlah').value == "") {
+				document.getElementById('jumlah').focus();
+			}
+			if (document.getElementById('kode').value != "" && document.getElementById('jumlah').value != "") {
+				var data = {
+					"no": transaksi.length,
+					"tipe": 0,
+					"id": id_selected,
+					"nama": document.getElementById('nama').value,
+					"jumlah": document.getElementById('jumlah').value,
+					"harga": parseInt(document.getElementById('harga').value.replace(/\./g, '')),
+					"stok": stok
+				};
+				document.getElementById('kode').value = "";
+				document.getElementById('nama').value = "";
+				document.getElementById('keterangan').value = "";
+				document.getElementById('harga').value = "";
+				document.getElementById('jumlah').value = "";
+				document.getElementById('total').value = "";
 
-			transaksi[transaksi.length] = data;
-			ambil_data();
-			// console.log(transaksi);
+				transaksi[transaksi.length] = data;
+				ambil_data();
+				// console.log(transaksi);
+			}
 		}
+
 		$("#tambahBarang").html('Tambah')
 	}
 
 	function tambah_array_jasa() {
 		$("#tambahJasa").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
-		if (document.getElementById('kode_jasa').value == "") {
-			document.getElementById('kode_jasa').focus();
+		if (jasaKosong) {
+			$("#errorJasa").html("<small class='text-danger'>Jasa tidak ditemukan.</small>")
 		} else {
+			if (document.getElementById('kode_jasa').value == "") {
+				document.getElementById('kode_jasa').focus();
+			} else {
 
-			var data = {
-				"no": transaksi.length,
-				"tipe": 1,
-				"id": id_selected,
-				"nama": document.getElementById('kode_jasa').value,
-				"jumlah": "1",
-				"harga": parseInt(document.getElementById('harga_jasa').value.replace(/\./g, '')),
-				"harga_kulak": document.getElementById('harga'),
-				"stok": 0
-			};
+				var data = {
+					"no": transaksi.length,
+					"tipe": 1,
+					"id": id_selected,
+					"nama": document.getElementById('kode_jasa').value,
+					"jumlah": "1",
+					"harga": parseInt(document.getElementById('harga_jasa').value.replace(/\./g, '')),
+					"harga_kulak": document.getElementById('harga'),
+					"stok": 0
+				};
 
-			document.getElementById('kode_jasa').value = "";
-			document.getElementById('harga_jasa').value = "";
+				document.getElementById('kode_jasa').value = "";
+				document.getElementById('harga_jasa').value = "";
 
-			transaksi[transaksi.length] = data;
-			ambil_data();
-			// console.log(transaksi);
+				transaksi[transaksi.length] = data;
+				ambil_data();
+				// console.log(transaksi);
+			}
 		}
 		$("#tambahJasa").html('Tambah')
 	}

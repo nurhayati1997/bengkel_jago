@@ -162,6 +162,7 @@
 			</div>
 			<div class="modal-footer no-bd">
 				<button onclick="tambah()" id="tambah_button" type="button" class="btn btn-primary">Tambah</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
 				<!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
 			</div>
 		</div>
@@ -438,7 +439,7 @@
 					document.getElementById("ubah_pagu").value = data[i].pagu;
 					document.getElementById("ubah_ket").value = data[i].keterangan;
 					document.getElementById("ubah_lokasi").value = data[i].lokasi;
-					var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" class="btn btn-primary">Ubah</button>';
+					var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" class="btn btn-primary">Ubah</button><button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>';
 					$("#ubahModal_tombol").html(html);
 
 					$("#ubah_button").click(function showAlert() {
@@ -456,28 +457,54 @@
 
 	function ubah(id) {
 		$("#ubah_button").html('<i class="fas fa-spinner fa-pulse"></i> Memuat..')
-		$.ajax({
-			type: 'POST',
-			data: 'id=' + id + '&kode=' + document.getElementById("ubah_kode").value +
-				'&jenis=' + document.getElementById("ubah_jenis").value + '&nama=' + document.getElementById("ubah_nama").value +
-				'&distributor=' + document.getElementById("ubah_distributor").value + '&satuan=' + document.getElementById("ubah_satuan").value +
-				'&jual=' + document.getElementById("ubah_jual").value + '&merk=' + document.getElementById("ubah_merk").value + '&pagu=' + document.getElementById("ubah_pagu").value +
-				'&ket=' + document.getElementById("ubah_ket").value + '&lokasi=' + document.getElementById("ubah_lokasi").value,
-			url: '<?= base_url() ?>barang/ubah',
-			dataType: 'json',
-			success: function(data) {
-				// console.log(data);
-				$('#ubahModal').modal('hide');
+		if (document.getElementById("ubah_pagu").value == "") {
+			document.getElementById("ubah_pagu").focus();
+		}
+		if (document.getElementById("ubah_jual").value == "") {
+			document.getElementById("ubah_jual").focus();
+		}
+		if (document.getElementById("ubah_satuan").value == "") {
+			document.getElementById("ubah_satuan").focus();
+		}
+		if (document.getElementById("ubah_merk").value == "") {
+			document.getElementById("ubah_merk").focus();
+		}
+		if (document.getElementById("ubah_distributor").value == "") {
+			document.getElementById("ubah_distributor").focus();
+		}
+		if (document.getElementById("ubah_nama").value == "") {
+			document.getElementById("ubah_nama").focus();
+		}
+		if (document.getElementById("ubah_jenis").value == "") {
+			document.getElementById("ubah_jenis").focus();
+		}
+		if (document.getElementById("ubah_kode").value == "") {
+			document.getElementById("ubah_kode").focus();
+		}
+		if (document.getElementById("ubah_kode").value != "" && document.getElementById("ubah_jenis").value != "" && document.getElementById("ubah_nama").value != "" && document.getElementById("ubah_distributor").value != "" && document.getElementById("ubah_merk").value != "" && document.getElementById("ubah_satuan").value != "" && document.getElementById("ubah_jual").value != "" && document.getElementById("ubah_pagu").value != "") {
+			$.ajax({
+				type: 'POST',
+				data: 'id=' + id + '&kode=' + document.getElementById("ubah_kode").value +
+					'&jenis=' + document.getElementById("ubah_jenis").value + '&nama=' + document.getElementById("ubah_nama").value +
+					'&distributor=' + document.getElementById("ubah_distributor").value + '&satuan=' + document.getElementById("ubah_satuan").value +
+					'&jual=' + document.getElementById("ubah_jual").value + '&merk=' + document.getElementById("ubah_merk").value + '&pagu=' + document.getElementById("ubah_pagu").value +
+					'&ket=' + document.getElementById("ubah_ket").value + '&lokasi=' + document.getElementById("ubah_lokasi").value,
+				url: '<?= base_url() ?>barang/ubah',
+				dataType: 'json',
+				success: function(data) {
+					// console.log(data);
+					$('#ubahModal').modal('hide');
 
-				ambil_data();
-			}
-		});
+					ambil_data();
+				}
+			});
+		}
 		$("#ubah_button").html('Ubah')
 	}
 
 	function hapus_list(id) {
 		$("#hapus" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
-		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" class="btn btn-danger">Hapus</button>';
+		var html = '<button onclick="hapus(' + id + ')" id="hapus_button" type="button" class="btn btn-danger">Hapus</button><button type="button" class="btn btn-info" data-dismiss="modal">Batal</button>';
 		$("#hapusModal_tombol").html(html);
 
 		$("#hapus_button").click(function showAlert() {

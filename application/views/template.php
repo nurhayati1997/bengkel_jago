@@ -62,7 +62,7 @@
 				<div class="container-fluid">
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<div class="ml-md-auto py-2 py-md-0">
-							<a class="nav-link badge badge-light" href="'<?= base_url() ?>keuntungan/eksportDb" title="logout" aria-expanded="false">
+							<a class="nav-link badge badge-light" href="'<?= base_url() ?>keuntungan/eksportDb" title="Download dan Backup Database" aria-expanded="false">
 								Back up Database
 							</a>
 							<!-- <select class="badge badge-light mr-2" id="backup" onchange="backup()">
@@ -80,6 +80,11 @@
 						<li class="nav-item dropdown hidden-caret">
 							<a class="nav-link" href="<?= site_url('piutang') ?>" title="piutang" aria-expanded="false">
 								<i class="fas fa-pen-square"></i>
+							</a>
+						</li>
+						<li class="nav-item dropdown hidden-caret">
+							<a class="nav-link" href="<?= base_url() ?>assets/help.pdf" target="_blank" title="Bantuan dan Tutorial Aplikasi." aria-expanded="false">
+								<i class="fas fa-info"></i>
 							</a>
 						</li>
 						<li class="nav-item dropdown hidden-caret">

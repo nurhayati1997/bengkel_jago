@@ -158,6 +158,7 @@
 					$("#modal_tambah").modal('show')
 					$("#tambah").show()
 					$("#edit").hide()
+					$("#no_ktp").prop('disabled', false)
 					$('#pesan_error').html("")
 				}
 

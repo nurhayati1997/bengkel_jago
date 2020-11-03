@@ -28,20 +28,9 @@ class client extends CI_Controller
 	public function tambah_data()
 	{
 		$this->form_validation->set_rules('nama', 'Nama', 'required|trim');
-		$this->form_validation->set_rules('alamat', 'Alamat', 'required|trim|min_length[5]');
-		$this->form_validation->set_rules('no_hp', 'No HP', 'required|trim|min_length[11]');
-		$this->form_validation->set_rules('no_ktp', 'No KTP', 'required|trim|min_length[16]|is_unique[tbl_client.no_ktp]');
 
 		if ($this->form_validation->run() == false) {
-			if (form_error("nama")) {
-				$error = form_error("nama");
-			} elseif (form_error("alamat")) {
-				$error = form_error("alamat");
-			} elseif (form_error("no_hp")) {
-				$error = form_error("no_hp");
-			} else {
-				$error = form_error("no_ktp");
-			}
+			$error = form_error("nama");
 			echo json_encode($error);
 		} else {
 			$tabel = $this->input->post("target");
@@ -66,19 +55,9 @@ class client extends CI_Controller
 	public function ubah_data()
 	{
 		$this->form_validation->set_rules('nama', 'Nama', 'required|trim');
-		$this->form_validation->set_rules('alamat', 'Alamat', 'required|trim|min_length[5]');
-		$this->form_validation->set_rules('no_hp', 'No HP', 'required|trim|min_length[11]');
 
 		if ($this->form_validation->run() == false) {
-			if (form_error("nama")) {
-				$error = form_error("nama");
-			} elseif (form_error("alamat")) {
-				$error = form_error("alamat");
-			} elseif (form_error("no_hp")) {
-				$error = form_error("no_hp");
-			} else {
-				$error = form_error("no_ktp");
-			}
+			$error = form_error("nama");
 			echo json_encode($error);
 		} else {
 			$tabel = $this->input->post("target");

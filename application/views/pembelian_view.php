@@ -144,6 +144,12 @@
 								<input oninput="jumlah_barang()" onchange="jumlah_barang()" type="text" class="form-control input-pill" id="harga" placeholder="" readonly>
 							</div>
 						</div>
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label for="kulak">Harga Kulak</label>
+								<input type="text" class="form-control input-pill" id="kulak" placeholder="" readonly>
+							</div>
+						</div>
 						<div class="col-sm-6" style="display: none;">
 							<div class="form-group">
 								<label for="total">Total</label>
@@ -212,6 +218,12 @@
 							<div class="form-group">
 								<label for="ubah_harga">Harga satuan</label>
 								<input oninput="ubah_jumlah_barang()" onchange="ubah_jumlah_barang()" type="text" class="form-control input-pill" id="ubah_harga" placeholder="" readonly>
+							</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label for="ubah_kulak">Harga Kulak</label>
+								<input type="text" class="form-control input-pill" id="ubah_kulak" placeholder="" readonly>
 							</div>
 						</div>
 						<div class="col-sm-6" style="display: none;">
@@ -300,6 +312,7 @@
 				document.getElementById('nama').value = barang[i].nama_barang;
 				document.getElementById('keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
 				document.getElementById('harga').value = barang[i].harga_jual;
+				document.getElementById('kulak').value = barang[i].harga_kulak;
 
 				id_selected = barang[i].id_barang;
 				stok = barang[i].stok_barang;
@@ -321,9 +334,10 @@
 		// alert(document.getElementById('kode').value);
 		for (var i = 0; i < barang.length; i++) {
 			if (document.getElementById('ubah_kode').value == barang[i].kode_barang) {
-				document.getElementById('ubah_nama').value = barang[i].nama_barang + "sdf";
+				document.getElementById('ubah_nama').value = barang[i].nama_barang;
 				document.getElementById('ubah_keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
 				document.getElementById('ubah_harga').value = barang[i].harga_jual;
+				document.getElementById('ubah_kulak').value = barang[i].harga_kulak;
 
 				id_selected = barang[i].id_barang;
 				stok = barang[i].stok_barang;
@@ -491,6 +505,7 @@
 					document.getElementById("ubah_harga").value = data[i].harga_kulak;
 					document.getElementById('ubah_keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
 					document.getElementById("ubah_jumlah").value = data[i].jumlah_pembelian;
+					document.getElementById("ubah_kulak").value = data[i].harga_kulak;
 
 					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" id="ubah_button" type="button" class="btn btn-primary">Ubah</button><button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>';
 					$("#ubahModal_tombol").html(html);

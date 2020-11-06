@@ -106,6 +106,32 @@
 					</div>
 				</div>
 			</div>
+			<div class="modal fade" id="hapus_modal" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header no-bd">
+							<h5 class="modal-title">
+								<span class="fw-mediumbold">
+									Hapus</span>
+								<span class="fw-light">
+									Pengguna
+								</span>
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p id="teksHapus"></p>
+							<input type="hidden" id="id_hapus" name="id_hapus" />
+						</div>
+						<div class="modal-footer no-bd">
+							<button type="button" id="hapus" onClick="hapus()" class="btn btn-primary">Hapus</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			</div>
 
 			<script src="<?= base_url() ?>assets/js/plugin/chart.js/chart.min.js"></script>
@@ -213,7 +239,7 @@
 					var keuntungan = 0;
 					var totalKeuntungan = 0;
 					var statusHutang = ""
-					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>TANGGAL</th><th>KODE</th><th>NAMA</th><th>MERK</th><th>KULAK</th><th>JUAL</th><th>QUANTITY</th><th>TOTAL</th><th>UNTUNG</th><th>PIUTANG</th><th>KASIR</th></tr></thead><tbody>'
+					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>AKSI</th><th>NO</th><th>TANGGAL</th><th>NAMA</th><th>MERK</th><th>KETERANGAN</th><th>KODE</th><th>KULAK</th><th>JUAL</th><th>QUANTITY</th><th>TOTAL</th><th>UNTUNG</th><th>PIUTANG</th><th>KASIR</th></tr></thead><tbody>'
 					$.ajax({
 						url: '<?= base_url() ?>keuntungan/getDataBarang',
 						method: 'post',
@@ -224,11 +250,13 @@
 								keuntungan = ((data[i].harga_jual - data[i].harga_kulak) * data[i].jumlah_penjualan)
 								totalKeuntungan += keuntungan
 								tabel += '<tr>'
+								tabel += '<td><button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_penjualan + '" onClick="tryHapus(' + data[i].id_penjualan + ')"><i class="fa fa-times"></i></button></td>'
 								tabel += '<td>' + (i + 1) + '</td>'
 								tabel += '<td>' + formatTanggal(data[i].tgl_transaksi) + '</td>'
-								tabel += '<td>' + data[i].kode_barang + '</td>'
 								tabel += '<td>' + data[i].nama_barang + '</td>'
 								tabel += '<td>' + data[i].merk_barang + '</td>'
+								tabel += '<td>' + data[i].keterangan + '</td>'
+								tabel += '<td>' + data[i].kode_barang + '</td>'
 								tabel += '<td>' + formatRupiah(data[i].harga_kulak) + '</td>'
 								tabel += '<td>' + formatRupiah(data[i].harga_jual) + '</td>'
 								tabel += '<td>' + data[i].jumlah_penjualan + '</td>'
@@ -333,5 +361,40 @@
 
 					rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 					return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+				}
+
+				function tryHapus(id) {
+					$("#hapus" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
+					$.ajax({
+						url: '<?= base_url() ?>keuntungan/get_dataByid',
+						method: 'post',
+						data: "target=vw_penjualan&id=" + id,
+						dataType: 'json',
+						success: function(data) {
+							$("#id_hapus").val(id)
+							$("#teksHapus").html("yakin ingin menghapus penjualan <b>'" + data.nama_barang + "'</b> dengan Merk <b>'" + data.merk_barang + "'</b> dengan jenis <b>'" + data.jenis + "'</b> kode <b>(" + data.kode_barang + ")</b> transaksi pada tanggal <b>'" + data.tgl_transaksi + "'</b> ?")
+
+							$("#hapus" + id).html('<i class="fa fa-times"></i>')
+						}
+					});
+					$("#hapus_modal").modal('show')
+				}
+
+				function hapus() {
+					$("#hapus").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
+					var id = $("#id_hapus").val()
+					$.ajax({
+						url: '<?= base_url() ?>keuntungan/hapus_data',
+						method: 'post',
+						data: "id=" + id,
+						dataType: 'json',
+						success: function(data) {
+							$("#id_hapus").val("")
+							$("#teksHapus").html("")
+							tampilkan()
+							$("#hapus_modal").modal('hide')
+							$("#hapus").html('Hapus')
+						}
+					});
 				}
 			</script>

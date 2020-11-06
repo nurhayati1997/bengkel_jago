@@ -20,7 +20,7 @@ class stok extends CI_Controller
 
 	public function get_data()
 	{
-		$data = $this->db_model->get_all("tbl_barang")->result_array();
+		$data = $this->db_model->get_where("tbl_barang", ["hapus" => 0])->result_array();
 		echo json_encode($data);
 	}
 

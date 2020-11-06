@@ -38,6 +38,7 @@ class Db_model extends CI_Model
     {
         $this->db->order_by('stok_barang ASC');
         $this->db->limit(10, 0);
+        $this->db->where("hapus", 0);
         return $this->db->get($tabel);
     }
 

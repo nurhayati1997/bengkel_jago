@@ -30,7 +30,7 @@ class login extends CI_Controller
 
 	public function ambilData()
 	{
-		$data = $this->db_model->get_all($this->input->get('target'));
+		$data = $this->db_model->get_where($this->input->get('target'), ["hapus" => 0]);
 		echo json_encode($data->result());
 	}
 

@@ -20,11 +20,11 @@ class penjualan extends CI_Controller
 
 	public function lista()
 	{
-		echo json_encode($this->db_model->get_all("tbl_jasa")->result());
+		echo json_encode($this->db_model->get_where("tbl_jasa", ["hapus" => 0])->result());
 	}
 	public function list_client()
 	{
-		echo json_encode($this->db_model->get_all("tbl_client")->result());
+		echo json_encode($this->db_model->get_where("tbl_client", ["hapus" => 0])->result());
 	}
 	public function transaksi()
 	{

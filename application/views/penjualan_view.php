@@ -547,6 +547,7 @@
 					"nama": document.getElementById('nama').value,
 					"jumlah": document.getElementById('jumlah').value,
 					"harga": parseInt(document.getElementById('harga').value.replace(/\./g, '')),
+					"harga_kulak": document.getElementById('harga_kulak').value,
 					"stok": stok
 				};
 				document.getElementById('kode').value = "";

@@ -29,7 +29,7 @@
 										</button> -->
 						</div>
 						<div class="card-footer">
-							<div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+							<!-- <div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
 								<strong>Data Berhasil di Tambah</strong>
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
@@ -46,7 +46,7 @@
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-							</div>
+							</div> -->
 							<!-- Modal -->
 							<div class="modal fade" id="ubahModal" tabindex="-1" role="dialog" aria-hidden="true">
 								<div class="modal-dialog" role="document">
@@ -186,7 +186,7 @@
 				'<td>' + transaksi[i].nama + '</td>' +
 				'<td>' + transaksi[i].merk + '</td>' +
 				'<td>' + transaksi[i].jumlah + '</td>' +
-				'<td>' + transaksi[i].harga + '</td>' +
+				'<td>' + formatRupiah(transaksi[i].harga.toString()) + '</td>' +
 				'</tr>';
 		}
 		$("#myList").html(html);
@@ -196,6 +196,7 @@
 	}
 
 	function ubah_list(id, status) {
+		var utang_list = [];
 		$.ajax({
 			type: 'POST',
 			data: 'id=' + id,
@@ -203,7 +204,7 @@
 			dataType: 'json',
 			success: function(data) {
 				// console.log(data);
-				var utang_list = [];
+				utang_list = [];
 				for (var i = 0; i < data.length; i++) {
 					var mydata = {
 						"kode": data[i].kode_barang,
@@ -215,41 +216,39 @@
 
 					utang_list[utang_list.length] = mydata;
 				}
-				ubah_jasa(id);
-				var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" class="btn btn-primary">Simpan</button> <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>';
-				$("#ubahModal_tombol").html(html);
-				ambil_data_piutang(utang_list, status);
-				$('#ubahModal').modal('show');
 
-				$("#ubah_button").click(function showAlert() {
-					$("#edit-alert").fadeTo(2000, 500).slideUp(500, function() {
-						$("#edit-alert").slideUp(500);
-					});
+				$.ajax({
+					type: 'POST',
+					data: 'id=' + id,
+					url: '<?= base_url() ?>piutang/ubah_list_jasa',
+					dataType: 'json',
+					success: function(data) {
+						// console.log(data);
+						for (var i = 0; i < data.length; i++) {
+							var mydata = {
+								"kode": data[i].id_jasa,
+								"nama": data[i].nama_jasa,
+								"jumlah": 1,
+								"harga": data[i].harga_jasa,
+								"merk": "-"
+							};
+
+							utang_list[utang_list.length] = mydata;
+						}
+
+						var html = '<button onclick="ubah(' + id + ')" id="ubah_button" type="button" class="btn btn-primary">Simpan</button> <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>';
+						$("#ubahModal_tombol").html(html);
+						ambil_data_piutang(utang_list, status);
+						$('#ubahModal').modal('show');
+
+					}
 				});
 
-			}
-		});
-	}
-
-	function ubah_jasa(id) {
-		$.ajax({
-			type: 'POST',
-			data: 'id=' + id,
-			url: '<?= base_url() ?>piutang/ubah_list_jasa',
-			dataType: 'json',
-			success: function(data) {
-				// console.log(data);
-				for (var i = 0; i < data.length; i++) {
-					var mydata = {
-						"kode": data[i].id_jasa,
-						"nama": data[i].nama_barang,
-						"jumlah": 1,
-						"harga": data[i].harga_jasa,
-						"merk": "-"
-					};
-
-					utang_list[utang_list.length] = mydata;
-				}
+				// $("#ubah_button").click(function showAlert() {
+				// 	$("#edit-alert").fadeTo(2000, 500).slideUp(500, function() {
+				// 		$("#edit-alert").slideUp(500);
+				// 	});
+				// });
 
 			}
 		});
@@ -266,5 +265,22 @@
 				$('#ubahModal').modal('hide');
 			}
 		});
+	}
+
+	function formatRupiah(angka, prefix) {
+		var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split = number_string.split(','),
+			sisa = split[0].length % 3,
+			rupiah = split[0].substr(0, sisa),
+			ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+		// tambahkan titik jika yang di input sudah menjadi angka ribuan
+		if (ribuan) {
+			separator = sisa ? '.' : '';
+			rupiah += separator + ribuan.join('.');
+		}
+
+		rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+		return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 	}
 </script>

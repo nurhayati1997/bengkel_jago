@@ -6,7 +6,7 @@ class keuntungan extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		if (!$this->session->userdata("id_pengguna")) {
+		if (!$this->session->userdata("id_pengguna") or $this->session->userdata("rule") != 1) {
 			redirect("login");
 		}
 		$this->load->model('db_model');

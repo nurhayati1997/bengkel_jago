@@ -26,9 +26,13 @@ class dashboard extends CI_Controller
 		}
 		//hutang orang
 		$hutang = $this->db_model->get_where('vw_piutang', ['status_piutang' => 0])->result_array();
+		$hutangJasa = $this->db_model->get_where('vw_piutang_jasa', ['status_piutang' => 0])->result_array();
 		$data['hutang'] = 0;
 		for ($i = 0; $i < count($hutang); $i++) {
-			$data['hutang'] += ($hutang[$i]['harga_jual'] - $hutang[$i]['harga_kulak']) * $hutang[$i]['jumlah_penjualan'];
+			$data['hutang'] += $hutang[$i]['harga_jual'] * $hutang[$i]['jumlah_penjualan'];
+		}
+		for ($i = 0; $i < count($hutangJasa); $i++) {
+			$data['hutang'] += $hutangJasa[$i]['harga_jasa'];
 		}
 		$data['hutang'] = number_format($data["hutang"], 0, '', '.');
 		//keuntungan hari ini

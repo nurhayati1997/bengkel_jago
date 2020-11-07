@@ -7,7 +7,7 @@ class penjualan extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		if (!$this->session->userdata("id_pengguna") or $this->session->userdata("rule") != 1) {
+		if (!$this->session->userdata("id_pengguna")) {
 			redirect("login");
 		}
 		$this->load->model('db_model');

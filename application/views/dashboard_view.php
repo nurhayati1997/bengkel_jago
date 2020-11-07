@@ -42,7 +42,11 @@
 										<div class="col-7 col-stats">
 											<div class="numbers">
 												<p class="card-category">Keuntungan</p>
-												<h4 class="card-title">Rp. <?= $keuntungan ?></h4>
+												<h4 class="card-title"><?php if ($this->session->userdata("role") == 2) {
+																			echo "Rp. " . $keuntungan;
+																		} else {
+																			echo "Hubungi Admin.";
+																		} ?></h4>
 											</div>
 										</div>
 									</div>

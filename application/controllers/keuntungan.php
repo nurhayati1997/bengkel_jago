@@ -36,7 +36,7 @@ class keuntungan extends CI_Controller
 		$hasil = array();
 		for ($i = 0; $i < count($jasa); $i++) {
 			$jumlahJasa = $this->db_model->get_where("vw_penjualan_jasa", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai, 'id_jasa' => $jasa[$i]["id_jasa"]])->num_rows();
-			array_push($hasil, [$jasa[$i]["nama_jasa"], $jasa[$i]["harga_jasa"], $jumlahJasa, $jasa[$i]["harga_jasa"] * $jumlahJasa]);
+			array_push($hasil, [$jasa[$i]["id_jasa"], $jasa[$i]["nama_jasa"], $jasa[$i]["harga_jasa"], $jumlahJasa, $jasa[$i]["harga_jasa"] * $jumlahJasa]);
 		}
 		echo json_encode($hasil);
 	}
@@ -45,43 +45,65 @@ class keuntungan extends CI_Controller
 	{
 		$tabel = $this->input->post("target");
 		$id = $this->input->post("id");
-		$data = $this->db_model->get_where($tabel, ["id_penjualan" => $id])->row_array();
+		$kondisi = $this->input->post("kondisi");
+		$data = $this->db_model->get_where($tabel, [$kondisi => $id])->row_array();
+		echo json_encode($data);
+	}
+
+	public function get_dataByidJasa()
+	{
+		$tabel = $this->input->post("target");
+		$id = $this->input->post("id");
+		$kondisi = $this->input->post("kondisi");
+		$tanggalMulai = $this->input->post('tanggalMulai');
+		$tanggalSelesai = $this->input->post('tanggalSelesai');
+		$data = $this->db_model->get_where($tabel, [$kondisi => $id, 'tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
 		echo json_encode($data);
 	}
 
 	public function hapus_data()
 	{
 		$idPenjualan = $this->input->post("id");
-		$idTransaksi = $this->db_model->get_where("vw_penjualan", ["id_penjualan" => $idPenjualan])->row_array()["id_transaksi"];
+		$jenis =  $this->input->post("jenis");
+
+		if ($jenis == "barang") {
+			$idTransaksi = $this->db_model->get_where("vw_penjualan", ["id_penjualan" => $idPenjualan])->row_array()["id_transaksi"];
+		} else {
+			$idTransaksi = $this->db_model->get_where("vw_penjualan_jasa", ["id_penjualan_jasa" => $idPenjualan])->row_array()["id_transaksi"];
+		}
 
 		$dataPenjualan = $this->db_model->get_where("vw_penjualan", ["id_transaksi" => $idTransaksi])->result_array();
 		$dataPenjualanJasa = $this->db_model->get_where("vw_penjualan_jasa", ["id_transaksi" => $idTransaksi])->result_array();
 
 		$jmlTransaksi = count($dataPenjualan) + count($dataPenjualanJasa);
-		$masukHutang = "No";
-		$masukTransaksi = "No";
 
 		if ($this->db_model->get_where("tbl_piutang", ["id_transaksi" => $idTransaksi])->row_array()) {
 			if ($jmlTransaksi == 1) {
 				$this->db_model->delete("tbl_piutang", ["id_transaksi" => $idTransaksi]);
-				$masukHutang = "Ya";
 			}
 		}
-		$penjualan = $this->db_model->get_where("tbl_penjualan", ["id_penjualan" => $idPenjualan])->row_array();
-		if ($penjualan) {
-			$jumlahPenjualan = $penjualan["jumlah_penjualan"];
-			$idBarang = $penjualan["id_barang"];
-			$barang = $this->db_model->get_where("tbl_barang", ["id_barang" => $idBarang])->row_array();
-			$stokTerkini = $barang["stok_barang"];
+		if ($jenis == "barang") {
+			$penjualan = $this->db_model->get_where("tbl_penjualan", ["id_penjualan" => $idPenjualan])->row_array();
+			if ($penjualan) {
+				$jumlahPenjualan = $penjualan["jumlah_penjualan"];
+				$idBarang = $penjualan["id_barang"];
+				$barang = $this->db_model->get_where("tbl_barang", ["id_barang" => $idBarang])->row_array();
+				$stokTerkini = $barang["stok_barang"];
 
-			$this->db_model->update("tbl_barang", ["stok_barang" => $stokTerkini + $jumlahPenjualan], ["id_barang" => $idBarang]);
-			$this->db_model->delete("tbl_penjualan", ["id_penjualan" => $idPenjualan]);
+				$this->db_model->update("tbl_barang", ["stok_barang" => $stokTerkini + $jumlahPenjualan], ["id_barang" => $idBarang]);
+				$this->db_model->delete("tbl_penjualan", ["id_penjualan" => $idPenjualan]);
+			}
+		} else {
+			$penjualan = $this->db_model->get_where("tbl_penjualan_jasa", ["id_penjualan_jasa" => $idPenjualan])->row_array();
+			if ($penjualan) {
+				$this->db_model->delete("tbl_penjualan_jasa", ["id_penjualan_jasa" => $idPenjualan]);
+			}
 		}
+
 		if (($jmlTransaksi - 1) == 0) {
-			$masukTransaksi = "ya";
 			$this->db_model->delete("tbl_transaksi", ["id_transaksi" => $idTransaksi]);
 		}
-		echo json_encode("");
+		echo json_encode($idPenjualan . $jenis);
 	}
 
 	function eksport()

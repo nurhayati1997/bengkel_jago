@@ -259,6 +259,7 @@
 			jual_hutang();
 		}
 		$("#tambah_button").html('Simpan')
+		total = 0
 	}
 
 	function jual_hutang() {
@@ -399,6 +400,7 @@
 
 	function ambil_data() {
 		var html = '';
+		total = 0
 		for (var i = 0; i < transaksi.length; i++) {
 			var temp = parseInt(transaksi[i].jumlah) * parseInt(transaksi[i].harga);
 			total += temp;
@@ -415,7 +417,7 @@
 				'<td>' + formatRupiah(transaksi[i].harga.toString()) + '</td>' +
 				'<td>' +
 				'<div class="form-button-action">' +
-				'<button onclick="hapus_list(' + transaksi[i].no + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">' +
+				'<button onclick="hapus_list(' + i + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">' +
 				'<i class="fa fa-times"></i>' +
 				'</button>' +
 				'</div>' +
@@ -541,7 +543,6 @@
 			}
 			if (document.getElementById('kode').value != "" && document.getElementById('jumlah').value != "") {
 				var data = {
-					"no": transaksi.length,
 					"tipe": 0,
 					"id": id_selected,
 					"nama": document.getElementById('nama').value,
@@ -576,13 +577,12 @@
 			} else {
 
 				var data = {
-					"no": transaksi.length,
 					"tipe": 1,
 					"id": id_selected,
 					"nama": document.getElementById('kode_jasa').value,
 					"jumlah": "1",
 					"harga": parseInt(document.getElementById('harga_jasa').value.replace(/\./g, '')),
-					"harga_kulak": document.getElementById('harga'),
+					"harga_kulak": 0,
 					"stok": 0
 				};
 

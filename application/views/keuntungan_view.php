@@ -132,6 +132,43 @@
 					</div>
 				</div>
 			</div>
+			<div class="modal fade bd-example-modal-lg" id="detailModal" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header no-bd">
+							<h5 class="modal-title">
+								<span class="fw-mediumbold">Rician Penjualans</span>
+								<span class="fw-light">Jasa</span>
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="table-responsive">
+								<table id="piutang_list_data" class="display table table-striped table-hover">
+									<thead>
+										<tr>
+											<th>No.</th>
+											<th>Tanggal</th>
+											<th>Nama</th>
+											<th>Harga</th>
+											<th>Piutang</th>
+											<th>Kasir</th>
+										</tr>
+									</thead>
+									<tbody id="myList">
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="modal-footer no-bd">
+							<button type="button" class="btn btn-info" data-dismiss="modal">Selesai</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			</div>
 
 			<script src="<?= base_url() ?>assets/js/plugin/chart.js/chart.min.js"></script>
@@ -289,7 +326,7 @@
 					var tanggalMulai = $("#tanggalMulai").val()
 					var tanggalSelesai = $("#tanggalSelesai").val()
 					var totalKeuntungan = 0;
-					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>JASA</th><th>HARGA</th><th>JUMLAH</th><th>TOTAL</th></tr></thead><tbody>'
+					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>AKSI</th><th>NO</th><th>JASA</th><th>HARGA</th><th>JUMLAH</th><th>TOTAL</th></tr></thead><tbody>'
 					$.ajax({
 						url: '<?= base_url() ?>keuntungan/getDataJasa',
 						method: 'post',
@@ -297,13 +334,14 @@
 						dataType: 'json',
 						success: function(data) {
 							for (let i = 0; i < data.length; i++) {
-								totalKeuntungan += parseInt(data[i][3])
+								totalKeuntungan += parseInt(data[i][4])
 								tabel += '<tr>'
+								tabel += '<td><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_jasa + '" onClick="tryEdit(' + data[i][0] + ')"><i class="fa fa-edit"></i></button></td>'
 								tabel += '<td>' + (i + 1) + '</td>'
-								tabel += '<td>' + data[i][0] + '</td>'
-								tabel += '<td>' + formatRupiah(data[i][1].toString()) + '</td>'
-								tabel += '<td>' + data[i][2] + '</td>'
-								tabel += '<td>' + formatRupiah(data[i][3].toString()) + '</td>'
+								tabel += '<td>' + data[i][1] + '</td>'
+								tabel += '<td>' + formatRupiah(data[i][2].toString()) + '</td>'
+								tabel += '<td>' + data[i][3] + '</td>'
+								tabel += '<td>' + formatRupiah(data[i][4].toString()) + '</td>'
 								tabel += '</tr>'
 
 							}
@@ -363,12 +401,42 @@
 					return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 				}
 
+				function tryEdit(id) {
+					var tanggalMulai = $("#tanggalMulai").val()
+					var tanggalSelesai = $("#tanggalSelesai").val()
+					$("#edit" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
+					$.ajax({
+						url: '<?= base_url() ?>keuntungan/get_dataByidJasa',
+						method: 'post',
+						data: "target=vw_penjualan_jasa&id=" + id + "&kondisi=id_jasa&tanggalMulai=" + tanggalMulai + "&tanggalSelesai=" + tanggalSelesai,
+						dataType: 'json',
+						success: function(data) {
+							var html = '';
+							for (var i = 0; i < data.length; i++) {
+								html += '<tr>' +
+									'<td><button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapusJasa' + data[i].id_penjualan_jasa + '" onClick="hapusJasa(' + data[i].id_penjualan_jasa + ',' + id + ')"><i class="fa fa-times"></i></button></td>' +
+									'<td>' + (i + 1) + '</td>' +
+									'<td>' + data[i].tgl_transaksi + '</td>' +
+									'<td>' + data[i].nama_jasa + '</td>' +
+									'<td>' + formatRupiah(data[i].harga_jasa.toString()) + '</td>' +
+									'<td> - </td>' +
+									'<td>' + data[i].nama + '</td>' +
+									'</tr>';
+							}
+							$("#myList").html(html);
+
+							$("#detailModal").modal('show')
+							$("#edit" + id).html('<i class="fa fa-edit"></i>')
+						}
+					});
+				}
+
 				function tryHapus(id) {
 					$("#hapus" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
 					$.ajax({
 						url: '<?= base_url() ?>keuntungan/get_dataByid',
 						method: 'post',
-						data: "target=vw_penjualan&id=" + id,
+						data: "target=vw_penjualan&id=" + id + "&kondisi=id_penjualan",
 						dataType: 'json',
 						success: function(data) {
 							$("#id_hapus").val(id)
@@ -380,13 +448,32 @@
 					$("#hapus_modal").modal('show')
 				}
 
+				function hapusJasa(id, idTransaksi) {
+					var konfirmasi = confirm("apakah anda yakin ingin menghapus data terpilih ?");
+					if (konfirmasi) {
+						$("#hapusJasa" + id).html('<i class="fas fa-spinner fa-pulse"></i>')
+						$.ajax({
+							url: '<?= base_url() ?>keuntungan/hapus_data',
+							method: 'post',
+							data: "id=" + id + "&jenis=jasa",
+							dataType: 'json',
+							success: function(data) {
+								console.log(data)
+								$("#hapusJasa" + id).html('<i class="fa fa-times"></i>')
+								tryEdit(idTransaksi)
+								jasaByDate()
+							}
+						});
+					}
+				}
+
 				function hapus() {
 					$("#hapus").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
 					var id = $("#id_hapus").val()
 					$.ajax({
 						url: '<?= base_url() ?>keuntungan/hapus_data',
 						method: 'post',
-						data: "id=" + id,
+						data: "id=" + id + "&jenis=barang",
 						dataType: 'json',
 						success: function(data) {
 							$("#id_hapus").val("")

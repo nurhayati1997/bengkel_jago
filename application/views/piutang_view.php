@@ -76,7 +76,7 @@
 														<tr>
 															<th>TOTAL</th>
 															<th colspan="4">
-																<form><input type="number" min="0" class="form-control input-pill" id="total_bayar" placeholder="Rp" readonly></form>
+																<form><input type="text" min="0" class="form-control input-pill" id="total_bayar" placeholder="Rp" readonly></form>
 															</th>
 														</tr>
 													</tfoot>
@@ -190,7 +190,7 @@
 				'</tr>';
 		}
 		$("#myList").html(html);
-		document.getElementById('total_bayar').value = total;
+		document.getElementById('total_bayar').value = formatRupiah(total.toString());
 		document.getElementById('status').value = status;
 		$("#piutang_list_data").dataTable().fnDestroy();
 	}

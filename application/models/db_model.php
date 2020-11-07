@@ -52,23 +52,20 @@ class Db_model extends CI_Model
 
     function getJumlahTerjual()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $this->db->select('SUM(jumlah_penjualan)');
-        $this->db->where('tgl_transaksi', date("Y/m/d"));
-        $this->db->group_by('tgl_transaksi');
+        $this->db->where('tgl_transaksi >=', date("Y/m/d") . " 00:00:00");
+        $this->db->where('tgl_transaksi <=', date("Y/m/d") . " 23:59:59");
         return $this->db->get('vw_penjualan');
     }
 
     function getJumlahTerbeli()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $this->db->select('SUM(jumlah_pembelian)');
-        $this->db->where('tgl_pembelian >', date("Y/m/d") . " 00:00:00");
-        $this->db->where('tgl_pembelian <', date("Y/m/d") . " 23:59:59");
+        $this->db->where('tgl_pembelian >=', date("Y/m/d") . " 00:00:00");
+        $this->db->where('tgl_pembelian <=', date("Y/m/d") . " 23:59:59");
         $this->db->group_by('tgl_pembelian');
         return $this->db->get('tbl_pembelian');
-    }
-
-    function keuntunganMingguan()
-    {
-        return $this->db->query("SELECT * FROM tbl_penjualan WHERE vw_penjualan.tgl_transaksi >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND vw_penjualan.tgl_transaksi < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY");
     }
 }

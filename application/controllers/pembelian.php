@@ -75,9 +75,9 @@ class pembelian extends CI_Controller
 		$tahun = $this->input->post("tahun");
 		// $bulan = "10";
 		// $tahun = "2020";
-		$mulai = strtotime($tahun . "/" . $bulan . "/" . "1");
-		$sampai = strtotime($tahun . "/" . $bulan . "/" . "31");
-		echo json_encode($this->db_model->get_where("view_pembelian", ['tgl_pembelian >=' => date("Y/m/d", $mulai), 'tgl_pembelian <=' => date("Y/m/d", $sampai)])->result());
+		$mulai = strtotime($tahun . "/" . $bulan . "/" . "1 00:00:00");
+		$sampai = strtotime($tahun . "/" . $bulan . "/" . "31 23:59:59");
+		echo json_encode($this->db_model->get_where("view_pembelian", ['tgl_pembelian >=' => date("Y/m/d  H:i:s", $mulai), 'tgl_pembelian <=' => date("Y/m/d  H:i:s", $sampai)])->result());
 	}
 
 	public function hapus()

@@ -11,6 +11,8 @@ class dashboard extends CI_Controller
 		}
 		$this->load->model('db_model');
 		$this->load->library('form_validation');
+
+		date_default_timezone_set('Asia/Jakarta');
 	}
 
 	public function index()
@@ -30,10 +32,15 @@ class dashboard extends CI_Controller
 		}
 		$data['hutang'] = number_format($data["hutang"], 0, '', '.');
 		//keuntungan hari ini
-		$keuntungan = $this->db_model->get_where('vw_penjualan', ['tgl_transaksi' => date("Y/m/d")])->result_array();
+		$keuntungan = $this->db_model->get_where('vw_penjualan', ['tgl_transaksi >=' => date("Y/m/d") . " 00:00:00", 'tgl_transaksi <=' => date("Y/m/d") . " 23:59:59"])->result_array();
+		$keuntunganJasa = $this->db_model->get_where('vw_penjualan_jasa', ['tgl_transaksi >=' => date("Y/m/d") . " 00:00:00", 'tgl_transaksi <=' => date("Y/m/d") . " 23:59:59"])->result_array();
+
 		$data['keuntungan'] = 0;
 		for ($i = 0; $i < count($keuntungan); $i++) {
 			$data['keuntungan'] += ($keuntungan[$i]['harga_jual'] - $keuntungan[$i]['harga_kulak']) * $keuntungan[$i]['jumlah_penjualan'];
+		}
+		for ($i = 0; $i < count($keuntunganJasa); $i++) {
+			$data['keuntungan'] += $keuntunganJasa[$i]['harga_jasa'];
 		}
 		$data['keuntungan'] = number_format($data["keuntungan"], 0, '', '.');
 		//barang terbeli
@@ -64,7 +71,7 @@ class dashboard extends CI_Controller
 		$hasil = array();
 
 		for ($i = $hariIni; $i < count($hari); $i++) {
-			$dataKeuntungan = $this->db_model->get_where('vw_penjualan', ['tgl_transaksi' => $tanggalSeminggu[$i]])->result_array();
+			$dataKeuntungan = $this->db_model->get_where('vw_penjualan', ['tgl_transaksi >=' => $tanggalSeminggu[$i] . " 00:00:00", 'tgl_transaksi <=' => $tanggalSeminggu[$i] . " 23:59:59"])->result_array();
 			$untungPerHari = 0;
 			for ($j = 0; $j < count($dataKeuntungan); $j++) {
 				$untungPerHari += ($dataKeuntungan[$j]['harga_jual'] - $dataKeuntungan[$j]['harga_kulak']) * $dataKeuntungan[$j]['jumlah_penjualan'];
@@ -72,7 +79,7 @@ class dashboard extends CI_Controller
 			array_push($hasil, array($hariIndo[$i], $untungPerHari));
 		}
 		for ($i = 0; $i < $hariIni; $i++) {
-			$dataKeuntungan = $this->db_model->get_where('vw_penjualan', ['tgl_transaksi' => $tanggalSeminggu[$i]])->result_array();
+			$dataKeuntungan = $this->db_model->get_where('vw_penjualan', ['tgl_transaksi >=' => $tanggalSeminggu[$i] . " 00:00:00", 'tgl_transaksi <=' => $tanggalSeminggu[$i] . " 23:59:59"])->result_array();
 			$untungPerHari = 0;
 			for ($j = 0; $j < count($dataKeuntungan); $j++) {
 				$untungPerHari += ($dataKeuntungan[$j]['harga_jual'] - $dataKeuntungan[$j]['harga_kulak']) * $dataKeuntungan[$j]['jumlah_penjualan'];

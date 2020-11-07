@@ -22,7 +22,7 @@
 										</div>
 										<div class="col-7 col-stats">
 											<div class="numbers">
-												<p class="card-category">Jumlah Pembeli</p>
+												<p class="card-category">Jumlah Pembelian</p>
 												<h4 class="card-title"><?= $jumlahBarangTerjual ?></h4>
 											</div>
 										</div>
@@ -115,7 +115,7 @@
 										for ($i = 0; $i < count($terlaris); $i++) { ?>
 											<div class="d-flex">
 												<div class="flex-1 pt-1 ml-2">
-													<h6 class="fw-bold mb-1"><?= $terlaris[$i]["nama_barang"]." | ".$terlaris[$i]["merk_barang"] ." | " . $terlaris[$i]["jenis"] ?></h6>
+													<h6 class="fw-bold mb-1"><?= $terlaris[$i]["nama_barang"] . " | " . $terlaris[$i]["merk_barang"] . " | " . $terlaris[$i]["jenis"] ?></h6>
 												</div>
 												<div class="d-flex ml-auto align-items-center">
 													<h3 class="text-default fw-bold"><?= $terlaris[$i]["SUM(jumlah_penjualan)"] ?></h3>

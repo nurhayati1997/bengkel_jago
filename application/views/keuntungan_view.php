@@ -283,13 +283,14 @@
 						data: "target=tbl_penjualan&tanggalMulai=" + tanggalMulai + "&tanggalSelesai=" + tanggalSelesai,
 						dataType: 'json',
 						success: function(data) {
+							console.log(data)
 							for (let i = 0; i < data.length; i++) {
 								keuntungan = ((data[i].harga_jual - data[i].harga_kulak) * data[i].jumlah_penjualan)
 								totalKeuntungan += keuntungan
 								tabel += '<tr>'
 								tabel += '<td><button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_penjualan + '" onClick="tryHapus(' + data[i].id_penjualan + ')"><i class="fa fa-times"></i></button></td>'
 								tabel += '<td>' + (i + 1) + '</td>'
-								tabel += '<td>' + formatTanggal(data[i].tgl_transaksi) + '</td>'
+								tabel += '<td>' + data[i].tgl_transaksi + '</td>'
 								tabel += '<td>' + data[i].nama_barang + '</td>'
 								tabel += '<td>' + data[i].merk_barang + '</td>'
 								tabel += '<td>' + data[i].keterangan + '</td>'

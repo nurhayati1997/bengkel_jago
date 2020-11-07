@@ -11,6 +11,8 @@ class keuntungan extends CI_Controller
 		}
 		$this->load->model('db_model');
 		$this->load->library('form_validation');
+
+		date_default_timezone_set('Asia/Jakarta');
 	}
 
 	public function index()
@@ -21,8 +23,8 @@ class keuntungan extends CI_Controller
 	public function getDataBarang()
 	{
 		$target = $this->input->post('target');
-		$tanggalMulai = $this->input->post('tanggalMulai');
-		$tanggalSelesai = $this->input->post('tanggalSelesai');
+		$tanggalMulai = $this->input->post('tanggalMulai') . " 00:00:00";
+		$tanggalSelesai = $this->input->post('tanggalSelesai') . " 23:59:59";
 		$this->db->order_by("tgl_transaksi");
 		$data = $this->db_model->get_where("vw_penjualan", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
 		echo json_encode($data);
@@ -30,8 +32,8 @@ class keuntungan extends CI_Controller
 
 	public function getDataJasa()
 	{
-		$tanggalMulai = $this->input->post('tanggalMulai');
-		$tanggalSelesai = $this->input->post('tanggalSelesai');
+		$tanggalMulai = $this->input->post('tanggalMulai') . " 00:00:00";
+		$tanggalSelesai = $this->input->post('tanggalSelesai') . " 23:59:59";
 		$jasa = $this->db_model->get_all("tbl_jasa")->result_array();
 		$hasil = array();
 		for ($i = 0; $i < count($jasa); $i++) {
@@ -55,8 +57,8 @@ class keuntungan extends CI_Controller
 		$tabel = $this->input->post("target");
 		$id = $this->input->post("id");
 		$kondisi = $this->input->post("kondisi");
-		$tanggalMulai = $this->input->post('tanggalMulai');
-		$tanggalSelesai = $this->input->post('tanggalSelesai');
+		$tanggalMulai = $this->input->post('tanggalMulai') . " 00:00:00";
+		$tanggalSelesai = $this->input->post('tanggalSelesai') . " 23:59:59";
 		$data = $this->db_model->get_where($tabel, [$kondisi => $id, 'tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
 		echo json_encode($data);
 	}
@@ -108,8 +110,8 @@ class keuntungan extends CI_Controller
 
 	function eksport()
 	{
-		$tanggalMulai = $this->input->get('tanggalMulai');
-		$tanggalSelesai = $this->input->get('tanggalSelesai');
+		$tanggalMulai = $this->input->get('tanggalMulai') . " 00:00:00";
+		$tanggalSelesai = $this->input->get('tanggalSelesai') . " 23:59:59";
 		$target = $this->input->get('target');
 
 		$this->load->library("Excel");
@@ -278,7 +280,7 @@ class keuntungan extends CI_Controller
 		$hasil = array();
 
 		for ($i = $hariIni; $i < count($hari); $i++) {
-			$dataKeuntungan = $this->db_model->get_where($target, ['tgl_transaksi' => $tanggalSeminggu[$i]])->result_array();
+			$dataKeuntungan = $this->db_model->get_where($target, ['tgl_transaksi >=' => $tanggalSeminggu[$i] . " 00:00:00", 'tgl_transaksi <=' => $tanggalSeminggu[$i] . " 23:59:59"])->result_array();
 			$untungPerHari = 0;
 			for ($j = 0; $j < count($dataKeuntungan); $j++) {
 				if ($target == "vw_penjualan") {
@@ -290,7 +292,7 @@ class keuntungan extends CI_Controller
 			array_push($hasil, array($hariIndo[$i], $untungPerHari));
 		}
 		for ($i = 0; $i < $hariIni; $i++) {
-			$dataKeuntungan = $this->db_model->get_where($target, ['tgl_transaksi' => $tanggalSeminggu[$i]])->result_array();
+			$dataKeuntungan = $this->db_model->get_where($target, ['tgl_transaksi >=' => $tanggalSeminggu[$i] . " 00:00:00", 'tgl_transaksi <=' => $tanggalSeminggu[$i] . " 23:59:59"])->result_array();
 			$untungPerHari = 0;
 			for ($j = 0; $j < count($dataKeuntungan); $j++) {
 				if ($target == "vw_penjualan") {

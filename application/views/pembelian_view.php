@@ -469,7 +469,7 @@
 				for (let i = 0; i < data.length; i++) {
 					baris += '<tr>'
 					baris += '<td>' + (i + 1) + '</td>'
-					baris += '<td>' + data[i].tgl_pembelian.split(" ")[0] + '</td>'
+					baris += '<td>' + data[i].tgl_pembelian + '</td>'
 					baris += '<td>' + data[i].kode_barang + '</td>'
 					baris += '<td>' + data[i].nama_barang + '</td>'
 					baris += '<td>' + data[i].harga_kulak + '</td>'

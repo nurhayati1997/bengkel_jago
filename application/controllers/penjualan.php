@@ -29,7 +29,7 @@ class penjualan extends CI_Controller
 	public function transaksi()
 	{
 		date_default_timezone_set('Asia/Jakarta');
-		$tgl = date('Y-m-d');
+		$tgl = date('Y-m-d H:i:s');
 
 		$data = [
 			"id_pengguna" => $this->session->userdata("id_pengguna"),

@@ -23,6 +23,48 @@
 					<div class="card-body">
 						<div class="user-profile text-center">
 							<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Data Piutang</h4>
+							<div class="row m-2 p-2" style="background-color: royalblue; color:seashell;">
+								<div class="col-2">Menampilkan data </div>
+								<div class="col-1">
+									Bulan :
+								</div>
+								<div class="col-3">
+									<select class="form-control form-control-sm" id="bulan" onchange="ambil_data()">
+										<option value="1" <?php if (date('m') == 1) echo "selected"; ?>>Januari</option>
+										<option value="2" <?php if (date('m') == 2) echo "selected"; ?>>Februari</option>
+										<option value="3" <?php if (date('m') == 3) echo "selected"; ?>>April</option>
+										<option value="4" <?php if (date('m') == 4) echo "selected"; ?>>Maret</option>
+										<option value="5" <?php if (date('m') == 5) echo "selected"; ?>>Mei</option>
+										<option value="6" <?php if (date('m') == 6) echo "selected"; ?>>Juni</option>
+										<option value="7" <?php if (date('m') == 7) echo "selected"; ?>>Juli</option>
+										<option value="8" <?php if (date('m') == 8) echo "selected"; ?>>Agustus</option>
+										<option value="9" <?php if (date('m') == 9) echo "selected"; ?>>September</option>
+										<option value="10" <?php if (date('m') == 10) echo "selected"; ?>>Oktober</option>
+										<option value="11" <?php if (date('m') == 11) echo "selected"; ?>>November</option>
+										<option value="12" <?php if (date('m') == 12) echo "selected"; ?>>Desember</option>
+									</select>
+								</div>
+								<div class="col-1">
+									Tahun :
+								</div>
+								<div class="col-2">
+									<select class="form-control form-control-sm" id="tahun" onchange="ambil_data()">
+										<?php for ($i = 2020; $i < date("Y") + 1; $i++) { ?>
+											<option value="<?php echo $i;  ?>"><?php echo $i;  ?></option>
+										<?php } ?>
+									</select>
+								</div>
+								<div class="col-1">
+									Status :
+								</div>
+								<div class="col-2">
+									<select class="form-control form-control-sm" id="status" onchange="ambil_data()">
+										<option value="0">Hutang</option>
+										<option value="1">Lunas</option>
+										<option value="2">Semua</option>
+									</select>
+								</div>
+							</div>
 							<!-- <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
 											<i class="fa fa-plus"></i>
 											Tambah Data
@@ -99,22 +141,7 @@
 								</div>
 							</div>
 
-							<div class="table-responsive">
-								<table id="tabel_piutang" class="display table table-striped table-hover">
-									<thead>
-										<tr>
-											<th>TANGGAL TRANSAKSI</th>
-											<th>JATUH TEMPO</th>
-											<th>NAMA CLIENT</th>
-											<th>STATUS</th>
-											<th style="width: 10%">Action</th>
-										</tr>
-									</thead>
-
-									<tbody>
-
-									</tbody>
-								</table>
+							<div class="table-responsive" id="tempatTabel">
 							</div>
 						</div>
 					</div>
@@ -131,46 +158,82 @@
 		ambil_data();
 	});
 
+
+
+	// function ambil_data() {
+	// 	$('#tabel_piutang').DataTable({
+	// 		destroy: true,
+	// 		"ajax": {
+	// 			"url": "<?php echo site_url("piutang/tampil") ?>",
+	// 			"dataSrc": ""
+	// 		},
+	// 		"columns": [{
+	// 				"data": "tgl_transaksi"
+	// 			},
+	// 			{
+	// 				"data": "tgl_jatuh_tempo"
+	// 			},
+	// 			{
+	// 				"data": "nama_client"
+	// 			},
+	// 			{
+	// 				"data": "status_piutang",
+	// 				"render": function(data, type, row) {
+	// 					if (data == 0) {
+	// 						return "Hutang"
+	// 					} else {
+	// 						return "Lunas"
+	// 					}
+
+	// 				}
+	// 			},
+	// 			{
+	// 				"data": "id_transaksi",
+	// 				"render": function(data, type, row) {
+	// 					// Tampilkan kolom aksi
+	// 					var html = '<div class="form-button-action">' +
+	// 						'<button onclick="ubah_list(' + data + ',' + row.status_piutang + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">' +
+	// 						'<i class="fa fa-edit"></i>' +
+	// 						'</button>';
+	// 					return html
+	// 				}
+
+	// 			}
+	// 		]
+	// 	});
+	// }
+
 	function ambil_data() {
-		$('#tabel_piutang').DataTable({
-			destroy: true,
-			"ajax": {
-				"url": "<?php echo site_url("piutang/tampil") ?>",
-				"dataSrc": ""
-			},
-			"columns": [{
-					"data": "tgl_transaksi"
-				},
-				{
-					"data": "tgl_jatuh_tempo"
-				},
-				{
-					"data": "nama_client"
-				},
-				{
-					"data": "status_piutang",
-					"render": function(data, type, row) {
-						if (data == 0) {
-							return "Hutang"
-						} else {
-							return "Lunas"
-						}
-
+		var tahun = $("#tahun").val();
+		var bulan = $("#bulan").val();
+		var status = $("#status").val();
+		$("#tempatTabel").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
+		var baris = '<table id="tabel_piutang" class="display table table-striped table-hover" ><thead><th>NO.</th><th>TANGGAL TRANSAKSI</th><th>JATUH TEMPO</th><th>NAMA CLIENT</th><th>STATUS</th><th style="width: 10%">Action</th></thead><tbody>'
+		$.ajax({
+			url: '<?= base_url() ?>piutang/tampil',
+			method: 'post',
+			data: "tahun=" + tahun + "&bulan=" + bulan + "&status=" + status,
+			dataType: 'json',
+			success: function(data) {
+				for (let i = 0; i < data.length; i++) {
+					baris += '<tr>'
+					baris += '<td>' + (i + 1) + '</td>'
+					baris += '<td>' + data[i].tgl_transaksi + '</td>'
+					baris += '<td>' + data[i].tgl_jatuh_tempo + '</td>'
+					baris += '<td>' + data[i].nama_client + '</td>'
+					if (data[i].status_piutang == 0) {
+						baris += '<td>Hutang</td>'
+					} else {
+						baris += '<td>Lunas</td>'
 					}
-				},
-				{
-					"data": "id_transaksi",
-					"render": function(data, type, row) {
-						// Tampilkan kolom aksi
-						var html = '<div class="form-button-action">' +
-							'<button onclick="ubah_list(' + data + ',' + row.status_piutang + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">' +
-							'<i class="fa fa-edit"></i>' +
-							'</button>';
-						return html
-					}
-
+					baris += '<td><div class="form-button-action"><button onclick="ubah_list(' + data[i].id_transaksi + ',' + data[i].status_piutang + ')" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"><i class="fa fa-edit"></i></button></div></td></tr>'
 				}
-			]
+				baris += '</tbody></table>'
+				$("#tempatTabel").html(baris)
+				$('#tabel_pembelian').DataTable({
+					"pageLength": 5,
+				});
+			}
 		});
 	}
 

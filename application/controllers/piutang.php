@@ -18,9 +18,26 @@ class piutang extends CI_Controller
 	}
 	public function tampil()
 	{
-		$query = "select * FROM view_penjualan INNER JOIN view_piutang on view_piutang.id_transaksi = view_penjualan.id_transaksi GROUP BY view_penjualan.id_transaksi";
-		// echo json_encode($this->db_model->get_all('v_piutang')->result());
-		echo json_encode($this->db_model->get_query($query)->result());
+		$bulan = $this->input->post("bulan");
+		$tahun = $this->input->post("tahun");
+		$status = $this->input->post("status");
+
+		// $bulan = "10";
+		// $tahun = "2020";
+		$mulai = strtotime($tahun . "/" . $bulan . "/" . "1 00:00:00");
+		$sampai = strtotime($tahun . "/" . $bulan . "/" . "31 23:59:59");
+
+		$kondisi = ['tgl_transaksi >=' => date("Y/m/d  H:i:s", $mulai), 'tgl_transaksi <=' => date("Y/m/d  H:i:s", $sampai)];
+		if ($status != 2) {
+			$kondisi["status_piutang"] = $status;
+		}
+
+		echo json_encode($this->db_model->get_where("view_piutang", $kondisi)->result());
+
+		// $query = "select * FROM view_penjualan INNER JOIN view_piutang on view_piutang.id_transaksi = view_penjualan.id_transaksi GROUP BY view_penjualan.id_transaksi";
+		// $query = "select * FROM view_piutang";
+		// // echo json_encode($this->db_model->get_all('v_piutang')->result());
+		// echo json_encode($this->db_model->get_query($query)->result());
 	}
 	function ubah_list()
 	{

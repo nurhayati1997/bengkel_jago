@@ -311,8 +311,8 @@
 			if (document.getElementById('kode').value == barang[i].id_barang) {
 				document.getElementById('nama').value = barang[i].nama_barang;
 				document.getElementById('keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
-				document.getElementById('harga').value = barang[i].harga_jual;
-				document.getElementById('kulak').value = barang[i].harga_kulak;
+				document.getElementById('harga').value = formatRupiah(barang[i].harga_jual.toString());
+				document.getElementById('kulak').value = formatRupiah(barang[i].harga_kulak.toString());
 
 				id_selected = barang[i].id_barang;
 				stok = barang[i].stok_barang;
@@ -336,8 +336,8 @@
 			if (document.getElementById('ubah_kode').value == barang[i].kode_barang) {
 				document.getElementById('ubah_nama').value = barang[i].nama_barang;
 				document.getElementById('ubah_keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
-				document.getElementById('ubah_harga').value = barang[i].harga_jual;
-				document.getElementById('ubah_kulak').value = barang[i].harga_kulak;
+				document.getElementById('ubah_harga').value = formatRupiah(barang[i].harga_jual, toString());
+				document.getElementById('ubah_kulak').value = formatRupiah(barang[i].harga_kulak.toString());
 
 				id_selected = barang[i].id_barang;
 				stok = barang[i].stok_barang;
@@ -472,7 +472,7 @@
 					baris += '<td>' + data[i].tgl_pembelian + '</td>'
 					baris += '<td>' + data[i].kode_barang + '</td>'
 					baris += '<td>' + data[i].nama_barang + '</td>'
-					baris += '<td>' + data[i].harga_kulak + '</td>'
+					baris += '<td>' + formatRupiah(data[i].harga_kulak.toString()) + '</td>'
 					baris += '<td>' + data[i].jumlah_pembelian + '</td>'
 					baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_pembelian + '" onClick="ubah_list(' + data[i].id_pembelian + ')"><i class="fa fa-edit"></i></button>'
 					baris += '<button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_pembelian + '" onClick="hapus_list(' + data[i].id_pembelian + ')"><i class="fa fa-times"></i></button>'
@@ -502,10 +502,10 @@
 
 					document.getElementById("ubah_kode").value = data[i].kode_barang;
 					document.getElementById("ubah_nama").value = data[i].nama_barang;
-					document.getElementById("ubah_harga").value = data[i].harga_kulak;
+					document.getElementById("ubah_harga").value = formatRupiah(data[i].harga_kulak.toString());
 					document.getElementById('ubah_keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
 					document.getElementById("ubah_jumlah").value = data[i].jumlah_pembelian;
-					document.getElementById("ubah_kulak").value = data[i].harga_kulak;
+					document.getElementById("ubah_kulak").value = formatRupiah(data[i].harga_kulak.toString());
 
 					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" id="ubah_button" type="button" class="btn btn-primary">Ubah</button><button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>';
 					$("#ubahModal_tombol").html(html);
@@ -536,5 +536,22 @@
 			});
 		});
 		$("#hapus" + id).html('<i class="fa fa-times"></i>')
+	}
+
+	function formatRupiah(angka, prefix) {
+		var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split = number_string.split(','),
+			sisa = split[0].length % 3,
+			rupiah = split[0].substr(0, sisa),
+			ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+		// tambahkan titik jika yang di input sudah menjadi angka ribuan
+		if (ribuan) {
+			separator = sisa ? '.' : '';
+			rupiah += separator + ribuan.join('.');
+		}
+
+		rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+		return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 	}
 </script>

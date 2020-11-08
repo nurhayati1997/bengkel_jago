@@ -190,7 +190,7 @@
 					baris += '<tr>'
 					baris += '<td>' + (i + 1) + '</td>'
 					baris += '<td>' + data[i].nama_jasa + '</td>'
-					baris += '<td>' + data[i].harga_jasa + '</td>'
+					baris += '<td>' + formatRupiah(data[i].harga_jasa.toString()) + '</td>'
 					baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_jasa + '" onClick="tryEdit(' + data[i].id_jasa + ')"><i class="fa fa-edit"></i></button>'
 					baris += '<button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_jasa + '" onClick="tryHapus(' + data[i].id_jasa + ')"><i class="fa fa-times"></i></button>'
 					baris += '</div></td></tr>'
@@ -310,5 +310,22 @@
 				$("#hapus").html('Hapus')
 			}
 		});
+	}
+
+	function formatRupiah(angka, prefix) {
+		var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split = number_string.split(','),
+			sisa = split[0].length % 3,
+			rupiah = split[0].substr(0, sisa),
+			ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+		// tambahkan titik jika yang di input sudah menjadi angka ribuan
+		if (ribuan) {
+			separator = sisa ? '.' : '';
+			rupiah += separator + ribuan.join('.');
+		}
+
+		rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+		return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 	}
 </script>

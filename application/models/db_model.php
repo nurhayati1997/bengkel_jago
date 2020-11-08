@@ -45,6 +45,8 @@ class Db_model extends CI_Model
     function getTerlaris()
     {
         $this->db->select('*, SUM(jumlah_penjualan)');
+        $this->db->where('tgl_transaksi >=', date("Y/m") . "/01 00:00:00");
+        $this->db->where('tgl_transaksi <=', date("Y/m") . "/31 23:59:59");
         $this->db->group_by('id_barang');
         $this->db->order_by('SUM(jumlah_penjualan) DESC');
         return $this->db->get('vw_penjualan', 5);

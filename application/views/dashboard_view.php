@@ -113,7 +113,7 @@
 						<div class="col-md-4">
 							<div class="card card-info">
 								<div class="card-body">
-									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Barang Terlaris</h4>
+									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Barang Terlaris Bulan <?= date("F") ?></h4>
 									<div class="card-body pb-0">
 										<?php
 										for ($i = 0; $i < count($terlaris); $i++) { ?>

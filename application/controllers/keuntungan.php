@@ -225,6 +225,15 @@ class keuntungan extends CI_Controller
 				$object->getActiveSheet()->setCellValueByColumnAndRow(1, $excel_row, $data[$i]['tgl_transaksi']);
 				$object->getActiveSheet()->setCellValueByColumnAndRow(2, $excel_row, $data[$i]['nama_jasa']);
 				$object->getActiveSheet()->setCellValueByColumnAndRow(3, $excel_row, $data[$i]['harga_jasa']);
+				$statusPiutang = "";
+				if ($data[$i]['status_piutang'] == NULL) {
+					$statusPiutang = "Cash";
+				} elseif ($data[$i]['status_piutang'] == 0) {
+					$statusPiutang = "Hutang";
+				} else {
+					$statusPiutang = "Lunas";
+				}
+				$object->getActiveSheet()->setCellValueByColumnAndRow(4, $excel_row, $statusPiutang);
 				$object->getActiveSheet()->setCellValueByColumnAndRow(5, $excel_row, $data[$i]['nama']);
 			}
 			foreach (range('A', $sampaiKolom) as $columnID) {

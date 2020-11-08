@@ -19,7 +19,7 @@ class dashboard extends CI_Controller
 	{
 		//jumlah jenis barang terjual ini
 		$data['jumlahBarangTerjual'] = $this->db_model->getJumlahTerjual()->row_array();
-		if (!$data['jumlahBarangTerjual']) {
+		if (!$data['jumlahBarangTerjual']['SUM(jumlah_penjualan)']) {
 			$data['jumlahBarangTerjual'] = 0;
 		} else {
 			$data['jumlahBarangTerjual'] = $data['jumlahBarangTerjual']['SUM(jumlah_penjualan)'];

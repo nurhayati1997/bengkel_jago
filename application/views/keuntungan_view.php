@@ -413,14 +413,22 @@
 						dataType: 'json',
 						success: function(data) {
 							var html = '';
+							var statusHutang = ''
 							for (var i = 0; i < data.length; i++) {
+								if (data[i].status_piutang == 0) {
+									statusHutang = "Hutang"
+								} else if (data[i].status_piutang == 1) {
+									statusHutang = "Lunas"
+								} else {
+									statusHutang = "Cash"
+								}
 								html += '<tr>' +
 									'<td><button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapusJasa' + data[i].id_penjualan_jasa + '" onClick="hapusJasa(' + data[i].id_penjualan_jasa + ',' + id + ')"><i class="fa fa-times"></i></button></td>' +
 									'<td>' + (i + 1) + '</td>' +
 									'<td>' + data[i].tgl_transaksi + '</td>' +
 									'<td>' + data[i].nama_jasa + '</td>' +
 									'<td>' + formatRupiah(data[i].harga_jasa.toString()) + '</td>' +
-									'<td> - </td>' +
+									'<td> ' + statusHutang + ' </td>' +
 									'<td>' + data[i].nama + '</td>' +
 									'</tr>';
 							}

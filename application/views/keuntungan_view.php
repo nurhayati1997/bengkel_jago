@@ -11,68 +11,59 @@
 				</div>
 				<div class="page-inner mt--5">
 					<div class="row mt--2">
-						<div class="col-md-5">
-							<div class="card-pricing2 card-primary">
-								<div class="pricing-header">
-									<h3 class="fw-bold"> </h3>
-								</div>
-								<div class="price-value">
-									<div class="value">
-										<span class="currency">DATA</span>
-										<!-- <span class="amount">1<span>99</span></span> -->
-										<span class="month">proses</span>
+						<div class="col-md-12">
+							<div class="row py-3">
+								<div class="col-md-6">
+									<div id="chart-container">
+										<canvas id="totalIncomeChart"></canvas>
 									</div>
 								</div>
-								<hr>
-								<form>
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label for="pillInput">Dari tgl</label>
-												<input type="date" class="form-control input-pill" id="tanggalMulai" placeholder="Rp">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label for="pillInput">Sampai tgl</label>
-												<input type="date" class="form-control input-pill" id="tanggalSelesai" placeholder="Rp">
-											</div>
-										</div>
-										<div class="col-sm-12">
-											<div class="form-group">
-												<div id="pesanError" class="badge badge-danger"></div>
-											</div>
-										</div>
+								<div class="col-3 pt-5 col-stats">
+									<div class="numbers">
+										<p class="card-category">Total Keuntungan Hari ini :</p>
+										<h4 class="card-title" id="keuntungan">Rp. 0</h4>
 									</div>
-									<a href="#" id="tombolProses" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3" onclick="tampilkan()">Proses</a>
-								</form>
-								<div class="row py-3">
-									<div class="col-md-12">
-										<div id="chart-container">
-											<canvas id="totalIncomeChart"></canvas>
-										</div>
+								</div>
+								<div class="col-3 pt-5">
+									<div class="numbers">
+										<p class="card-category">Total Pemasukan :</p>
+										<h4 class="card-title" id="pemasukan">Rp. 0</h4>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-7">
+
+
+						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
 									<div class="d-flex align-items-center">
-										<div class="col-sm-6">
+										<div class="col-sm-4">
 											<h5 class="card-title">Data Transaksi</h5>
-											<div id="judulTanggal" class="badge badge-info"></div>
+											<div id="pesanError" class="badge badge-danger"></div>
 										</div>
 										<div class="col-sm-3">
-											<button class="btn btn-primary btn-border btn-round mr-2" onclick="eksport()">Cetak</button>
+											<div class="form-group">
+												<label for="pillInput">Dari tgl</label>
+												<input type="date" class="form-control input-pill" id="tanggalMulai" onChange="tampilkan()" placeholder="Rp">
+											</div>
 										</div>
 										<div class="col-sm-3">
+											<div class="form-group">
+												<label for="pillInput">Sampai tgl</label>
+												<input type="date" class="form-control input-pill" onChange="tampilkan()" id="tanggalSelesai" placeholder="Rp">
+											</div>
+										</div>
+										<div class="col-sm-1">
 											<div class="dropdown">
-												<select class="btn btn-warning btn-border btn-round dropdown-toggle" onChange="tampilkan()" id="jenisLaporan">
+												<select class="badge badge-warning dropdown-toggle" onChange="tampilkan()" id="jenisLaporan">
 													<option value="1">Barang</option>
 													<option value="2">Jasa</option>
 												</select>
 											</div>
+										</div>
+										<div class="col-sm-1">
+											<button class="badge badge-primary" onclick="eksport()">Cetak</button>
 										</div>
 									</div>
 								</div>
@@ -80,26 +71,6 @@
 							<div class="card-body">
 								<div class="table-responsive" id="tempat_tabel">
 
-								</div>
-								<br />
-								<div class="col-sm-12 col-md-12">
-									<div class="card card-stats card-round">
-										<div class="card-body ">
-											<div class="row">
-												<div class="col-5">
-													<div class="icon-big text-center">
-														<i class="flaticon-coins text-success"></i>
-													</div>
-												</div>
-												<div class="col-7 col-stats">
-													<div class="numbers">
-														<p class="card-category">Total Keuntungan :</p>
-														<h4 class="card-title" id="keuntungan">Rp. 0</h4>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -264,8 +235,6 @@
 						} else {
 							jasaByDate()
 						}
-						$("#judulTanggal").html("Tanggal : " +
-							tanggalMulai + " Sampai " + tanggalSelesai)
 					}
 				}
 
@@ -275,6 +244,8 @@
 					var tanggalSelesai = $("#tanggalSelesai").val()
 					var keuntungan = 0;
 					var totalKeuntungan = 0;
+					var pemasukan = 0;
+					var totalPemasukan = 0;
 					var statusHutang = ""
 					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>AKSI</th><th>NO</th><th>TANGGAL</th><th>NAMA</th><th>MERK</th><th>KETERANGAN</th><th>KODE</th><th>KULAK</th><th>JUAL</th><th>QUANTITY</th><th>TOTAL</th><th>UNTUNG</th><th>PIUTANG</th><th>KASIR</th></tr></thead><tbody>'
 					$.ajax({
@@ -285,6 +256,8 @@
 						success: function(data) {
 							console.log(data)
 							for (let i = 0; i < data.length; i++) {
+								pemasukan = (data[i].harga_jual * data[i].jumlah_penjualan)
+								totalPemasukan += pemasukan
 								keuntungan = ((data[i].harga_jual - data[i].harga_kulak) * data[i].jumlah_penjualan)
 								totalKeuntungan += keuntungan
 								tabel += '<tr>'
@@ -314,6 +287,7 @@
 							tabel += '</tbody></table>'
 							$("#tempat_tabel").html(tabel)
 							$("#keuntungan").html('Rp. ' + formatRupiah(totalKeuntungan.toString()))
+							$("#pemasukan").html('Rp. ' + formatRupiah(totalPemasukan.toString()))
 
 							$('#add-row').DataTable({
 								"pageLength": 5,
@@ -380,8 +354,6 @@
 					} else {
 						$("#pesanError").html("")
 						window.location.href = '<?= base_url() ?>keuntungan/eksport?target=' + target + '&tanggalMulai=' + tanggalMulai + '&tanggalSelesai=' + tanggalSelesai
-						$("#judulTanggal").html("Tanggal : " +
-							tanggalMulai + " Sampai " + tanggalSelesai)
 					}
 				}
 

@@ -62,7 +62,7 @@
 				<div class="container-fluid">
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<div class="ml-md-auto py-2 py-md-0">
-							<a class="nav-link badge badge-light" href="'<?= base_url() ?>keuntungan/eksportDb" title="Download dan Backup Database" aria-expanded="false">
+							<a class="nav-link badge badge-light" href="keuntungan/eksportDb" title="Download dan Backup Database" aria-expanded="false">
 								Back up Database
 							</a>
 							<!-- <select class="badge badge-light mr-2" id="backup" onchange="backup()">

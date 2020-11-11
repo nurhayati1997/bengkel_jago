@@ -72,17 +72,7 @@
 								<option value="3">Data Base</option>
 							</select> -->
 						</div>
-						<li class="nav-item">
-							<a class="nav-link" href="<?= site_url('penjualan') ?>" title="penjualan" role="button" aria-expanded="false">
-								<i class="fas fa-th-list"></i>
-							</a>
-						</li>
-						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link" href="<?= site_url('piutang') ?>" title="piutang" aria-expanded="false">
-								<i class="fas fa-pen-square"></i>
-							</a>
-						</li>
-						<li class="nav-item dropdown hidden-caret">
+						<li class="nav-item dropdown ml-3 hidden-caret">
 							<a class="nav-link" href="<?= base_url() ?>assets/help.pdf" target="_blank" title="Bantuan dan Tutorial Aplikasi." aria-expanded="false">
 								<i class="fas fa-info"></i>
 							</a>

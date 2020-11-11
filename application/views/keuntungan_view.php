@@ -63,7 +63,7 @@
 											</div>
 										</div>
 										<div class="col-sm-1">
-											<button class="badge badge-primary" onclick="eksport()">Cetak</button>
+											<a href="#" class="badge badge-primary" onclick="eksport()">Cetak</a>
 										</div>
 									</div>
 								</div>
@@ -323,6 +323,7 @@
 							tabel += '</tbody></table>'
 							$("#tempat_tabel").html(tabel)
 							$("#keuntungan").html('Rp. ' + formatRupiah(totalKeuntungan.toString()))
+							$("#pemasukan").html('Rp. ' + formatRupiah(totalKeuntungan.toString()))
 							$('#add-row').DataTable({
 								"pageLength": 5,
 							});

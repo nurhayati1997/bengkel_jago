@@ -29,6 +29,9 @@
 	<div class="page-inner mt--5">
 		<div class="row mt--2">
 			<div class="col-md-4">
+			
+			<div class="tab-content mt-2 mb-3" id="pills-with-icon-tabContent">
+				<div class="tab-pane fade show active" id="pills-home-icon" role="tabpanel" aria-labelledby="pills-home-tab-icon">
 				<div class="card-pricing2 card-success">
 					<div class="pricing-header">
 						<h3 class="fw-bold"> </h3>
@@ -60,6 +63,7 @@
 								</div>
 							</div>
 							<div class="col-sm-12">
+						<a onclick="tambah_array()" id="tambahBarang" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Tambah</a>
 								<div class="form-group">
 									<label for="nama">Nama Barang</label>
 									<input type="text" class="form-control input-pill" id="nama" placeholder="" readonly>
@@ -85,11 +89,12 @@
 								</div>
 							</div>
 						</div>
-						<a onclick="tambah_array()" id="tambahBarang" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Tambah</a>
 					</form>
 				</div>
-			</div>
-			<div class="col-md-3">
+
+				</div>
+				<div class="tab-pane fade" id="pills-profile-icon" role="tabpanel" aria-labelledby="pills-profile-tab-icon">
+
 				<div class="card-pricing2 card-primary">
 					<div class="pricing-header">
 						<h3 class="fw-bold"> </h3>
@@ -123,15 +128,32 @@
 						<a onclick="tambah_array_jasa()" id="tambahJasa" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3">Tambah</a>
 					</form>
 				</div>
+				
+				</div>
+			</div> 
 			</div>
-			<div class="col-md-5">
+			<div class="col-md-8">
 				<div class="card">
 					<div class="card-header">
 						<div class="d-flex align-items-center">
+						<ul class="nav nav-pills nav-danger" id="pills-tab-with-icon" role="tablist">
+									<li class="nav-item">
+										<a class="nav-link active" id="pills-home-tab-icon" data-toggle="pill" href="#pills-home-icon" role="tab" aria-controls="pills-home-icon" aria-selected="true">
+											Barang
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" id="pills-profile-tab-icon" data-toggle="pill" href="#pills-profile-icon" role="tab" aria-controls="pills-profile-icon" aria-selected="false">
+											Jasa
+										</a>
+									</li>
+								</ul>
+								&nbsp;&nbsp;
 							<h4 class="card-title">Data Transaksi</h4>
+								&nbsp;&nbsp;
 							<div class="ml-md-auto py-2 py-md-0">
-								<a onclick="hutang_cek()" class="btn btn-primary btn-border btn-round mr-2">Hutang</a>
-								<a onclick="simpan_penjualan()" id="tambah_button" class="btn btn-secondary btn-round">Simpan</a>
+								<a onclick="hutang_cek()" class="btn btn-info btn-round mr-2"><b>Hutang</b></a>
+								<a onclick="simpan_penjualan()" id="tambah_button" class="btn btn-warning btn-round"><b>Simpan</b></a>
 							</div>
 						</div>
 						<div id="errorSimpan"></div>
@@ -169,6 +191,7 @@
 									<tr>
 										<th>Jenis</th>
 										<th>Nama</th>
+										<th>Keterangan</th>
 										<th>Jumlah </th>
 										<th>Harga</th>
 										<th style="width: 10%">Action</th>
@@ -190,7 +213,7 @@
 									</tr>
 									<tr>
 										<th>KEMBALI</th>
-										<th colspan="4" id="kembalian"></th>
+										<th colspan="4" id="kembalian"> 0</th>
 									</tr>
 								</tfoot>
 								<tbody id="myTabel">
@@ -314,7 +337,7 @@
 	}
 
 	function jual_biasa() {
-		// console.log(transaksi);
+		//console.log(transaksi);
 		if (transaksi.length < 1) {
 			$("#errorSimpan").html("<small class='text-danger'>Catatan pembelian kosong.</small>")
 		} else {
@@ -348,7 +371,7 @@
 						'&harga_kulak=' + transaksi[i].harga_kulak + '&stok=' + transaksi[i].stok,
 					dataType: 'json',
 					success: function(data) {
-
+						console.log(data)
 					}
 				});
 			} else {
@@ -413,6 +436,7 @@
 			html += '<tr>' +
 				'<td>' + tipe + '</td>' +
 				'<td>' + transaksi[i].nama + '</td>' +
+				'<td>' + transaksi[i].keterangan + '</td>' +
 				'<td>' + transaksi[i].jumlah + '</td>' +
 				'<td>' + formatRupiah(transaksi[i].harga.toString()) + '</td>' +
 				'<td>' +
@@ -424,14 +448,23 @@
 				'</td>' +
 				'</tr>';
 		}
-		$("#myTabel").html(html);
+		if(html){
+			$("#myTabel").html(html);
+		}else{
+			$("#myTabel").html("<tr><th colspan='6' style='text-align:center;'>Kosong</th></tr>");
+		}
 		document.getElementById('total_bayar').value = formatRupiah(total.toString());
 		$("#tabel_penjualan").dataTable().fnDestroy();
 	}
 
 	function kembalian() {
 		if (transaksi.length > 0) {
-			$("#kembalian").html(formatRupiah((parseInt(document.getElementById('bayar').value) - total).toString()));
+			var penampung = formatRupiah((parseInt(document.getElementById('bayar').value) - total).toString());
+			if (parseInt(document.getElementById('bayar').value) - total<0){
+				$("#kembalian").html('- '+penampung);
+			}else{
+				$("#kembalian").html(penampung);
+			}
 		}
 	}
 
@@ -546,6 +579,7 @@
 					"tipe": 0,
 					"id": id_selected,
 					"nama": document.getElementById('nama').value,
+					"keterangan": document.getElementById('keterangan').value,
 					"jumlah": document.getElementById('jumlah').value,
 					"harga": parseInt(document.getElementById('harga').value.replace(/\./g, '')),
 					"harga_kulak": document.getElementById('harga_kulak').value,
@@ -560,7 +594,7 @@
 
 				transaksi[transaksi.length] = data;
 				ambil_data();
-				// console.log(transaksi);
+				console.log(transaksi);
 			}
 		}
 
@@ -580,6 +614,7 @@
 					"tipe": 1,
 					"id": id_selected,
 					"nama": document.getElementById('kode_jasa').value,
+					"keterangan": "-",
 					"jumlah": "1",
 					"harga": parseInt(document.getElementById('harga_jasa').value.replace(/\./g, '')),
 					"harga_kulak": 0,
@@ -591,7 +626,7 @@
 
 				transaksi[transaksi.length] = data;
 				ambil_data();
-				// console.log(transaksi);
+				console.log(transaksi);
 			}
 		}
 		$("#tambahJasa").html('Tambah')

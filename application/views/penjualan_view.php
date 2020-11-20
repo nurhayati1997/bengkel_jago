@@ -371,7 +371,7 @@
 						'&harga_kulak=' + transaksi[i].harga_kulak + '&stok=' + transaksi[i].stok,
 					dataType: 'json',
 					success: function(data) {
-						console.log(data)
+						// console.log(data)
 					}
 				});
 			} else {
@@ -448,11 +448,7 @@
 				'</td>' +
 				'</tr>';
 		}
-		if(html){
-			$("#myTabel").html(html);
-		}else{
-			$("#myTabel").html("<tr><th colspan='6' style='text-align:center;'>Kosong</th></tr>");
-		}
+		$("#myTabel").html(html);
 		document.getElementById('total_bayar').value = formatRupiah(total.toString());
 		$("#tabel_penjualan").dataTable().fnDestroy();
 	}
@@ -594,7 +590,7 @@
 
 				transaksi[transaksi.length] = data;
 				ambil_data();
-				console.log(transaksi);
+				// console.log(transaksi);
 			}
 		}
 
@@ -626,7 +622,7 @@
 
 				transaksi[transaksi.length] = data;
 				ambil_data();
-				console.log(transaksi);
+				// console.log(transaksi);
 			}
 		}
 		$("#tambahJasa").html('Tambah')

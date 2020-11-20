@@ -100,25 +100,34 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="kode">Kode Barang</label>
-								<input type="text" class="form-control input-pill" id="kode" placeholder="">
+								<!-- <input type="text" class="form-control input-pill" id="kode" placeholder=""> -->
+								<input type="text" class="form-control input-pill" id="kode" autocomplete="TRUE" list="kodes" placeholder="">
+								<datalist id="kodes">
+								</datalist>
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="jenis">Jenis Mobil</label>
-								<input type="text" class="form-control input-pill" id="jenis" placeholder="">
+								<!-- <input type="text" class="form-control input-pill" id="jenis" placeholder=""> -->
+								<input type="text" class="form-control input-pill" id="jenis" autocomplete="TRUE" list="jeniss" placeholder="">
+								<datalist id="jeniss">
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="nama">Nama Barang</label>
-								<input type="text" class="form-control input-pill" id="nama" placeholder="">
+								<!-- <input type="text" class="form-control input-pill" id="nama" placeholder=""> -->
+								<input type="text" class="form-control input-pill" id="nama" autocomplete="TRUE" list="namas" placeholder="">
+								<datalist id="namas">
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="merk">Merk</label>
-								<input type="text" class="form-control input-pill" id="merk" placeholder="">
+								<!-- <input type="text" class="form-control input-pill" id="merk" placeholder=""> -->
+								<input type="text" class="form-control input-pill" id="merk" autocomplete="TRUE" list="merks" placeholder="">
+								<datalist id="merks">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -130,13 +139,17 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="lokasi">Lokasi</label>
-								<input type="text" class="form-control input-pill" id="lokasi" placeholder="">
+								<!-- <input type="text" class="form-control input-pill" id="lokasi" placeholder=""> -->
+								<input type="text" class="form-control input-pill" id="lokasi" autocomplete="TRUE" list="lokasis" placeholder="">
+								<datalist id="lokasis">
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="distributor">Distributor</label>
-								<input type="text" class="form-control input-pill" id="distributor" placeholder="">
+								<!-- <input type="text" class="form-control input-pill" id="distributor" placeholder=""> -->
+								<input type="text" class="form-control input-pill" id="distributor" autocomplete="TRUE" list="distributors" placeholder="">
+								<datalist id="distributors">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -191,25 +204,33 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="ubah_kode">Kode Barang</label>
-								<input type="text" class="form-control input-pill" id="ubah_kode" placeholder="">
+								<!-- <input type="text" class="form-control input-pill" id="ubah_kode" placeholder=""> -->
+								<input type="text" class="form-control input-pill" id="ubah_kode" autocomplete="TRUE" list="ubah_kodes" placeholder="">
+								<datalist id="ubah_kodes">
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="ubah_jenis">Jenis Mobil</label>
-								<input type="text" class="form-control input-pill" id="ubah_jenis" placeholder="">
+								<!-- <input type="text" class="form-control input-pill" id="ubah_jenis" placeholder=""> -->
+								<input type="text" class="form-control input-pill" id="ubah_jenis" autocomplete="TRUE" list="ubah_jeniss" placeholder="">
+								<datalist id="ubah_jeniss">
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="ubah_nama">Nama Barang</label>
-								<input type="text" class="form-control input-pill" id="ubah_nama" placeholder="barang">
+								<!-- <input type="text" class="form-control input-pill" id="ubah_nama" placeholder="barang"> -->
+								<input type="text" class="form-control input-pill" id="ubah_nama" autocomplete="TRUE" list="ubah_namas" placeholder="">
+								<datalist id="ubah_namas">
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="ubah_merk">Merk</label>
-								<input type="text" class="form-control input-pill" id="ubah_merk" placeholder="">
+								<!-- <input type="text" class="form-control input-pill" id="ubah_merk" placeholder=""> -->
+								<input type="text" class="form-control input-pill" id="ubah_merk" autocomplete="TRUE" list="ubah_merks" placeholder="">
+								<datalist id="ubah_merks">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -221,7 +242,9 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="ubah_lokasi">Lokasi</label>
-								<input type="text" class="form-control input-pill" id="ubah_lokasi" placeholder="">
+								<!-- <input type="text" class="form-control input-pill" id="ubah_lokasi" placeholder=""> -->
+								<input type="text" class="form-control input-pill" id="ubah_lokasi" autocomplete="TRUE" list="ubah_lokasis" placeholder="">
+								<datalist id="ubah_lokasis">
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -295,6 +318,7 @@
 
 		//datatabel
 		ambil_data();
+		daftar();
 	});
 
 	function tryTambah() {
@@ -539,6 +563,58 @@
 		});
 
 		$("#hapus_button").html('Hapus')
+	}
+
+	function daftar() {
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() ?>barang/daftar',
+			dataType: 'json',
+			success: function(data) {
+				var kodes = '';
+				var jeniss = '';
+				var namas = '';
+				var merks = '';
+				var lokasis = '';
+				var distributors = '';
+
+				for (var i = 0; i < data["kodes"].length; i++) {
+					kodes += '<option value="' + data["kodes"][i].kode_barang + '"></option>';
+				}
+				$("#kodes").html(kodes);
+				$("#ubah_kodes").html(kodes);
+
+				for (var i = 0; i < data["jeniss"].length; i++) {
+					jeniss += '<option value="' + data["jeniss"][i].jenis + '"></option>';
+				}
+				$("#jeniss").html(jeniss);
+				$("#ubah_jeniss").html(jeniss);
+
+				for (var i = 0; i < data["namas"].length; i++) {
+					jeniss += '<option value="' + data["namas"][i].nama_barang + '"></option>';
+				}
+				$("#namas").html(namas);
+				$("#ubah_namas").html(namas);
+				
+				for (var i = 0; i < data["merks"].length; i++) {
+					merks += '<option value="' + data["merks"][i].merk_barang + '"></option>';
+				}
+				$("#merks").html(merks);
+				$("#ubah_merks").html(merks);
+
+				for (var i = 0; i < data["lokasis"].length; i++) {
+					lokasis += '<option value="' + data["lokasis"][i].lokasi + '"></option>';
+				}
+				$("#lokasis").html(lokasis);
+				$("#ubah_lokasis").html(lokasis);
+				
+				for (var i = 0; i < data["distributors"].length; i++) {
+					jeniss += '<option value="' + data["distributors"][i].distributors + '"></option>';
+				}
+				$("#distributors").html(distributors);
+				$("#ubah_distributors").html(distributors);
+			}
+		});
 	}
 
 	function formatRupiah(angka, prefix) {

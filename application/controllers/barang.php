@@ -23,6 +23,17 @@ class barang extends CI_Controller
 		echo json_encode($this->db_model->get_where("tbl_barang", ["hapus" => 0])->result());
 	}
 
+	public function daftar()
+	{
+		$data["kodes"] = $this->db_model->getDaftarBarang("kode_barang")->result();
+		$data["jeniss"] = $this->db_model->getDaftarBarang("jenis")->result();
+		$data["namas"] = $this->db_model->getDaftarBarang("nama_barang")->result();
+		$data["merks"] = $this->db_model->getDaftarBarang("merk_barang")->result();
+		$data["lokasis"] = $this->db_model->getDaftarBarang("lokasi")->result();
+		$data["distributors"] = $this->db_model->getDaftarBarang("distributor")->result();
+		echo json_encode($data);
+	}
+
 	public function tambah()
 	{
 		$data = [

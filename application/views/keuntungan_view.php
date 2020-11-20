@@ -254,7 +254,7 @@
 						data: "target=tbl_penjualan&tanggalMulai=" + tanggalMulai + "&tanggalSelesai=" + tanggalSelesai,
 						dataType: 'json',
 						success: function(data) {
-							console.log(data)
+							// console.log(data)
 							for (let i = 0; i < data.length; i++) {
 								pemasukan = (data[i].harga_jual * data[i].jumlah_penjualan)
 								totalPemasukan += pemasukan
@@ -440,7 +440,7 @@
 							data: "id=" + id + "&jenis=jasa",
 							dataType: 'json',
 							success: function(data) {
-								console.log(data)
+								// console.log(data)
 								$("#hapusJasa" + id).html('<i class="fa fa-times"></i>')
 								tryEdit(idTransaksi)
 								jasaByDate()

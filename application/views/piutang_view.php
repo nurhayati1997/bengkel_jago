@@ -58,7 +58,7 @@
 									Status :
 								</div>
 								<div class="col-2">
-									<select class="form-control form-control-sm" id="status" onchange="ambil_data()">
+									<select class="form-control form-control-sm" id="pilihStatus" onchange="ambil_data()">
 										<option value="0">Hutang</option>
 										<option value="1">Lunas</option>
 										<option value="2">Semua</option>
@@ -206,7 +206,7 @@
 	function ambil_data() {
 		var tahun = $("#tahun").val();
 		var bulan = $("#bulan").val();
-		var status = $("#status").val();
+		var status = $("#pilihStatus").val();
 		$("#tempatTabel").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
 		var baris = '<table id="tabel_piutang" class="display table table-striped table-hover" ><thead><th>NO.</th><th>TANGGAL TRANSAKSI</th><th>JATUH TEMPO</th><th>NAMA CLIENT</th><th>STATUS</th><th style="width: 10%">Action</th></thead><tbody>'
 		$.ajax({
@@ -324,6 +324,7 @@
 			url: '<?= base_url() ?>piutang/ubah',
 			dataType: 'json',
 			success: function(data) {
+				// consol.log(data)
 				ambil_data();
 				$('#ubahModal').modal('hide');
 			}

@@ -70,4 +70,11 @@ class Db_model extends CI_Model
         $this->db->group_by('tgl_pembelian');
         return $this->db->get('tbl_pembelian');
     }
+
+    function getDaftarBarang($target){
+        $this->db->select($target);
+        $this->db->where('hapus', 0);
+        $this->db->group_by($target);
+        return $this->db->get('tbl_barang');
+    }
 }

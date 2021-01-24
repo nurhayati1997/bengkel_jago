@@ -50,7 +50,7 @@
 								<div class="col-2">
 									<select class="form-control form-control-sm" id="tahun" onchange="ambil_data()">
 										<?php for ($i = 2020; $i < date("Y") + 1; $i++) { ?>
-											<option value="<?php echo $i;  ?>"><?php echo $i;  ?></option>
+											<option value="<?php echo $i; ?>" <?php if (date('Y') == $i) echo "selected"; ?>><?php echo $i;  ?></option>
 										<?php } ?>
 									</select>
 								</div>
@@ -230,7 +230,7 @@
 				}
 				baris += '</tbody></table>'
 				$("#tempatTabel").html(baris)
-				$('#tabel_pembelian').DataTable({
+				$('#tabel_piutang').DataTable({
 					"pageLength": 5,
 				});
 			}

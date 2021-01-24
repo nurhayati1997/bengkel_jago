@@ -29,128 +29,128 @@
 	<div class="page-inner mt--5">
 		<div class="row mt--2">
 			<div class="col-md-4">
-			
-			<div class="tab-content mt-2 mb-3" id="pills-with-icon-tabContent">
-				<div class="tab-pane fade show active" id="pills-home-icon" role="tabpanel" aria-labelledby="pills-home-tab-icon">
-				<div class="card-pricing2 card-success">
-					<div class="pricing-header">
-						<h3 class="fw-bold"> </h3>
-					</div>
-					<div class="price-value">
-						<div class="value">
-							<span class="currency">Penjualan</span>
-							<!-- <span class="amount">1<span>99</span></span> -->
-							<span class="month">Barang</span>
-						</div>
-					</div>
-					<hr>
-					<form>
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label for="kode">Id barang</label>
-									<div id="errorBarang"></div>
-									<input oninput="tampil_data_kode()" onchange="tampil_data_kode()" type="text" class="form-control input-pill" id="kode" autocomplete="TRUE" list="kodes" placeholder="">
-									<datalist onchange="tampil_data_kode()" id="kodes">
 
-									</datalist>
+				<div class="tab-content mt-2 mb-3" id="pills-with-icon-tabContent">
+					<div class="tab-pane fade show active" id="pills-home-icon" role="tabpanel" aria-labelledby="pills-home-tab-icon">
+						<div class="card-pricing2 card-success">
+							<div class="pricing-header">
+								<h3 class="fw-bold"> </h3>
+							</div>
+							<div class="price-value">
+								<div class="value">
+									<span class="currency">Penjualan</span>
+									<!-- <span class="amount">1<span>99</span></span> -->
+									<span class="month">Barang</span>
 								</div>
 							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label for="jumlah">Jumlah</label>
-									<input oninput="jumlah_barang()" onchange="jumlah_barang()" type="number" min="1" class="form-control input-pill" id="jumlah" placeholder="0" required>
-								</div>
-							</div>
-							<div class="col-sm-12">
-						<a onclick="tambah_array()" id="tambahBarang" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Tambah</a>
-								<div class="form-group">
-									<label for="nama">Nama Barang</label>
-									<input type="text" class="form-control input-pill" id="nama" placeholder="" readonly>
-								</div>
-							</div>
-							<div class="col-sm-12">
-								<div class="form-group">
-									<label for="keterangan">Keterangan</label>
-									<textarea type="text" class="form-control input-pill" id="keterangan" readonly> </textarea>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label for="harga">Harga</label>
-									<input type="text" class="form-control input-pill" id="harga" placeholder="Rp" readonly>
-									<input type="text" class="form-control input-pill" id="harga_kulak" placeholder="Rp" style="display: none;">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label for="total">Total</label>
-									<input type="text" class="form-control input-pill" id="total" placeholder="Rp" readonly>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
+							<hr>
+							<form>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="kode">Id barang</label>
+											<div id="errorBarang"></div>
+											<input oninput="tampil_data_kode()" onchange="tampil_data_kode()" type="text" class="form-control input-pill" id="kode" autocomplete="TRUE" list="kodes" placeholder="">
+											<datalist onchange="tampil_data_kode()" id="kodes">
 
-				</div>
-				<div class="tab-pane fade" id="pills-profile-icon" role="tabpanel" aria-labelledby="pills-profile-tab-icon">
+											</datalist>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="jumlah">Jumlah</label>
+											<input oninput="jumlah_barang()" onchange="jumlah_barang()" type="number" min="1" class="form-control input-pill" id="jumlah" placeholder="0" required>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<a onclick="tambah_array()" id="tambahBarang" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Tambah</a>
+										<div class="form-group">
+											<label for="nama">Nama Barang</label>
+											<input type="text" class="form-control input-pill" id="nama" placeholder="" readonly>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label for="keterangan">Keterangan</label>
+											<textarea type="text" class="form-control input-pill" id="keterangan" readonly> </textarea>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="harga">Harga</label>
+											<input type="text" class="form-control input-pill" id="harga" placeholder="Rp" readonly>
+											<input type="text" class="form-control input-pill" id="harga_kulak" placeholder="Rp" style="display: none;">
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="total">Total</label>
+											<input type="text" class="form-control input-pill" id="total" placeholder="Rp" readonly>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
 
-				<div class="card-pricing2 card-primary">
-					<div class="pricing-header">
-						<h3 class="fw-bold"> </h3>
 					</div>
-					<div class="price-value">
-						<div class="value">
-							<span class="currency">Jasa</span>
-							<!-- <span class="amount">1<span>99</span></span> -->
-							<span class="month">Service</span>
-						</div>
-					</div>
-					<hr>
-					<form>
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="form-group">
-									<label for="kode_jasa">Nama Jasa</label>
-									<div id="errorJasa"></div>
-									<input oninput="tampil_data_kode_jasa()" onchange="tampil_data_kode_jasa()" type="text" class="form-control input-pill" id="kode_jasa" autocomplete="TRUE" list="kodes_jasa" placeholder="">
-									<datalist onchange="tampil_data_kode_jasa()" id="kodes_jasa">
-									</datalist>
+					<div class="tab-pane fade" id="pills-profile-icon" role="tabpanel" aria-labelledby="pills-profile-tab-icon">
+
+						<div class="card-pricing2 card-primary">
+							<div class="pricing-header">
+								<h3 class="fw-bold"> </h3>
+							</div>
+							<div class="price-value">
+								<div class="value">
+									<span class="currency">Jasa</span>
+									<!-- <span class="amount">1<span>99</span></span> -->
+									<span class="month">Service</span>
 								</div>
 							</div>
-							<div class="col-sm-12">
-								<div class="form-group">
-									<label for="harga_jasa">Harga</label>
-									<input type="text" class="form-control input-pill" id="harga_jasa" placeholder="Rp" readonly>
+							<hr>
+							<form>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label for="kode_jasa">Nama Jasa</label>
+											<div id="errorJasa"></div>
+											<input oninput="tampil_data_kode_jasa()" onchange="tampil_data_kode_jasa()" type="text" class="form-control input-pill" id="kode_jasa" autocomplete="TRUE" list="kodes_jasa" placeholder="">
+											<datalist onchange="tampil_data_kode_jasa()" id="kodes_jasa">
+											</datalist>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label for="harga_jasa">Harga</label>
+											<input type="text" class="form-control input-pill" id="harga_jasa" placeholder="Rp" readonly>
+										</div>
+									</div>
 								</div>
-							</div>
+								<a onclick="tambah_array_jasa()" id="tambahJasa" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3">Tambah</a>
+							</form>
 						</div>
-						<a onclick="tambah_array_jasa()" id="tambahJasa" class="btn btn-primary btn-border btn-lg w-75 fw-bold mb-3">Tambah</a>
-					</form>
+
+					</div>
 				</div>
-				
-				</div>
-			</div> 
 			</div>
 			<div class="col-md-8">
 				<div class="card">
 					<div class="card-header">
 						<div class="d-flex align-items-center">
-						<ul class="nav nav-pills nav-danger" id="pills-tab-with-icon" role="tablist">
-									<li class="nav-item">
-										<a class="nav-link active" id="pills-home-tab-icon" data-toggle="pill" href="#pills-home-icon" role="tab" aria-controls="pills-home-icon" aria-selected="true">
-											Barang
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" id="pills-profile-tab-icon" data-toggle="pill" href="#pills-profile-icon" role="tab" aria-controls="pills-profile-icon" aria-selected="false">
-											Jasa
-										</a>
-									</li>
-								</ul>
-								&nbsp;&nbsp;
+							<ul class="nav nav-pills nav-danger" id="pills-tab-with-icon" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" id="pills-home-tab-icon" data-toggle="pill" href="#pills-home-icon" role="tab" aria-controls="pills-home-icon" aria-selected="true">
+										Barang
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="pills-profile-tab-icon" data-toggle="pill" href="#pills-profile-icon" role="tab" aria-controls="pills-profile-icon" aria-selected="false">
+										Jasa
+									</a>
+								</li>
+							</ul>
+							&nbsp;&nbsp;
 							<h4 class="card-title">Data Transaksi</h4>
-								&nbsp;&nbsp;
+							&nbsp;&nbsp;
 							<div class="ml-md-auto py-2 py-md-0">
 								<a onclick="hutang_cek()" class="btn btn-info btn-round mr-2"><b>Hutang</b></a>
 								<a onclick="simpan_penjualan()" id="tambah_button" class="btn btn-warning btn-round"><b>Simpan</b></a>
@@ -234,6 +234,7 @@
 	var klien = [];
 
 	var id_selected = '';
+	var id_selected_jasa = '';
 	var id_klien = '';
 	var transaksi = [];
 	var total = 0;
@@ -456,9 +457,9 @@
 	function kembalian() {
 		if (transaksi.length > 0) {
 			var penampung = formatRupiah((parseInt(document.getElementById('bayar').value) - total).toString());
-			if (parseInt(document.getElementById('bayar').value) - total<0){
-				$("#kembalian").html('- '+penampung);
-			}else{
+			if (parseInt(document.getElementById('bayar').value) - total < 0) {
+				$("#kembalian").html('- ' + penampung);
+			} else {
 				$("#kembalian").html(penampung);
 			}
 		}
@@ -485,6 +486,7 @@
 				stok = barang[i].stok_barang;
 				jumlah_barang();
 				barangKosong = false
+				break;
 			}
 		}
 
@@ -548,8 +550,9 @@
 			if (document.getElementById('kode_jasa').value == jasa[i].nama_jasa) {
 				document.getElementById('harga_jasa').value = formatRupiah(jasa[i].harga_jasa.toString());
 
-				id_selected = jasa[i].id_jasa;
+				id_selected_jasa = jasa[i].id_jasa;
 				jasaKosong = false;
+				break;
 			}
 		}
 
@@ -590,7 +593,7 @@
 
 				transaksi[transaksi.length] = data;
 				ambil_data();
-				// console.log(transaksi);
+				console.log(transaksi);
 			}
 		}
 
@@ -608,7 +611,7 @@
 
 				var data = {
 					"tipe": 1,
-					"id": id_selected,
+					"id": id_selected_jasa,
 					"nama": document.getElementById('kode_jasa').value,
 					"keterangan": "-",
 					"jumlah": "1",

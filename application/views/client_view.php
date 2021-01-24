@@ -126,7 +126,7 @@
 
 				function tampilkan() {
 					$("#tempat_tabel").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
-					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>KODE CLIENT</th><th>NAMA CLIENT</th><th>ALAMAT</th><th>NO KTP</th><th>NO HP</th><th style="width: 10%">Action</th></tr></thead><tbody>'
+					var tabel = '<table id="tabelClient" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>KODE CLIENT</th><th>NAMA CLIENT</th><th>ALAMAT</th><th>NO KTP</th><th>NO HP</th><th style="width: 10%">Action</th></tr></thead><tbody>'
 					$.ajax({
 						url: '<?= base_url() ?>client/get_data',
 						method: 'post',
@@ -145,6 +145,9 @@
 							}
 							tabel += '</tbody></table>'
 							$("#tempat_tabel").html(tabel)
+							$('#tabelClient').DataTable({
+								"pageLength": 5,
+							});
 						}
 					});
 				}

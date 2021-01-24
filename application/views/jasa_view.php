@@ -197,7 +197,7 @@
 				}
 				baris += '</tbody></table>'
 				$("#tempatTabel").html(baris)
-				$('#tabelTabel').DataTable({
+				$('#tabelJasa').DataTable({
 					"pageLength": 5,
 				});
 			}

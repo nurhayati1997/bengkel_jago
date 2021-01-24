@@ -57,9 +57,10 @@
 							<div class="col-3">
 								<select class="form-control form-control-sm" id="tahun" onchange="ambil_data()">
 									<?php for ($i = 2020; $i < date("Y") + 1; $i++) { ?>
-										<option value="<?php echo $i;  ?>"><?php echo $i;  ?></option>
+										<option value="<?php echo $i;  ?>" <?php if (date('Y') == $i) echo "selected"; ?>><?php echo $i;  ?></option>
 									<?php } ?>
-								</select></div>
+								</select>
+							</div>
 						</div>
 						<div class="card-footer">
 							<!-- <div style="display: none;" class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
@@ -390,7 +391,7 @@
 				$.ajax({
 					type: 'POST',
 					url: '<?= base_url() ?>pembelian/tambah',
-					data: 'id=' + id_selected + '&jumlah=' + document.getElementById('jumlah').value + '&harga=' + document.getElementById('harga').value +
+					data: 'id=' + id_selected + '&jumlah=' + document.getElementById('jumlah').value + '&harga=' + parseInt(document.getElementById('harga').value.replace(/\./g, '')) +
 						'&stok=' + stok,
 					dataType: 'json',
 					success: function(data) {

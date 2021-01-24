@@ -92,4 +92,22 @@ class dashboard extends CI_Controller
 		}
 		echo json_encode($hasil);
 	}
+
+	public function eksportDb()
+	{
+		$this->load->dbutil();
+		$prefs = array(
+			'format'      => 'zip',
+			'filename'    => 'my_db_backup' . date("d-m-Y") . '.sql'
+		);
+		$backup = &$this->dbutil->backup($prefs);
+		$db_name = 'backup-on-' . date("d-m-Y") . '.zip';
+		$save = $db_name;
+
+		// $this->load->helper('file');
+		// write_file($save, $backup); 
+
+		$this->load->helper('download');
+		force_download($save, $backup);
+	}
 }

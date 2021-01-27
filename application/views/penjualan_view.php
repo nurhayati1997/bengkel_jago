@@ -185,6 +185,7 @@
 								</form>
 							</div>
 						</div>
+
 						<div class="table-responsive">
 							<table id="tabel_penjualan" class="display table table-striped table-hover">
 								<thead>
@@ -222,6 +223,25 @@
 							</table>
 						</div>
 					</div>
+
+					<div class="table-responsive center">
+						<h4 class="card-title text-center bg-info p-2">Daftar Transaksi Terakhir</h4>
+						<table id="tabelTransaksiTerakhir" class="display table table-striped table-hover">
+							<thead>
+								<tr>
+									<th>Nama</th>
+									<th>Keterangan</th>
+									<th>Harga</th>
+									<th>Jumlah </th>
+									<th>Total</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody id="transaksiTerakhir">
+
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -249,6 +269,7 @@
 		list_jasa();
 		list_client();
 		ambil_data();
+		getTransaksiTerakhir();
 		$('form').on('focus', 'input[type=number]', function(e) {
 			$(this).on('wheel.disableScroll', function(e) {
 				e.preventDefault()
@@ -333,6 +354,7 @@
 				document.getElementById('bayar').value = "";
 				total = 0;
 				ambil_data();
+				getTransaksiTerakhir();
 			}
 		});
 	}
@@ -355,6 +377,7 @@
 					document.getElementById('bayar').value = "";
 					total = 0;
 					ambil_data();
+					getTransaksiTerakhir();
 					$("#errorSimpan").html("")
 				}
 			});
@@ -629,6 +652,124 @@
 			}
 		}
 		$("#tambahJasa").html('Tambah')
+	}
+
+	function formatRupiah(angka, prefix) {
+		var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split = number_string.split(','),
+			sisa = split[0].length % 3,
+			rupiah = split[0].substr(0, sisa),
+			ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+		// tambahkan titik jika yang di input sudah menjadi angka ribuan
+		if (ribuan) {
+			separator = sisa ? '.' : '';
+			rupiah += separator + ribuan.join('.');
+		}
+
+		rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+		return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+	}
+
+	function getTransaksiTerakhir() {
+		$("#tombolProses").html('<i class="fas fa-spinner fa-pulse"></i> Memproses...')
+		$.ajax({
+			url: '<?= base_url() ?>penjualan/getTransaksiTerakhir',
+			method: 'post',
+			data: "target=tbl_penjualan&tanggalMulai=" + tanggalHariIni() + "&tanggalSelesai=" + tanggalHariIni(),
+			dataType: 'json',
+			success: function(data) {
+				//console.log(data)
+				var idData = [];
+				var bestFive = [];
+				var terbesar = '';
+				var pembanding = '';
+				for (let i = 0; i < data[0].length; i++) {
+					idData.push([data[0][i].id_penjualan, data[0][i].tgl_transaksi, 0]);
+				}
+				for (let i = 0; i < data[1].length; i++) {
+					idData.push([data[1][i].id_penjualan_jasa, data[1][i].tgl_transaksi, 1]);
+				}
+
+				//console.log(idData[0][1])
+
+				//sort data
+				while (bestFive.length < 5 && idData.length > 0) {
+					terbesar = [0, new Date(idData[0][1])];
+					for (let i = 0; i < idData.length; i++) {
+						pembanding = new Date(idData[i][1])
+						if (terbesar[1] < pembanding) {
+							terbesar = [i, new Date(idData[i][1])];
+						}
+					}
+					bestFive.push(idData[terbesar[0]])
+					idData.splice(terbesar[0], 1)
+				}
+
+				//tinggal stop kalo data kurang dari 5
+				// for (let i = 0; i < bestFive.length; i++) {
+				// 	console.log(bestFive[i])
+				// }
+
+				var tabel = ''
+				for (let i = 0; i < bestFive.length; i++) {
+					//console.log(i)
+					if (bestFive[i][2] == 0) {
+						for (let j = 0; j < data[0].length; j++) {
+							if (bestFive[i][0] == data[0][j].id_penjualan) {
+								tabel += '<tr>'
+								tabel += '<td>' + data[0][j].nama_barang + '</td>'
+								tabel += '<td>' + data[0][j].jenis + ' | ' + data[0][j].merk_barang + ' | ' + data[0][j].keterangan + ' | ' + data[0][j].kode_barang + '</td>'
+								tabel += '<td>' + formatRupiah(data[0][j].harga_jual) + '</td>'
+								tabel += '<td>' + data[0][j].jumlah_penjualan + '</td>'
+								tabel += '<td>' + formatRupiah((data[0][j].harga_jual * data[0][j].jumlah_penjualan).toString()) + '</td>'
+								if (data[0][j].status_piutang == 0) {
+									statusHutang = "Hutang"
+								} else if (data[0][j].status_piutang == 1) {
+									statusHutang = "Lunas"
+								} else {
+									statusHutang = "Cash"
+								}
+								tabel += '<td>' + statusHutang + '</td>'
+								tabel += '</tr>'
+							}
+						}
+					} else {
+						for (let k = 0; k < data[1].length; k++) {
+							if (bestFive[i][0] == data[1][k].id_penjualan_jasa) {
+								tabel += '<tr>'
+								tabel += '<td>' + data[1][k].nama_jasa + '</td>'
+								tabel += '<td>-</td>'
+								tabel += '<td>' + formatRupiah(data[1][k].harga_jasa) + '</td>'
+								tabel += '<td>1</td>'
+								tabel += '<td>' + formatRupiah(data[1][k].harga_jasa) + '</td>'
+								if (data[1][k].status_piutang == 0) {
+									statusHutang = "Hutang"
+								} else if (data[1][k].status_piutang == 1) {
+									statusHutang = "Lunas"
+								} else {
+									statusHutang = "Cash"
+								}
+								tabel += '<td>' + statusHutang + '</td>'
+								tabel += '</tr>'
+							}
+						}
+					}
+				}
+				if (!tabel) {
+					tabel = '<td class="text-center" colspan="6">Data Masih kosong :)</td>'
+				}
+				$("#transaksiTerakhir").html(tabel)
+			}
+		});
+	}
+
+	function tanggalHariIni() {
+		var now = new Date();
+		var day = ("0" + now.getDate()).slice(-2);
+		var month = ("0" + (now.getMonth() + 1)).slice(-2);
+		var today = now.getFullYear() + "-" + (month) + "-" + (day);
+		return today
 	}
 
 	function formatRupiah(angka, prefix) {

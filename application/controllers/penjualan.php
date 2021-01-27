@@ -75,4 +75,18 @@ class penjualan extends CI_Controller
 		];
 		echo json_encode($this->db_model->insert('tbl_penjualan_jasa', $data));
 	}
+
+	public function getTransaksiTerakhir()
+	{
+		$tanggalMulai = $this->input->post('tanggalMulai') . " 00:00:00";
+		$tanggalSelesai = $this->input->post('tanggalSelesai') . " 23:59:59";
+		$this->db->limit(5, 0);
+		$this->db->order_by("tgl_transaksi", 'DESC');
+		$barang = $this->db_model->get_where("vw_penjualan", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
+
+		$this->db->limit(5, 0);
+		$this->db->order_by("tgl_transaksi", 'DESC');
+		$jasa = $this->db_model->get_where("vw_penjualan_jasa", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
+		echo json_encode([$barang, $jasa]);
+	}
 }

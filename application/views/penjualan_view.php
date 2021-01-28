@@ -303,7 +303,6 @@
 		} else {
 			jual_hutang();
 		}
-		$("#tambah_button").html('Simpan')
 		total = 0
 	}
 
@@ -616,7 +615,7 @@
 
 				transaksi[transaksi.length] = data;
 				ambil_data();
-				console.log(transaksi);
+				//console.log(transaksi);
 			}
 		}
 
@@ -760,6 +759,8 @@
 					tabel = '<td class="text-center" colspan="6">Data Masih kosong :)</td>'
 				}
 				$("#transaksiTerakhir").html(tabel)
+
+				$("#tambah_button").html('Simpan')
 			}
 		});
 	}

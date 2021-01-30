@@ -57,6 +57,7 @@
 									<thead>
 										<tr>
 											<th style="width: 1%">AKSI</th>
+											<th>ID</th>
 											<th>NAMA</th>
 											<th>MERK</th>
 											<th>JENIS MOBIL</th>
@@ -410,6 +411,9 @@
 					}
 				},
 				{
+					"data": "id_barang"
+				},
+				{
 					"data": "nama_barang"
 				},
 				{
@@ -595,7 +599,7 @@
 				}
 				$("#namas").html(namas);
 				$("#ubah_namas").html(namas);
-				
+
 				for (var i = 0; i < data["merks"].length; i++) {
 					merks += '<option value="' + data["merks"][i].merk_barang + '"></option>';
 				}
@@ -607,7 +611,7 @@
 				}
 				$("#lokasis").html(lokasis);
 				$("#ubah_lokasis").html(lokasis);
-				
+
 				for (var i = 0; i < data["distributors"].length; i++) {
 					jeniss += '<option value="' + data["distributors"][i].distributors + '"></option>';
 				}

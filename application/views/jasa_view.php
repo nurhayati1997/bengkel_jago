@@ -180,7 +180,7 @@
 
 	function tampilkan() {
 		$("#tempatTabel").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
-		var baris = '<table id="tabelJasa" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>NAMA JASA</th><th>HARGA</th><th style="width: 10%">Action</th></tr></thead><tbody>'
+		var baris = '<table id="tabelJasa" class="display table table-striped table-hover" ><thead><tr><th>ID</th><th>NAMA JASA</th><th>HARGA</th><th style="width: 10%">Action</th></tr></thead><tbody>'
 		$.ajax({
 			url: '<?= base_url() ?>jasa/tampil',
 			method: 'post',
@@ -188,7 +188,7 @@
 			success: function(data) {
 				for (let i = 0; i < data.length; i++) {
 					baris += '<tr>'
-					baris += '<td>' + (i + 1) + '</td>'
+					baris += '<td>' + data[i].id_jasa + '</td>'
 					baris += '<td>' + data[i].nama_jasa + '</td>'
 					baris += '<td>' + formatRupiah(data[i].harga_jasa.toString()) + '</td>'
 					baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_jasa + '" onClick="tryEdit(' + data[i].id_jasa + ')"><i class="fa fa-edit"></i></button>'

@@ -113,9 +113,9 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="kode">Id barang</label>
+								<label for="id">Id barang</label>
 								<div id="errorBarang"></div>
-								<input oninput="tampil_data_kode()" onchange="tampil_data_kode()" type="text" class="form-control input-pill" id="kode" autocomplete="TRUE" list="kodes" placeholder="">
+								<input oninput="tampil_data_kode()" onchange="tampil_data_kode()" type="text" class="form-control input-pill" id="id" autocomplete="TRUE" list="kodes" placeholder="">
 								<datalist onchange="tampil_data_kode()" id="kodes">
 
 								</datalist>
@@ -124,7 +124,7 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="jumlah">Jumlah Pembelian</label>
-								<input oninput="jumlah_barang()" onchange="jumlah_barang()" type="number" min="1" class="form-control input-pill" id="jumlah" placeholder="">
+								<input type="number" min="1" class="form-control input-pill" id="jumlah" placeholder="">
 							</div>
 						</div>
 						<div class="col-sm-12">
@@ -139,22 +139,22 @@
 								<textarea type="text" class="form-control input-pill" id="keterangan" readonly> </textarea>
 							</div>
 						</div>
-						<div class="col-sm-12">
-							<div class="form-group">
-								<label for="harga">Harga Satuan</label>
-								<input oninput="jumlah_barang()" onchange="jumlah_barang()" type="text" class="form-control input-pill" id="harga" placeholder="" readonly>
-							</div>
-						</div>
-						<div class="col-sm-12">
+						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="kulak">Harga Kulak</label>
 								<input type="text" class="form-control input-pill" id="kulak" placeholder="" readonly>
 							</div>
 						</div>
-						<div class="col-sm-6" style="display: none;">
+						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="total">Total</label>
-								<input type="text" class="form-control input-pill" id="total" placeholder="" readonly>
+								<label for="jual">Harga Jual</label>
+								<input type="text" class="form-control input-pill" id="jual" placeholder="" readonly>
+							</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label for="stok">Stok Barang</label>
+								<input type="text" class="form-control input-pill" id="stok" placeholder="" readonly>
 							</div>
 						</div>
 					</div>
@@ -190,17 +190,14 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="ubah_kode">Id Barang</label>
-								<input oninput="ubah_tampil_data_kode()" onchange="ubah_tampil_data_kode()" type="text" class="form-control input-pill" id="ubah_kode" autocomplete="TRUE" list="kodes" placeholder="" readonly>
-								<datalist onchange="ubah_tampil_data_kode()" id="kodes">
-
-								</datalist>
+								<label for="ubah_id">Id Barang</label>
+								<input type="text" class="form-control input-pill" id="ubah_id" placeholder="" readonly>
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="ubah_jumlah">Jumlah Pembelian</label>
-								<input oninput="ubah_jumlah_barang()" onchange="ubah_jumlah_barang()" type="number" min="1" class="form-control input-pill" id="ubah_jumlah" placeholder="">
+								<input type="number" min="1" class="form-control input-pill" id="ubah_jumlah" placeholder="">
 							</div>
 						</div>
 						<div class="col-sm-12">
@@ -215,22 +212,22 @@
 								<textarea type="text" class="form-control input-pill" id="ubah_keterangan" readonly> </textarea>
 							</div>
 						</div>
-						<div class="col-sm-12">
-							<div class="form-group">
-								<label for="ubah_harga">Harga satuan</label>
-								<input oninput="ubah_jumlah_barang()" onchange="ubah_jumlah_barang()" type="text" class="form-control input-pill" id="ubah_harga" placeholder="" readonly>
-							</div>
-						</div>
-						<div class="col-sm-12">
+						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="ubah_kulak">Harga Kulak</label>
 								<input type="text" class="form-control input-pill" id="ubah_kulak" placeholder="" readonly>
 							</div>
 						</div>
-						<div class="col-sm-6" style="display: none;">
+						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="ubah_total">Total</label>
-								<input type="text" class="form-control input-pill" id="ubah_total" placeholder="" readonly>
+								<label for="ubah_jual">Harga Jual</label>
+								<input type="text" class="form-control input-pill" id="ubah_jual" placeholder="" readonly>
+							</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label for="stok">Stok Barang</label>
+								<input type="text" class="form-control input-pill" id="ubah_stok" placeholder="" readonly>
 							</div>
 						</div>
 					</div>
@@ -280,12 +277,6 @@
 	$(document).ready(function() {
 		list();
 		ambil_data();
-
-		$("#tambah_button").click(function showAlert() {
-			$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
-				$("#success-alert").slideUp(500);
-			});
-		});
 	});
 
 	function list() {
@@ -309,15 +300,15 @@
 		$("#errorBarang").html("")
 		barangKosong = true;
 		for (var i = 0; i < barang.length; i++) {
-			if (document.getElementById('kode').value == barang[i].id_barang) {
+			if (document.getElementById('id').value == barang[i].id_barang) {
 				document.getElementById('nama').value = barang[i].nama_barang;
 				document.getElementById('keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
-				document.getElementById('harga').value = formatRupiah(barang[i].harga_jual.toString());
+				document.getElementById('jual').value = formatRupiah(barang[i].harga_jual.toString());
 				document.getElementById('kulak').value = formatRupiah(barang[i].harga_kulak.toString());
+				document.getElementById('stok').value = barang[i].stok_barang;
 
 				id_selected = barang[i].id_barang;
 				stok = barang[i].stok_barang;
-				jumlah_barang();
 				barangKosong = false;
 			}
 		}
@@ -327,43 +318,7 @@
 			document.getElementById('jumlah').value = "";
 			document.getElementById('nama').value = "";
 			document.getElementById('keterangan').value = "";
-			document.getElementById('harga').value = "";
-		}
-	}
-
-	function ubah_tampil_data_kode() {
-		// alert(document.getElementById('kode').value);
-		for (var i = 0; i < barang.length; i++) {
-			if (document.getElementById('ubah_kode').value == barang[i].kode_barang) {
-				document.getElementById('ubah_nama').value = barang[i].nama_barang;
-				document.getElementById('ubah_keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
-				document.getElementById('ubah_harga').value = formatRupiah(barang[i].harga_jual, toString());
-				document.getElementById('ubah_kulak').value = formatRupiah(barang[i].harga_kulak.toString());
-
-				id_selected = barang[i].id_barang;
-				stok = barang[i].stok_barang;
-
-				// console.log(id_selected);
-				jumlah_barang();
-			}
-		}
-	}
-
-	function jumlah_barang() {
-		// alert("yeye");
-		if (document.getElementById('jumlah').value != "" && document.getElementById('harga').value != "") {
-			document.getElementById('total').value = parseInt(document.getElementById('jumlah').value) * parseInt(document.getElementById('harga').value);
-		} else {
-			document.getElementById('total').value = "";
-		}
-	}
-
-	function ubah_jumlah_barang() {
-		// alert("yeye");
-		if (document.getElementById('ubah_jumlah').value != "" && document.getElementById('ubah_harga').value != "") {
-			document.getElementById('ubah_total').value = parseInt(document.getElementById('ubah_jumlah').value) * parseInt(document.getElementById('ubah_harga').value);
-		} else {
-			document.getElementById('ubah_total').value = "";
+			document.getElementById('jual').value = "";
 		}
 	}
 
@@ -381,33 +336,30 @@
 			if (document.getElementById('jumlah').value == '') {
 				document.getElementById('jumlah').focus();
 			}
-			if (document.getElementById('harga').value == "") {
-				document.getElementById('harga').focus();
+			if (document.getElementById('id').value == "") {
+				document.getElementById('id').focus();
 			}
-			if (document.getElementById('kode').value == "") {
-				document.getElementById('kode').focus();
-			}
-			if (document.getElementById('kode').value != "" && document.getElementById('harga').value != "" && document.getElementById('jumlah').value != '') {
+			if (document.getElementById('id').value != "" && document.getElementById('jumlah').value != '') {
 				$.ajax({
 					type: 'POST',
 					url: '<?= base_url() ?>pembelian/tambah',
-					data: 'id=' + id_selected + '&jumlah=' + document.getElementById('jumlah').value + '&harga=' + parseInt(document.getElementById('harga').value.replace(/\./g, '')) +
-						'&stok=' + stok,
+					data: 'id=' + id_selected + '&jumlah=' + document.getElementById('jumlah').value + '&jual=' + parseInt(document.getElementById('jual').value.replace(/\./g, '')) + '&stok=' + stok + '&kulak=' + parseInt(document.getElementById('kulak').value.replace(/\./g, '')),
 					dataType: 'json',
 					success: function(data) {
 						document.getElementById('jumlah').value = "";
-						document.getElementById('harga').value = "";
-						document.getElementById('kode').value = "";
+						document.getElementById('jual').value = "";
+						document.getElementById('kulak').value = "";
+						document.getElementById('id').value = "";
 						document.getElementById('nama').value = "";
 
 						ambil_data();
+						$("#tambah_button").html('Tambah')
 						$('#tambahModal').modal('hide');
 
 					}
 				});
 			}
 		}
-		$("#tambah_button").html('Tambah')
 	}
 
 	function ubah(id_pembelian, id_barang) {
@@ -415,13 +367,13 @@
 		if (document.getElementById('ubah_jumlah').value == '') {
 			document.getElementById('ubah_jumlah').focus();
 		}
-		if (document.getElementById('ubah_harga').value == "") {
-			document.getElementById('ubah_harga').focus();
+		if (document.getElementById('ubah_jual').value == "") {
+			document.getElementById('ubah_jual').focus();
 		}
-		if (document.getElementById('ubah_kode').value == "") {
-			document.getElementById('ubah_kode').focus();
+		if (document.getElementById('ubah_id').value == "") {
+			document.getElementById('ubah_id').focus();
 		}
-		if (document.getElementById('ubah_kode').value != "" && document.getElementById('ubah_harga').value != "" && document.getElementById('ubah_jumlah').value != '') {
+		if (document.getElementById('ubah_id').value != "" && document.getElementById('ubah_jual').value != "" && document.getElementById('ubah_jumlah').value != '') {
 			$.ajax({
 				type: 'POST',
 				url: '<?= base_url() ?>pembelian/ubah',
@@ -460,7 +412,7 @@
 		var tahun = $("#tahun").val();
 		var bulan = $("#bulan").val();
 		$("#tempatTabel").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
-		var baris = '<table id="tabel_pembelian" class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>TANGGAL</th><th>KODE</th><th>NAMA</th><th>HARGA KULAK</th><th>JUMLAH PEMBELIAN</th><th style="width: 10%">Action</th></tr></thead><tbody>'
+		var baris = '<table id="tabel_pembelian" class="display table table-striped table-hover" ><thead><tr><th style="width: 5%">Action</th><th>NO</th><th>TANGGAL</th><th>KODE</th><th>NAMA</th><th>HARGA KULAK</th><th>HARGA JUAL</th><th>JUMLAH PEMBELIAN</th><th>STOK TERKINI</th></tr></thead><tbody>'
 		$.ajax({
 			url: '<?= base_url() ?>pembelian/tampil',
 			method: 'post',
@@ -469,16 +421,18 @@
 			success: function(data) {
 				for (let i = 0; i < data.length; i++) {
 					baris += '<tr>'
+
+					baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_pembelian + '" onClick="ubah_list(' + data[i].id_pembelian + ')"><i class="fa fa-edit"></i></button>'
+					baris += '<button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_pembelian + '" onClick="hapus_list(' + data[i].id_pembelian + ')"><i class="fa fa-times"></i></button></div></td>'
 					baris += '<td>' + (i + 1) + '</td>'
 					baris += '<td>' + data[i].tgl_pembelian + '</td>'
 					baris += '<td>' + data[i].kode_barang + '</td>'
 					baris += '<td>' + data[i].nama_barang + '</td>'
 					baris += '<td>' + formatRupiah(data[i].harga_kulak.toString()) + '</td>'
+					baris += '<td>' + formatRupiah(data[i].harga_jual.toString()) + '</td>'
 					baris += '<td>' + data[i].jumlah_pembelian + '</td>'
-					baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_pembelian + '" onClick="ubah_list(' + data[i].id_pembelian + ')"><i class="fa fa-edit"></i></button>'
-					baris += '<button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_pembelian + '" onClick="hapus_list(' + data[i].id_pembelian + ')"><i class="fa fa-times"></i></button>'
-
-					baris += '</div></td></tr>'
+					baris += '<td>' + data[i].stok_barang + '</td>'
+					baris += '</tr>'
 				}
 				baris += '</tbody></table>'
 				$("#tempatTabel").html(baris)
@@ -497,29 +451,19 @@
 			url: '<?= base_url() ?>pembelian/ubah_list',
 			dataType: 'json',
 			success: function(data) {
-				// console.log(data);
-				for (var i = 0; i < data.length; i++) {
-					document.getElementById('jumlah').value = "";
+				document.getElementById("ubah_id").value = data.id_pembelian;
+				document.getElementById("ubah_nama").value = data.nama_barang;
+				document.getElementById("ubah_jual").value = formatRupiah(data.harga_jual.toString());
+				document.getElementById('ubah_keterangan').value = data.jenis + ' | ' + data.merk_barang + ' | ' + data.keterangan + ' | ' + data.kode_barang;
+				document.getElementById("ubah_jumlah").value = data.jumlah_pembelian;
+				document.getElementById("ubah_kulak").value = formatRupiah(data.harga_kulak.toString());
+				document.getElementById("ubah_stok").value = data.stok_barang;
 
-					document.getElementById("ubah_kode").value = data[i].kode_barang;
-					document.getElementById("ubah_nama").value = data[i].nama_barang;
-					document.getElementById("ubah_harga").value = formatRupiah(data[i].harga_kulak.toString());
-					document.getElementById('ubah_keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
-					document.getElementById("ubah_jumlah").value = data[i].jumlah_pembelian;
-					document.getElementById("ubah_kulak").value = formatRupiah(data[i].harga_kulak.toString());
-
-					var html = '<button onclick="ubah(' + data[i].id_pembelian + ',' + data[i].id_barang + ')" id="ubah_button" type="button" class="btn btn-primary">Ubah</button><button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>';
-					$("#ubahModal_tombol").html(html);
-					stok_ubah = data[i].jumlah_pembelian;
-					stok = data[i].stok_barang;
-					$('#ubahModal').modal('show');
-
-					$("#ubah_button").click(function showAlert() {
-						$("#edit-alert").fadeTo(2000, 500).slideUp(500, function() {
-							$("#edit-alert").slideUp(500);
-						});
-					});
-				}
+				var html = '<button onclick="ubah(' + data.id_pembelian + ',' + data.id_barang + ')" id="ubah_button" type="button" class="btn btn-primary">Ubah</button><button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>';
+				$("#ubahModal_tombol").html(html);
+				stok_ubah = data.jumlah_pembelian;
+				stok = data.stok_barang;
+				$('#ubahModal').modal('show');
 			}
 		});
 		$("#edit" + id).html('<i class="fa fa-edit"></i>')
@@ -531,11 +475,6 @@
 		$("#hapusModal_tombol").html(html);
 		$('#hapusModal').modal('show');
 
-		$("#hapus_button").click(function showAlert() {
-			$("#delete-alert").fadeTo(2000, 500).slideUp(500, function() {
-				$("#delete-alert").slideUp(500);
-			});
-		});
 		$("#hapus" + id).html('<i class="fa fa-times"></i>')
 	}
 

@@ -30,7 +30,8 @@ class pembelian extends CI_Controller
 		$data = [
 			"id_barang" => $this->input->post("id", TRUE),
 			"tgl_pembelian" => $tgl,
-			"harga_kulak" => $this->input->post("harga", TRUE),
+			"harga_kulak" => $this->input->post("kulak", TRUE),
+			"harga_jual" => $this->input->post("jual", TRUE),
 			"jumlah_pembelian" => $this->input->post("jumlah", TRUE),
 			"id_pengguna" => $this->session->userdata("id_pengguna")
 		];
@@ -66,7 +67,7 @@ class pembelian extends CI_Controller
 
 	function ubah_list()
 	{
-		echo json_encode($this->db_model->get_where('view_pembelian', ["id_pembelian" => $this->input->post('id', TRUE)])->result());
+		echo json_encode($this->db_model->get_where('view_pembelian', ["id_pembelian" => $this->input->post('id', TRUE)])->row_array());
 	}
 
 	public function tampil()
@@ -77,6 +78,7 @@ class pembelian extends CI_Controller
 		// $tahun = "2020";
 		$mulai = strtotime($tahun . "/" . $bulan . "/" . "1 00:00:00");
 		$sampai = strtotime($tahun . "/" . $bulan . "/" . "31 23:59:59");
+		$this->db->order_by('tgl_pembelian DESC');
 		echo json_encode($this->db_model->get_where("view_pembelian", ['tgl_pembelian >=' => date("Y/m/d  H:i:s", $mulai), 'tgl_pembelian <=' => date("Y/m/d  H:i:s", $sampai)])->result());
 	}
 

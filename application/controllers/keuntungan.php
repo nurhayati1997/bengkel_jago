@@ -25,7 +25,7 @@ class keuntungan extends CI_Controller
 		$target = $this->input->post('target');
 		$tanggalMulai = $this->input->post('tanggalMulai') . " 00:00:00";
 		$tanggalSelesai = $this->input->post('tanggalSelesai') . " 23:59:59";
-		$this->db->order_by("tgl_transaksi");
+		$this->db->order_by("tgl_transaksi DESC");
 		$data = $this->db_model->get_where("vw_penjualan", ['tgl_transaksi >=' => $tanggalMulai, 'tgl_transaksi <=' => $tanggalSelesai])->result_array();
 		echo json_encode($data);
 	}

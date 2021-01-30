@@ -32,6 +32,7 @@ class piutang extends CI_Controller
 			$kondisi["status_piutang"] = $status;
 		}
 
+		$this->db->order_by('tgl_transaksi DESC');
 		echo json_encode($this->db_model->get_where("view_piutang", $kondisi)->result());
 
 		// $query = "select * FROM view_penjualan INNER JOIN view_piutang on view_piutang.id_transaksi = view_penjualan.id_transaksi GROUP BY view_penjualan.id_transaksi";

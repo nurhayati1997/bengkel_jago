@@ -58,14 +58,16 @@ class penjualan extends CI_Controller
 		];
 		$this->db_model->insert('tbl_penjualan', $data);
 
-		$lama = (int) $this->input->post("stok", TRUE) - (int)$this->input->post("jumlah", TRUE);
+		$stok = $this->db_model->get_where("tbl_barang", ["id_barang" => $this->input->post("id_barang", TRUE)])->row_array()["stok_barang"];
+
+		$stokTerkini = $stok - (int)$this->input->post("jumlah", TRUE);
 		$data = [
-			"stok_barang" =>  $lama
+			"stok_barang" =>  $stokTerkini
 		];
 
 		$this->db_model->update('tbl_barang', $data, array('id_barang' => $this->input->post('id_barang', TRUE)));
 
-		echo json_encode('');
+		echo json_encode($stok . "-" . $this->input->post("jumlah", TRUE));
 	}
 	public function jasa_insert()
 	{

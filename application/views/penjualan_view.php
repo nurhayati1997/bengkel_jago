@@ -64,9 +64,17 @@
 									</div>
 									<div class="col-sm-12">
 										<a onclick="tambah_array()" id="tambahBarang" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Tambah</a>
+									</div>
+									<div class="col-sm-6">
 										<div class="form-group">
 											<label for="nama">Nama Barang</label>
 											<input type="text" class="form-control input-pill" id="nama" placeholder="" readonly>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group" id="statusStok">
+											<label for="nama">Stok</label>
+											<input type="text" class="form-control input-pill" id="stok" placeholder="" readonly>
 										</div>
 									</div>
 									<div class="col-sm-12">
@@ -263,7 +271,6 @@
 	var jasaKosong = true;
 	var klienKosong = true;
 
-	var stok = 0;
 	$(document).ready(function() {
 		list();
 		list_jasa();
@@ -354,6 +361,7 @@
 				total = 0;
 				ambil_data();
 				getTransaksiTerakhir();
+				list();
 			}
 		});
 	}
@@ -377,6 +385,7 @@
 					total = 0;
 					ambil_data();
 					getTransaksiTerakhir();
+					list();
 					$("#errorSimpan").html("")
 				}
 			});
@@ -391,7 +400,7 @@
 					url: '<?= base_url() ?>penjualan/barang_insert',
 					data: 'id_transaksi=' + id + '&id_barang=' + transaksi[i].id +
 						'&jumlah=' + transaksi[i].jumlah + '&harga=' + transaksi[i].harga +
-						'&harga_kulak=' + transaksi[i].harga_kulak + '&stok=' + transaksi[i].stok,
+						'&harga_kulak=' + transaksi[i].harga_kulak,
 					dataType: 'json',
 					success: function(data) {
 						// console.log(data)
@@ -503,9 +512,15 @@
 				document.getElementById('keterangan').value = barang[i].jenis + ' | ' + barang[i].merk_barang + ' | ' + barang[i].keterangan + ' | ' + barang[i].kode_barang;
 				document.getElementById('harga').value = formatRupiah(barang[i].harga_jual.toString());
 				document.getElementById('harga_kulak').value = barang[i].harga_kulak;
+				document.getElementById('stok').value = barang[i].stok_barang;
+
+				if (parseInt(barang[i].stok_barang) <= parseInt(barang[i].pagu)) {
+					$("#statusStok").addClass("has-error")
+				} else {
+					$("#statusStok").removeClass("has-error")
+				}
 
 				id_selected = barang[i].id_barang;
-				stok = barang[i].stok_barang;
 				jumlah_barang();
 				barangKosong = false
 				break;
@@ -513,6 +528,7 @@
 		}
 
 		if (barangKosong) {
+			$("#statusStok").removeClass("has-error")
 			$("#errorBarang").html("<small class='text-danger'>id tidak ditemukan.</small>")
 			document.getElementById('jumlah').value = "";
 			document.getElementById('nama').value = "";
@@ -603,8 +619,7 @@
 					"keterangan": document.getElementById('keterangan').value,
 					"jumlah": document.getElementById('jumlah').value,
 					"harga": parseInt(document.getElementById('harga').value.replace(/\./g, '')),
-					"harga_kulak": document.getElementById('harga_kulak').value,
-					"stok": stok
+					"harga_kulak": document.getElementById('harga_kulak').value
 				};
 				document.getElementById('kode').value = "";
 				document.getElementById('nama').value = "";
@@ -612,6 +627,8 @@
 				document.getElementById('harga').value = "";
 				document.getElementById('jumlah').value = "";
 				document.getElementById('total').value = "";
+				document.getElementById('stok').value = "";
+				$("#statusStok").removeClass("has-error")
 
 				transaksi[transaksi.length] = data;
 				ambil_data();
@@ -638,8 +655,7 @@
 					"keterangan": "-",
 					"jumlah": "1",
 					"harga": parseInt(document.getElementById('harga_jasa').value.replace(/\./g, '')),
-					"harga_kulak": 0,
-					"stok": 0
+					"harga_kulak": 0
 				};
 
 				document.getElementById('kode_jasa').value = "";

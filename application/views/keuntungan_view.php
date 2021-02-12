@@ -120,6 +120,7 @@
 								<table id="piutang_list_data" class="display table table-striped table-hover">
 									<thead>
 										<tr>
+											<th>Aksi</th>
 											<th>No.</th>
 											<th>Tanggal</th>
 											<th>Nama</th>
@@ -247,7 +248,7 @@
 					var pemasukan = 0;
 					var totalPemasukan = 0;
 					var statusHutang = ""
-					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>AKSI</th><th>NO</th><th>TANGGAL</th><th>NAMA</th><th>MERK</th><th>KETERANGAN</th><th>KODE</th><th>KULAK</th><th>JUAL</th><th>QUANTITY</th><th>TOTAL</th><th>UNTUNG</th><th>PIUTANG</th><th>KASIR</th></tr></thead><tbody>'
+					var tabel = '<table id="add-row" class="display table table-striped table-hover" ><thead><tr><th>AKSI</th><th>NO</th><th>ID BARANG</th><th>TANGGAL</th><th>NAMA</th><th>MERK</th><th>KETERANGAN</th><th>KODE</th><th>KULAK</th><th>JUAL</th><th>JUMLAH</th><th>TOTAL</th><th>UNTUNG</th><th>PIUTANG</th><th>KASIR</th></tr></thead><tbody>'
 					$.ajax({
 						url: '<?= base_url() ?>keuntungan/getDataBarang',
 						method: 'post',
@@ -263,6 +264,7 @@
 								tabel += '<tr>'
 								tabel += '<td><button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_penjualan + '" onClick="tryHapus(' + data[i].id_penjualan + ')"><i class="fa fa-times"></i></button></td>'
 								tabel += '<td>' + (i + 1) + '</td>'
+								tabel += '<td>' + data[i].id_barang + '</td>'
 								tabel += '<td>' + data[i].tgl_transaksi + '</td>'
 								tabel += '<td>' + data[i].nama_barang + '</td>'
 								tabel += '<td>' + data[i].merk_barang + '</td>'

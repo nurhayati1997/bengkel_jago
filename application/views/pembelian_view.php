@@ -412,7 +412,7 @@
 		var tahun = $("#tahun").val();
 		var bulan = $("#bulan").val();
 		$("#tempatTabel").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
-		var baris = '<table id="tabel_pembelian" class="display table table-striped table-hover" ><thead><tr><th style="width: 5%">Action</th><th>NO</th><th>TANGGAL</th><th>KODE</th><th>NAMA</th><th>HARGA KULAK</th><th>HARGA JUAL</th><th>JUMLAH PEMBELIAN</th><th>STOK TERKINI</th></tr></thead><tbody>'
+		var baris = '<table id="tabel_pembelian" class="display table table-striped table-hover" ><thead><tr><th style="width: 5%">Action</th><th>ID BARANG</th><th>TANGGAL</th><th>NAMA</th><th>KETERANGAN</th><th>JUMLAH PEMBELIAN</th><th>STOK TERKINI</th><th>HARGA KULAK</th><th>HARGA JUAL</th></tr></thead><tbody>'
 		$.ajax({
 			url: '<?= base_url() ?>pembelian/tampil',
 			method: 'post',
@@ -424,14 +424,14 @@
 
 					baris += '<td><div class="form-button-action"><button type="button" title="edit" class="btn btn-link btn-primary btn-lg" id="edit' + data[i].id_pembelian + '" onClick="ubah_list(' + data[i].id_pembelian + ')"><i class="fa fa-edit"></i></button>'
 					baris += '<button type="button" title="hapus?" class="btn btn-link btn-danger" id="hapus' + data[i].id_pembelian + '" onClick="hapus_list(' + data[i].id_pembelian + ')"><i class="fa fa-times"></i></button></div></td>'
-					baris += '<td>' + (i + 1) + '</td>'
+					baris += '<td>' + data[i].id_barang + '</td>'
 					baris += '<td>' + data[i].tgl_pembelian + '</td>'
-					baris += '<td>' + data[i].kode_barang + '</td>'
 					baris += '<td>' + data[i].nama_barang + '</td>'
-					baris += '<td>' + formatRupiah(data[i].harga_kulak.toString()) + '</td>'
-					baris += '<td>' + formatRupiah(data[i].harga_jual.toString()) + '</td>'
+					baris += '<td>' + data[i].jenis + ' | ' + data[i].merk_barang + ' | ' + data[i].keterangan + ' | ' + data[i].kode_barang + '</td>'
 					baris += '<td>' + data[i].jumlah_pembelian + '</td>'
 					baris += '<td>' + data[i].stok_barang + '</td>'
+					baris += '<td>' + formatRupiah(data[i].harga_kulak.toString()) + '</td>'
+					baris += '<td>' + formatRupiah(data[i].harga_jual.toString()) + '</td>'
 					baris += '</tr>'
 				}
 				baris += '</tbody></table>'

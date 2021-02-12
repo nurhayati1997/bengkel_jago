@@ -237,12 +237,13 @@
 						<table id="tabelTransaksiTerakhir" class="display table table-striped table-hover">
 							<thead>
 								<tr>
+									<th>Id</th>
 									<th>Nama</th>
 									<th>Keterangan</th>
 									<th>Harga</th>
-									<th>Jumlah </th>
+									<th>Jml </th>
 									<th>Total</th>
-									<th>Status</th>
+									<th>Stok</th>
 								</tr>
 							</thead>
 							<tbody id="transaksiTerakhir">
@@ -277,20 +278,6 @@
 		list_client();
 		ambil_data();
 		getTransaksiTerakhir();
-		$('form').on('focus', 'input[type=number]', function(e) {
-			$(this).on('wheel.disableScroll', function(e) {
-				e.preventDefault()
-			})
-		});
-		$('form').on('blur', 'input[type=number]', function(e) {
-			$(this).off('wheel.disableScroll')
-		});
-
-		$("#tambah_button").click(function showAlert() {
-			$("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
-				$("#success-alert").slideUp(500);
-			});
-		});
 	});
 
 	function hutang_cek() {
@@ -733,19 +720,13 @@
 						for (let j = 0; j < data[0].length; j++) {
 							if (bestFive[i][0] == data[0][j].id_penjualan) {
 								tabel += '<tr>'
+								tabel += '<td>' + data[0][j].id_barang + '</td>'
 								tabel += '<td>' + data[0][j].nama_barang + '</td>'
 								tabel += '<td>' + data[0][j].jenis + ' | ' + data[0][j].merk_barang + ' | ' + data[0][j].keterangan + ' | ' + data[0][j].kode_barang + '</td>'
 								tabel += '<td>' + formatRupiah(data[0][j].harga_jual) + '</td>'
 								tabel += '<td>' + data[0][j].jumlah_penjualan + '</td>'
 								tabel += '<td>' + formatRupiah((data[0][j].harga_jual * data[0][j].jumlah_penjualan).toString()) + '</td>'
-								if (data[0][j].status_piutang == 0) {
-									statusHutang = "Hutang"
-								} else if (data[0][j].status_piutang == 1) {
-									statusHutang = "Lunas"
-								} else {
-									statusHutang = "Cash"
-								}
-								tabel += '<td>' + statusHutang + '</td>'
+								tabel += '<td>' + data[0][j].stok_barang + '</td>'
 								tabel += '</tr>'
 							}
 						}
@@ -753,19 +734,13 @@
 						for (let k = 0; k < data[1].length; k++) {
 							if (bestFive[i][0] == data[1][k].id_penjualan_jasa) {
 								tabel += '<tr>'
+								tabel += '<td>' + data[1][k].id_jasa + '</td>'
 								tabel += '<td>' + data[1][k].nama_jasa + '</td>'
 								tabel += '<td>-</td>'
 								tabel += '<td>' + formatRupiah(data[1][k].harga_jasa) + '</td>'
 								tabel += '<td>1</td>'
 								tabel += '<td>' + formatRupiah(data[1][k].harga_jasa) + '</td>'
-								if (data[1][k].status_piutang == 0) {
-									statusHutang = "Hutang"
-								} else if (data[1][k].status_piutang == 1) {
-									statusHutang = "Lunas"
-								} else {
-									statusHutang = "Cash"
-								}
-								tabel += '<td>' + statusHutang + '</td>'
+								tabel += '<td>-</td>'
 								tabel += '</tr>'
 							}
 						}

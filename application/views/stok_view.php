@@ -112,7 +112,7 @@
 				$("#tempatTabelWarning").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
 				$("#tempatTabelAman").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
 				$("#tempatTabelPagu").html('<i class="fas fa-spinner fa-pulse"></i> Memuat...')
-				var beginTabel = 'class="display table table-striped table-hover" ><thead><tr><th>NO</th><th>NAMA</th><th>MERK</th><th>JENIS MOBIL</th><th>KETERANGAN</th><th>KODE</th><th>STOK</th>'
+				var beginTabel = 'class="display table table-striped table-hover" ><thead><tr><th>ID BARANG</th><th>NAMA</th><th>MERK</th><th>JENIS MOBIL</th><th>KETERANGAN</th><th>KODE</th><th>STOK</th>'
 				var stokWarning = '<table id="tabelWarning" ' + beginTabel + "</thead><tbody>";
 				var stokAman = '<table id="tabelAman" ' + beginTabel + "</thead><tbody>";
 				var stokPagu = '<table id="tabelPagu" ' + beginTabel + '<th>PAGU</th><th style="width: 20%">Action</th></tr></thead><tbody>';
@@ -125,16 +125,16 @@
 					dataType: 'json',
 					success: function(data) {
 						for (let i = 0; i < data.length; i++) {
-							baris = '<td>' + data[i].nama_barang + '</td><td>' + data[i].merk_barang + '</td><td>' + data[i].jenis + '</td><td>' + data[i].keterangan + '</td><td>' + data[i].kode_barang + '</td><td>' + data[i].stok_barang + '</td>'
+							baris = '<td>' + data[i].id_barang + '</td><td>' + data[i].nama_barang + '</td><td>' + data[i].merk_barang + '</td><td>' + data[i].jenis + '</td><td>' + data[i].keterangan + '</td><td>' + data[i].kode_barang + '</td><td>' + data[i].stok_barang + '</td>'
 
 							if (parseInt(data[i].stok_barang) >= parseInt(data[i].pagu)) {
-								stokAman += '<tr><td>' + noAman + '</td>' + baris + '</tr>'
+								stokAman += '<tr>' + baris + '</tr>'
 								noAman += 1
 							} else {
-								stokWarning += '<tr><td>' + noWarning + '</td>' + baris + '</tr>'
+								stokWarning += '<tr>' + baris + '</tr>'
 								noWarning += 1
 							}
-							stokPagu += '<tr><td>' + (i + 1) + '</td>' + baris + ' <td> ' + data[i].pagu + ' </td><td><div class="form-button-action"><button type="button" title="Edit Pagu" class="btn btn-link btn-success btn-lg" id="pagu' + data[i].id_barang + '" onClick="tryEdit(' + data[i].id_barang + ', \'pagu\')"><i class="fa fa-edit"></i > </button> '
+							stokPagu += '<tr>' + baris + ' <td> ' + data[i].pagu + ' </td><td><div class="form-button-action"><button type="button" title="Edit Pagu" class="btn btn-link btn-success btn-lg" id="pagu' + data[i].id_barang + '" onClick="tryEdit(' + data[i].id_barang + ', \'pagu\')"><i class="fa fa-edit"></i > </button> '
 							<?php if ($this->session->userdata("rule") == 1) : ?>
 								stokPagu += '<button type="button" title="Sesuaikan Stok" class="btn btn-link btn-primary btn-lg" id="stok' + data[i].id_barang + '" onClick="tryEdit(' + data[i].id_barang + ', \'stok\')"><i class="fa fa-th-list" aria-hidden="true"></i> </button>'
 							<?php endif; ?>

@@ -107,6 +107,7 @@
 												<table id="piutang_list_data" class="display table table-striped table-hover">
 													<thead>
 														<tr>
+															<th>Id</th>
 															<th>Kode</th>
 															<th>Nama</th>
 															<th>Merk</th>
@@ -164,7 +165,7 @@
 	// 	$('#tabel_piutang').DataTable({
 	// 		destroy: true,
 	// 		"ajax": {
-	// 			"url": "<?php echo site_url("piutang/tampil") ?>",
+	// 			"url": ",
 	// 			"dataSrc": ""
 	// 		},
 	// 		"columns": [{
@@ -245,6 +246,7 @@
 			total += temp;
 			// console.log(transaksi[i].tipe);
 			html += '<tr>' +
+				'<td>' + transaksi[i].id + '</td>' +
 				'<td>' + transaksi[i].kode + '</td>' +
 				'<td>' + transaksi[i].nama + '</td>' +
 				'<td>' + transaksi[i].merk + '</td>' +
@@ -270,6 +272,7 @@
 				utang_list = [];
 				for (var i = 0; i < data.length; i++) {
 					var mydata = {
+						"id": data[i].id_barang,
 						"kode": data[i].kode_barang,
 						"nama": data[i].nama_barang,
 						"jumlah": data[i].jumlah_penjualan,
@@ -289,7 +292,8 @@
 						// console.log(data);
 						for (var i = 0; i < data.length; i++) {
 							var mydata = {
-								"kode": data[i].id_jasa,
+								"id": data[i].id_jasa,
+								"kode": "-",
 								"nama": data[i].nama_jasa,
 								"jumlah": 1,
 								"harga": data[i].harga_jasa,

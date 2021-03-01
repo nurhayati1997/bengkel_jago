@@ -32,8 +32,8 @@
 									<select class="form-control form-control-sm" id="bulan" onchange="ambil_data()">
 										<option value="1" <?php if (date('m') == 1) echo "selected"; ?>>Januari</option>
 										<option value="2" <?php if (date('m') == 2) echo "selected"; ?>>Februari</option>
-										<option value="3" <?php if (date('m') == 3) echo "selected"; ?>>April</option>
-										<option value="4" <?php if (date('m') == 4) echo "selected"; ?>>Maret</option>
+										<option value="3" <?php if (date('m') == 3) echo "selected"; ?>>Maret</option>
+										<option value="4" <?php if (date('m') == 4) echo "selected"; ?>>April</option>
 										<option value="5" <?php if (date('m') == 5) echo "selected"; ?>>Mei</option>
 										<option value="6" <?php if (date('m') == 6) echo "selected"; ?>>Juni</option>
 										<option value="7" <?php if (date('m') == 7) echo "selected"; ?>>Juli</option>

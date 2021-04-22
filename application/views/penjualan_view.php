@@ -591,6 +591,10 @@
 		$("#tambahBarang").html('<i class="fas fa-spinner fa-pulse"></i> Memproses..')
 		if (barangKosong) {
 			$("#errorBarang").html("<small class='text-danger'>id tidak ditemukan.</small>")
+		} else if ($("#stok").val() < 1) {
+			$("#errorBarang").html("<small class='text-danger'>Barang kosong.</small>")
+		} else if (0 > ($("#stok").val() - $("#jumlah").val())) {
+			$("#errorBarang").html("<small class='text-danger'>Stok Kurang.</small>")
 		} else {
 			if (document.getElementById('kode').value == "") {
 				document.getElementById('kode').focus();
